@@ -5,11 +5,13 @@
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="40*"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="8*"/>
             </Grid.RowDefinitions>
-           
-            <Grid Grid.Row="0">
+
+            <Grid Grid.Row="0" BackgroundColor="#171a1d" Margin="0" ColumnSpacing="20">
+               
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width=".2*"/>
                     <ColumnDefinition Width="*"/>
@@ -19,55 +21,72 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width=".2*"/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="1" BackgroundColor="#515a63ff" Margin="0,0,5,5"></Label>
-                <Label Grid.Column="2" BackgroundColor="Beige" Margin="0,0,5,5"></Label>
-                <Label Grid.Column="3" BackgroundColor="Beige" Margin="0,0,5,5"></Label>
-                <Label Grid.Column="4" BackgroundColor="Beige" Margin="0,0,5,5"></Label>
-                <Label Grid.Column="5" BackgroundColor="Beige" Margin="0,0,5,5"></Label>
-                <Label Grid.Column="6" BackgroundColor="Beige" Margin="0,0,5,5"></Label>
-                <Label Grid.Column="7" BackgroundColor="Beige" Margin="0,0,0,5"></Label>
+                
+                <ImageButton Source="HomeTabButton.png" Grid.Column="1"  />
+                <ImageButton Source="HomeTabButton.png" Grid.Column="2"   />
+                <ImageButton Source="HomeTabButton.png" Grid.Column="3"   />
+                <ImageButton Source="HomeTabButton.png" Grid.Column="4"   />
+                <ImageButton Source="HomeTabButton.png" Grid.Column="5"   />
+                <ImageButton Source="HomeTabButton.png" Grid.Column="6" />
+                <ImageButton Source="HomeTabButton.png" Grid.Column="7"  />
+                <ImageButton Source="HomeTabButton.png" Grid.Column="8"  />
+                <ImageButton Source="HomeTabButton.png" Grid.Column="9"  />
+                <ImageButton Source="HomeTabButton.png" Grid.Column="10"  />
             </Grid>
-            
-            <Grid Grid.Row="1">
-                <Grid>
+
+            <Grid Grid.Row="1" Margin="0" Padding="0">
+               
+                <Grid.RowDefinitions>
+                        <RowDefinition Height="18*"/>
+                        <RowDefinition Height="16*"/>
+                </Grid.RowDefinitions>
+
+                    
+                    <Image Source="PlaceholderImg.jpg" Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Fill"></Image>
+
+                <Grid Grid.Row="1" Grid.ColumnSpan="2" BackgroundColor="#66717d" Margin="0" ColumnSpacing="20" RowSpacing="40"  Padding="40">
+
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="AliceBlue"></Label>
+                    <ImageButton Source="HomeMeseButton.png" Grid.Row="0" Grid.Column="0"  x:Name="btnMese" Clicked="btnMese_Clicked"/>
+                    <ImageButton Source="HomeBarButton.png" Grid.Row="0" Grid.Column="1"/>
+                    <ImageButton Source="HomePayButton.png" Grid.Row="0" Grid.Column="2" />
+                    <ImageButton Source="HomeVoidButton.png" Grid.Row="0" Grid.Column="3" />
+                    <ImageButton Source="HomeRecallButton.png" Grid.Row="0" Grid.Column="4" />
 
-                        <Grid Grid.Row="1" Grid.ColumnSpan="2">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Button Grid.Row="0" Grid.Column="0" Text="Mese" x:Name="btnMese" Clicked="btnMese_Clicked"/>
-                        </Grid>
-
-
-
-                    <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="2" Grid.Column="0" x:Name="StationName"/>
-                    <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="2" Grid.Column="1" x:Name="EmployeeName"/>
-
+                    <ImageButton Source="HomeNoSaleButton.png" Grid.Row="1" Grid.Column="0" />
+                    <ImageButton Source="HomePayBackButton.png" Grid.Row="1" Grid.Column="1" />
+                    <ImageButton Source="HomeSettingsButton.png" Grid.Row="1" Grid.Column="2" />
+                    <ImageButton Source="HomePlaceholderButton.png" Grid.Row="1" Grid.Column="3" />
+                    <ImageButton Source="HomePlaceholderButton.png" Grid.Row="1" Grid.Column="4" />
                 </Grid>
+            </Grid>
+            
+            <Grid Grid.Row="2"  BackgroundColor="#171a1d" Margin="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label HorizontalOptions="Center" Grid.Column="0" x:Name="StationName"/>
+                <Label HorizontalOptions="Center" Grid.Column="1" x:Name="EmployeeName"/>
+
             </Grid>
         </Grid>
     </ContentPage.Content>
