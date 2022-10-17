@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Marcaj.Pages.Tables.ActiveTable"
+             BackgroundColor="White">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="9*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid x:Name="gridLists" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Button Grid.Row="0" Text="NEW" x:Name="btnNewOrder" TextColor="Black" Clicked="btnNewOrder_Clicked"/>
+                <Button Grid.Row="2" Text="NEXT" x:Name="btnNextPage" TextColor="Black" Clicked="btnNextPage_Clicked" IsEnabled="False"/>
+                <Button Grid.Row="3" Text="BACK" x:Name="btnPrevPage" TextColor="Black" Clicked="btnPrevPage_Clicked" IsEnabled="False"/>
+                
+
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

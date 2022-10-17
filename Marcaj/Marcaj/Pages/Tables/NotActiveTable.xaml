@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Marcaj.Pages.Tables.NotActiveTable"
+             BackgroundColor="White">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="8*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <ListView Grid.Row="0" Grid.Column="0" x:Name="lstvwMenuGroups" ItemSelected="lstvwMenuGroups_ItemSelected">
+                
+                <ListView.Header>
+                    <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" TextColor="Black" Text="Menu Groups"/>
+                </ListView.Header>
+                
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Label VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black" Text="{Binding MenuGroupText}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                
+            </ListView>
+
+            <ListView Grid.Row="0"  Grid.Column="1" x:Name="lstvwMenuItems" ItemSelected="lstvwMenuItems_ItemSelected">
+                
+                <ListView.Header>
+                    <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" TextColor="Black" Text="Menu Items"/>
+                </ListView.Header>
+                
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Label VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black" Text="{Binding MenuItemText}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                
+            </ListView>
+
+            <ListView Grid.Row="0"  Grid.Column="2" x:Name="lstvwOrderTransactions">
+                <ListView.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0" x:Name="txtServer" VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black"/>
+                        <Label Grid.Row="0" Grid.Column="1" x:Name="txtStation" VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black"/>
+                        <Label Grid.Row="1" Grid.Column="0" x:Name="txtOrderName" VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black"/>
+                        <Label Grid.Row="1" Grid.Column="1" x:Name="txtTableName" VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black"/>
+                        <Label Grid.Row="2" Grid.ColumnSpan="2"  x:Name="txtDateTimeOpenedTable" VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black"/>
+                        <Grid Grid.Row="3" Grid.ColumnSpan="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="5*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Column="0" Text="Qty" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" TextColor="Black"/>
+                            <Label Grid.Column="1" Text="Item" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold"  TextColor="Black"/>
+                            <Label Grid.Column="2" Text="$" VerticalOptions="Center" HorizontalOptions="Center"  FontAttributes="Bold" TextColor="Black"/>
+                        </Grid>
+                    </Grid>
+                </ListView.Header>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="5*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Grid.Column="0" Text="{Binding Quantity}" VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black"/>
+                                <Label Grid.Column="1" Text="{Binding MenuItemTextOT}" VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black"/>
+                                <Label Grid.Column="2" Text="{Binding ExtendedPrice}" VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black"/>
+                                
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+                <ListView.Footer>
+                    <Label x:Name="txtAmountDue" VerticalOptions="Center" HorizontalOptions="End" TextColor="Black" FontAttributes="Bold"/>
+                </ListView.Footer>
+            </ListView>
+
+            <Grid Grid.Row="1" Grid.ColumnSpan="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="7" Text="DONE" TextColor="Black" x:Name="btnDone" Clicked="btnDone_Clicked"/>
+                <Button Grid.Column="0" Text="CANCEL" TextColor="Black" x:Name="btnCancel" Clicked="btnCancel_Clicked"/>
+                
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

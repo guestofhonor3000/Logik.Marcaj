@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Marcaj.HomePage">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Text="Mese" x:Name="btnMese" Clicked="btnMese_Clicked"/>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" x:Name="StationName"/>
+                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" x:Name="EmployeeName"/>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

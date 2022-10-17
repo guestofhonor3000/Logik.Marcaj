@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Marcaj.Pages.Tables.AllTables"
+             BackgroundColor="White">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <ListView Grid.Column="0"  x:Name="lstvwMese" ItemSelected="lstvwMese_ItemSelected">
+                <ListView.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" Grid.Column="0" TextColor="Black" Text="DineInTableText"/>
+                        <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" Grid.Column="1"  TextColor="Black" Text="DineInTableInActive"/>
+                        <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" Grid.Column="2"  TextColor="Black" Text="EmpName"/>
+                    </Grid>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0" TextColor="Black" Text="{Binding DineIn.DineInTableText}"/>
+                                <Label VerticalOptions="Center" HorizontalOptions="Center"   Grid.Column="1"  TextColor="Black" Text="{Binding DineIn.DineInTableInActive}"/>
+                                <Label VerticalOptions="Center" HorizontalOptions="Center"   Grid.Column="2"  TextColor="Black" Text="{Binding EmpName}"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <ListView Grid.Column="1" x:Name="lstvwGrupMese" ItemSelected="lstvwGrupMese_ItemSelected">
+                <ListView.Header>
+                    <Label VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black" FontAttributes="Bold" Text="Table Groups"/>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Label VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black" Text="{Binding TableGroupText}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
