@@ -6,16 +6,68 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="20"/>
+                <RowDefinition Height="8*"/>
             </Grid.RowDefinitions>
-            <Button Grid.Row="0" Text="Mese" x:Name="btnMese" Clicked="btnMese_Clicked"/>
-            <Grid Grid.Row="1">
+           
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".2*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width=".2*"/>
                 </Grid.ColumnDefinitions>
-                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" x:Name="StationName"/>
-                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" x:Name="EmployeeName"/>
+                <Label Grid.Column="1" BackgroundColor="#515a63ff" Margin="0,0,5,5"></Label>
+                <Label Grid.Column="2" BackgroundColor="Beige" Margin="0,0,5,5"></Label>
+                <Label Grid.Column="3" BackgroundColor="Beige" Margin="0,0,5,5"></Label>
+                <Label Grid.Column="4" BackgroundColor="Beige" Margin="0,0,5,5"></Label>
+                <Label Grid.Column="5" BackgroundColor="Beige" Margin="0,0,5,5"></Label>
+                <Label Grid.Column="6" BackgroundColor="Beige" Margin="0,0,5,5"></Label>
+                <Label Grid.Column="7" BackgroundColor="Beige" Margin="0,0,0,5"></Label>
+            </Grid>
+            
+            <Grid Grid.Row="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="AliceBlue"></Label>
+
+                        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Row="0" Grid.Column="0" Text="Mese" x:Name="btnMese" Clicked="btnMese_Clicked"/>
+                        </Grid>
+
+
+
+                    <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="2" Grid.Column="0" x:Name="StationName"/>
+                    <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="2" Grid.Column="1" x:Name="EmployeeName"/>
+
+                </Grid>
             </Grid>
         </Grid>
     </ContentPage.Content>

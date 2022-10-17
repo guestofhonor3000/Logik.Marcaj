@@ -33,7 +33,7 @@ namespace Marcaj
             InitializeComponent();
 
             manager = new ServiceManager(new RService());
-            MainPage = new NavigationPage(new  StartPage());
+            MainPage = new NavigationPage(new StartPage());
             MessagingCenter.Subscribe<StartPage>(this, "NoCon", (sender) => {
                 var startTimeSpan = TimeSpan.Zero;
                 var periodTimeSpan = TimeSpan.FromSeconds(2);
