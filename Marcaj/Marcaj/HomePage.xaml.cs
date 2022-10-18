@@ -10,6 +10,7 @@ using Marcaj.Pages.Tables;
 using Marcaj.Models.LocalDbModels;
 using Xamarin.Essentials;
 using System.Diagnostics;
+using Marcaj.Pages.Settings;
 
 namespace Marcaj
 {
@@ -223,6 +224,11 @@ namespace Marcaj
         private async void btnMese_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new AllTables(EmplFl));
+        }
+
+        private async void btnSettings_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SettingsHomePage());
         }
     }
 }

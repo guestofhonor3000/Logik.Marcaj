@@ -72,7 +72,7 @@
 
                     <ImageButton Source="HomeNoSaleButton.png" Grid.Row="1" Grid.Column="0" />
                     <ImageButton Source="HomePayBackButton.png" Grid.Row="1" Grid.Column="1" />
-                    <ImageButton Source="HomeSettingsButton.png" Grid.Row="1" Grid.Column="2" />
+                    <ImageButton Source="HomeSettingsButton.png" Clicked="btnSettings_Clicked" x:Name="btnSettings" Grid.Row="1" Grid.Column="2" />
                     <ImageButton Source="HomePlaceholderButton.png" Grid.Row="1" Grid.Column="3" />
                     <ImageButton Source="HomePlaceholderButton.png" Grid.Row="1" Grid.Column="4" />
                 </Grid>
