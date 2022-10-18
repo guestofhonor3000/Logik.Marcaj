@@ -336,5 +336,10 @@ namespace Marcaj.Pages.Tables
                 PopList(GroupId);
             }
         }
+
+        private async void btnMese_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new AllTables(EmplFl));
+        }
     }
 }

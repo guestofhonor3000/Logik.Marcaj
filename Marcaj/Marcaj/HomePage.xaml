@@ -3,17 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Marcaj.HomePage">
     <ContentPage.Content>
-        <Grid>
+        <Grid RowSpacing="0" ColumnSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="4*"/>
                 <RowDefinition Height="40*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" BackgroundColor="#171a1d" Margin="0" ColumnSpacing="20">
+            <Grid Grid.Row="0" BackgroundColor="#171a1d" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" ColumnSpacing="5" Margin="0" Padding="0,0,0,10">
                
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width=".2*"/>
+                    <ColumnDefinition Width=".5*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -23,8 +23,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width=".2*"/>
+                    <ColumnDefinition Width=".5*"/>
                 </Grid.ColumnDefinitions>
                 
                 <ImageButton Source="HomeTabButton.png" Grid.Column="1"  />
@@ -36,20 +35,19 @@
                 <ImageButton Source="HomeTabButton.png" Grid.Column="7"  />
                 <ImageButton Source="HomeTabButton.png" Grid.Column="8"  />
                 <ImageButton Source="HomeTabButton.png" Grid.Column="9"  />
-                <ImageButton Source="HomeTabButton.png" Grid.Column="10"  />
+
             </Grid>
 
-            <Grid Grid.Row="1" Margin="0" Padding="0">
+            <Grid Grid.Row="1" BackgroundColor="#66717d" Margin="0" Padding="0">
                
                 <Grid.RowDefinitions>
-                        <RowDefinition Height="18*"/>
-                        <RowDefinition Height="16*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                    
-                    <Image Source="PlaceholderImg.jpg" Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Fill"></Image>
+                <Image Source="RestImg.jpg" Grid.Row="0" Grid.ColumnSpan="2" Aspect="Fill" Margin="20,10,20,10"></Image>
 
-                <Grid Grid.Row="1" Grid.ColumnSpan="2" BackgroundColor="#66717d" Margin="0" ColumnSpacing="20" RowSpacing="40"  Padding="40">
+                <Grid Grid.Row="1" Grid.ColumnSpan="2" BackgroundColor="#66717d"  HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" ColumnSpacing="20" RowSpacing="40"  Padding="20,20,20,40">
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -78,7 +76,7 @@
                 </Grid>
             </Grid>
             
-            <Grid Grid.Row="2"  BackgroundColor="#171a1d" Margin="0">
+            <Grid Grid.Row="2"  BackgroundColor="#171a1d">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>

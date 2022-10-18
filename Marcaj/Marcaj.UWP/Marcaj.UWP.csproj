@@ -141,8 +141,8 @@
     <Content Include="HomeSettingsButton.png" />
     <Content Include="HomeTabButton.png" />
     <Content Include="HomeVoidButton.png" />
-    <Content Include="PlaceholderImg.jpg" />
     <Content Include="Properties\Default.rd.xml" />
+    <Content Include="RestImg.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

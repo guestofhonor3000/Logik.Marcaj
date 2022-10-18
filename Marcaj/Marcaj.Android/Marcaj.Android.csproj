@@ -129,7 +129,7 @@
     <AndroidResource Include="Resources\drawable\HomeSettingsButton.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\PlaceholderImg.jpg" />
+    <AndroidResource Include="Resources\drawable\RestImg.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
