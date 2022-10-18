@@ -137,13 +137,22 @@ namespace Marcaj.Services
         {
             HttpClient client = new HttpClient();
             dineInFull = new List<DineInTableAndEmpModel>();
-            Uri uri = new Uri(string.Format(Constants.GetUriDineInTablesByTableGroupID + groupID, string.Empty));
+            Uri uri = new Uri(string.Format(Constants.GetUriDineInTablesByTableGroupID + groupID + "&type=active", string.Empty));
             HttpResponseMessage response = await client.GetAsync(uri);
             var content = await response.Content.ReadAsStringAsync();
             dineInFull = JsonConvert.DeserializeObject<List<DineInTableAndEmpModel>>(content);
             return dineInFull;
         }
-
+        public async Task<List<DineInTableAndEmpModel>> GetDineInTablesAllByTableGroup(int groupID)
+        {
+            HttpClient client = new HttpClient();
+            dineInFull = new List<DineInTableAndEmpModel>();
+            Uri uri = new Uri(string.Format(Constants.GetUriDineInTablesByTableGroupID + groupID+"&type=all", string.Empty));
+            HttpResponseMessage response = await client.GetAsync(uri);
+            var content = await response.Content.ReadAsStringAsync();
+            dineInFull = JsonConvert.DeserializeObject<List<DineInTableAndEmpModel>>(content);
+            return dineInFull;
+        }
         //Post Table
         public async Task PostDineInTable(DineInTableModel user)
         {

@@ -34,5 +34,6 @@ namespace Marcaj.Services
         Task PostOrderTransactionSync(List<OrderTransactionsModel> user);
         Task<StationSettingsModel> GetStationSettings(string name);
         Task PostStationSettings(StationSettingsModel model);
+        Task<List<DineInTableAndEmpModel>> GetDineInTablesAllByTableGroup(int groupID);
     }
 }
