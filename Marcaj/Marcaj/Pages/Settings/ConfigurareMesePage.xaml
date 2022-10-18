@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Marcaj.Pages.Tables.AllTables"
+             x:Class="Marcaj.Pages.Settings.ConfigurareMesePage"
              BackgroundColor="White">
     <ContentPage.Content>
         <Grid>
@@ -9,7 +9,7 @@
                 <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
+
             <ListView Grid.Column="0" x:Name="lstvwMese" ItemSelected="lstvwMese_ItemSelected">
                 <ListView.Header>
                     <Grid>
@@ -20,7 +20,6 @@
                         </Grid.ColumnDefinitions>
                         <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" Grid.Column="0" TextColor="Black" Text="DineInTableText"/>
                         <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" Grid.Column="1"  TextColor="Black" Text="DineInTableInActive"/>
-                        <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" Grid.Column="2"  TextColor="Black" Text="EmpName"/>
                     </Grid>
                 </ListView.Header>
                 <ListView.ItemTemplate>
@@ -34,7 +33,6 @@
                                 </Grid.ColumnDefinitions>
                                 <Label VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0" TextColor="Black" Text="{Binding DineIn.DineInTableText}"/>
                                 <Label VerticalOptions="Center" HorizontalOptions="Center"   Grid.Column="1"  TextColor="Black" Text="{Binding DineIn.DineInTableInActive}"/>
-                                <Label VerticalOptions="Center" HorizontalOptions="Center"   Grid.Column="2"  TextColor="Black" Text="{Binding EmpName}"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
@@ -55,7 +53,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            
+
         </Grid>
     </ContentPage.Content>
 </ContentPage>
