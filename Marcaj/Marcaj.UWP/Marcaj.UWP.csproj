@@ -131,6 +131,17 @@
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="HomeBarButton.png" />
+    <Content Include="HomeMeseButton.png" />
+    <Content Include="HomeNoSaleButton.png" />
+    <Content Include="HomePayBackButton.png" />
+    <Content Include="HomePayButton.png" />
+    <Content Include="HomePlaceholderButton.png" />
+    <Content Include="HomeRecallButton.png" />
+    <Content Include="HomeSettingsButton.png" />
+    <Content Include="HomeTabButton.png" />
+    <Content Include="HomeVoidButton.png" />
+    <Content Include="PlaceholderImg.jpg" />
     <Content Include="Properties\Default.rd.xml" />
   </ItemGroup>
   <ItemGroup>

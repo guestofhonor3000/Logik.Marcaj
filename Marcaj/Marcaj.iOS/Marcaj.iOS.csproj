@@ -142,4 +142,37 @@
       <Name>Marcaj</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\HomeMeseButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\HomeTabButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\HomeBarButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\HomePayButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\HomeVoidButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\HomeNoSaleButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\HomePayBackButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\HomePlaceholderButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\HomeRecallButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\HomeSettingsButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\PlaceholderImg.jpg" />
+  </ItemGroup>
 </Project>
