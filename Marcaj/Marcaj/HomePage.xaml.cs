@@ -11,6 +11,7 @@ using Marcaj.Models.LocalDbModels;
 using Xamarin.Essentials;
 using System.Diagnostics;
 using Marcaj.Pages.Settings;
+using Marcaj.Pages;
 
 namespace Marcaj
 {
@@ -226,9 +227,18 @@ namespace Marcaj
             await Navigation.PushAsync(new AllTables(EmplFl));
         }
 
+        private async void btnAchita_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new AchitaPage(EmplFl));
+        }
+
         private async void btnSettings_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new SettingsHomePage());
+        }
+        private async void btnGrid_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new Page1());
         }
     }
 }

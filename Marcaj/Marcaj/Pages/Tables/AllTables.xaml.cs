@@ -324,9 +324,9 @@ namespace Marcaj.Pages.Tables
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
                 var selIt = e.SelectedItem as DineInTableGroupModel;
-                GroupId = selIt.TableGroupID;
-                IsFirstLoad = false;
-                PopList(GroupId);
+                    GroupId = selIt.TableGroupID;
+                    IsFirstLoad = false;
+                    PopList(GroupId);
             }
             else
             {
@@ -337,9 +337,15 @@ namespace Marcaj.Pages.Tables
             }
         }
 
-        private async void btnMese_Clicked(object sender, EventArgs e)
+
+    private async void btnMese_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new AllTables(EmplFl));
+        }
+
+        private async void btnAchita_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new AchitaPage(EmplFl));
         }
     }
 }

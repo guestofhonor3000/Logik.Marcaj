@@ -131,6 +131,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="CheckBackButton.png" />
     <Content Include="HomeBarButton.png" />
     <Content Include="HomeMeseButton.png" />
     <Content Include="HomeNoSaleButton.png" />
@@ -141,8 +142,26 @@
     <Content Include="HomeSettingsButton.png" />
     <Content Include="HomeTabButton.png" />
     <Content Include="HomeVoidButton.png" />
+    <Content Include="MainBackButtton.png" />
+    <Content Include="MainBarButton.png" />
+    <Content Include="MainMeseButton.png" />
+    <Content Include="MainMoreButtton.png" />
+    <Content Include="MainNoSaleButton.png" />
+    <Content Include="MainPayBackButton.png" />
+    <Content Include="MainPayButton.png" />
+    <Content Include="MainPlaceholderButton.png" />
+    <Content Include="MainRecallButton.png" />
+    <Content Include="MainVoidButton.png" />
+    <Content Include="PayCardButton.png" />
+    <Content Include="PayCashButton.png" />
+    <Content Include="PayDoneButton.png" />
+    <Content Include="PayGratuityButton.png" />
+    <Content Include="PayHouseAccountButton.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="RestImg.jpg" />
+    <Content Include="SecondaryBlankButton.png" />
+    <Content Include="Table6Active.png" />
+    <Content Include="Table6Open.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

@@ -9,7 +9,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="8*"/>
             </Grid.ColumnDefinitions>
-
+            
             <ScrollView VerticalScrollBarVisibility="Never">
                 <Grid Grid.Column="0" BackgroundColor="#171a1d" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" RowSpacing="10" Margin="0" Padding="10">
                 <Grid.RowDefinitions>
@@ -22,32 +22,28 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <ImageButton Source="HomeMeseButton.png" Grid.Row="0"   x:Name="btnMese" Clicked="btnMese_Clicked"/>
-                <ImageButton Source="HomeBarButton.png" Grid.Row="1" />
-                <ImageButton Source="HomePayButton.png" Grid.Row="2" />
-                <ImageButton Source="HomeVoidButton.png" Grid.Row="3" />
-                <ImageButton Source="HomeRecallButton.png" Grid.Row="4" />
-                <ImageButton Source="HomeNoSaleButton.png" Grid.Row="5"  />
-                <ImageButton Source="HomePayBackButton.png" Grid.Row="6"  />
-                <ImageButton Source="HomeSettingsButton.png" Grid.Row="7"  />
-                <ImageButton Source="HomePlaceholderButton.png" Grid.Row="8"  />
-                <ImageButton Source="HomePlaceholderButton.png" Grid.Row="9"  />
+                <ImageButton Source="MainMeseButton.png" Grid.Row="0"   x:Name="btnMese" Clicked="btnMese_Clicked"/>
+                <ImageButton Source="MainBarButton.png" Grid.Row="1" />
+                <ImageButton Source="MainPayButton.png" Grid.Row="2"  x:Name="btnAchita" Clicked="btnAchita_Clicked"/>
+                <ImageButton Source="MainVoidButton.png" Grid.Row="3" />
+                <ImageButton Source="MainRecallButton.png" Grid.Row="4" />
+                <ImageButton Source="MainNoSaleButton.png" Grid.Row="5" />
+                <ImageButton Source="MainPayBackButton.png" Grid.Row="6"/>
+                <ImageButton Source="MainPlaceholderButton.png" Grid.Row="7" />
+                <ImageButton Source="MainPlaceholderButton.png" Grid.Row="8" />
+                <ImageButton Source="MainPlaceholderButton.png" Grid.Row="9" />
             </Grid>
             </ScrollView>
            
-            <Grid Grid.Column="1" BackgroundColor="#394046" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" ColumnSpacing="5" Margin="0" Padding="0">
-                
-                <ListView x:Name="lstvwGrupMese" ItemSelected="lstvwGrupMese_ItemSelected">
+            <Grid Grid.Column="1" BackgroundColor="#394046" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" RowSpacing="10" Margin="0" Padding="0">
 
-                    <ListView.Header>
-                        <Label VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black" FontAttributes="Bold" Text="Table Groups"/>
-                    </ListView.Header>
+                <ListView x:Name="lstvwGrupMese" ItemSelected="lstvwGrupMese_ItemSelected">
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <StackLayout>
-                                    <Label VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black" Text="{Binding TableGroupText}"/>
+                                    <Button VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold"  TextColor="White" BackgroundColor="#8f99a3" Padding="10,20,10,20" Text="{Binding TableGroupText}"/>
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>
@@ -58,9 +54,33 @@
             </Grid>
 
             <Grid Grid.Column="2" BackgroundColor="#66717d" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" ColumnSpacing="5" Margin="0" Padding="0">
-                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                   
                 <ListView  x:Name="lstvwMese" ItemSelected="lstvwMese_ItemSelected">
-                    <ListView.Header>
+                   
+                    <!--ListView.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -71,25 +91,28 @@
                             <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" Grid.Column="1"  TextColor="Black" Text="DineInTableInActive"/>
                             <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" Grid.Column="2"  TextColor="Black" Text="EmpName"/>
                         </Grid>
-                    </ListView.Header>
+                    </ListView.Header-->
+                    
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0" TextColor="Black" Text="{Binding DineIn.DineInTableText}"/>
-                                    <Label VerticalOptions="Center" HorizontalOptions="Center"   Grid.Column="1"  TextColor="Black" Text="{Binding DineIn.DineInTableInActive}"/>
-                                    <Label VerticalOptions="Center" HorizontalOptions="Center"   Grid.Column="2"  TextColor="Black" Text="{Binding EmpName}"/>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height=".2*"/>
+                                        <RowDefinition Height=".2*"/>
+                                        <RowDefinition Height=".2*"/>
+                                        <RowDefinition Height=".4*"/>
+                                    </Grid.RowDefinitions>
+                                    <Label VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0" TextColor="Black" Text="{Binding DineIn.DineInTableText}"/>
+                                    <Label VerticalOptions="Center" HorizontalOptions="Center"   Grid.Row="1"  TextColor="Black" Text="{Binding DineIn.DineInTableInActive}"/>
+                                    <Label VerticalOptions="Center" HorizontalOptions="Center"   Grid.Row="2"  TextColor="Black" Text="{Binding EmpName}"/>
+                                    <ImageButton Grid.Row="3"  Source="Table6Open.png"/>
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                
+               
             </Grid>
         
         </Grid>

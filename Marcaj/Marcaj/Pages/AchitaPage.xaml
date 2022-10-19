@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Marcaj.Pages.AchitaPage">
+    
+    <ContentPage.Content>
+        <Grid  RowSpacing="0" ColumnSpacing="0"  BackgroundColor="#66717d">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <ScrollView Grid.Column="0"  VerticalScrollBarVisibility="Never">
+                <Grid BackgroundColor="#171a1d" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" RowSpacing="10" Margin="0" Padding="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                        <ImageButton Source="MainMeseButton.png" Grid.Row="0"   x:Name="btnMese" Clicked="btnMese_Clicked"/>
+                        <ImageButton Source="MainBarButton.png" Grid.Row="1" />
+                        <ImageButton Source="MainPayButton.png" Grid.Row="2" x:Name="btnAchita" Clicked="btnAchita_Clicked"/>
+                        <ImageButton Source="MainVoidButton.png" Grid.Row="3" />
+                        <ImageButton Source="MainRecallButton.png" Grid.Row="4" />
+                        <ImageButton Source="MainNoSaleButton.png" Grid.Row="5" />
+                        <ImageButton Source="MainPayBackButton.png" Grid.Row="6" />
+                        <ImageButton Source="MainPlaceholderButton.png" Grid.Row="7" />
+                        <ImageButton Source="MainPlaceholderButton.png" Grid.Row="8" />
+                        <ImageButton Source="MainPlaceholderButton.png" Grid.Row="9" />
+                </Grid>
+            </ScrollView>
+
+
+            <ScrollView Grid.Column="1"  VerticalScrollBarVisibility="Never">
+                
+                <Grid BackgroundColor="#394046" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" RowSpacing="10" Margin="0" Padding="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <ImageButton Grid.Row="0" Source="SecondaryBlankButton.png" x:Name="btnToate" Clicked="btnToate_Clicked"/>
+                        <Label Grid.Row="0" Text="Toate" FontAttributes="Bold" FontSize="22" FontFamily="Verdana" VerticalOptions="Center" HorizontalOptions="Center"/>
+                    </Grid>
+                    
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <ImageButton Grid.Row="0" Source="SecondaryBlankButton.png" x:Name="btnDineIn" Clicked="btnToate_Clicked"/>
+                        <Label Grid.Row="0" Text="DineIn" FontAttributes="Bold" FontSize="22" FontFamily="Verdana" VerticalOptions="Center" HorizontalOptions="Center"/>
+                    </Grid>
+
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <ImageButton Grid.Row="0" Source="SecondaryBlankButton.png" x:Name="btnBar" Clicked="btnToate_Clicked"/>
+                        <Label Grid.Row="0" Text="Bar" FontAttributes="Bold" FontSize="22" FontFamily="Verdana" VerticalOptions="Center" HorizontalOptions="Center"/>
+                    </Grid>
+
+                    <Grid Grid.Row="3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <ImageButton Grid.Row="0" Source="SecondaryBlankButton.png" x:Name="btnEmp" Clicked="btnToate_Clicked"/>
+                        <Label Grid.Row="0" Text="Server" FontAttributes="Bold" FontSize="22" FontFamily="Verdana" VerticalOptions="Center" HorizontalOptions="Center"/>
+                    </Grid>
+
+                </Grid>
+            </ScrollView>
+
+
+            <CollectionView Grid.Column="2" SelectionMode="None" x:Name="tabList" Margin="10,0,10,0" BackgroundColor="#66717d">
+
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="3" VerticalItemSpacing="10" HorizontalItemSpacing="10"/>
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <ImageButton Grid.Row="0" Source="CheckBackButton.png" />
+                            <Label Grid.Row="0" Text="{Binding OrderID, StringFormat='#{0:F0}'}" FontAttributes="Bold" FontSize="22" FontFamily="Verdana" VerticalOptions="Start" HorizontalOptions="Center" TextColor="Black" Padding="0,10,0,0"/>
+                        </Grid>
+                    </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            <Grid Grid.Column="3" BackgroundColor="#171a1d" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" RowSpacing="10" ColumnSpacing="10" Margin="0" Padding="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Row="0" Grid.ColumnSpan="2">
+                    
+                </Grid>
+
+                <ImageButton Grid.Row="1" Grid.Column="0" Source="PayGratuityButton.png"/>
+                <ImageButton Grid.Row="1" Grid.Column="1" Source="PayHouseAccountButton.png"/>
+
+                <ImageButton Grid.Row="2" Grid.Column="0" Source="PayCashButton.png"/>
+                <ImageButton Grid.Row="2" Grid.Column="1" Source="PayCardButton.png"/>
+
+                <Grid Grid.Row="3" Grid.ColumnSpan="2">
+                    
+                </Grid>
+
+                <ImageButton Grid.Row="4" Grid.ColumnSpan="2" Source="PayDoneButton.png"/>
+                
+            </Grid>
+        
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

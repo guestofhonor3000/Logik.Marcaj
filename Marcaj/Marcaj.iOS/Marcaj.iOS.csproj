@@ -175,4 +175,61 @@
   <ItemGroup>
     <BundleResource Include="Resources\RestImg.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\MainVoidButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\MainBarButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\MainMeseButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\MainNoSaleButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\MainPayBackButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\MainPayButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\MainPlaceholderButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\MainRecallButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Table6Open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Table6Active.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\MainMoreButtton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\MainBackButtton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\SecondaryBlankButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\CheckBackButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\PayHouseAccountButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\PayGratuityButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\PayCashButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\PayCardButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\PayDoneButton.png" />
+  </ItemGroup>
 </Project>

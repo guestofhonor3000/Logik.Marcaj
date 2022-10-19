@@ -1,14 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Marcaj.Pages.Tables.ActiveTable"
-             BackgroundColor="White">
+             x:Class="Marcaj.Pages.Tables.ActiveTable">
     <ContentPage.Content>
-        <Grid>
+        
+        <Grid RowSpacing="0" ColumnSpacing="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="9*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="12*"/>
+                <ColumnDefinition Width="6*"/>
             </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" BackgroundColor="#171a1d" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" ColumnSpacing="5" Margin="0" Padding="0,0,0,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Text="{Binding DineIn.DineInTableText}"/>
+                <ImageButton Grid.Row="1" Source="MainMoreButtton.png"/>
+                <ImageButton Grid.Row="2" Source="MainBackButtton.png" Clicked="btnBack_Clicked"/>
+
+
+            </Grid>
+            
             <Grid x:Name="gridLists" Grid.Column="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

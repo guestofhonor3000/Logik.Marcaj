@@ -473,6 +473,11 @@ namespace Marcaj.Pages.Tables
 			PopListNext(NumberOfClicksNext);
         }
 
+        private async void btnBack_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new AllTables(EmpFile));
+        }
+
         private async void ListView_Focused(object sender, FocusEventArgs e)
         {
 			var lstvw = sender as ListView;
