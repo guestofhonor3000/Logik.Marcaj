@@ -24,6 +24,7 @@ namespace Marcaj.Models.DbModels
         }
 
         public int OrderID { get; set; }
+        public Nullable<bool> BarOrder { get; set; }
         public System.DateTime OrderDateTime { get; set; }
         public int EmployeeID { get; set; }
         public int StationID { get; set; }

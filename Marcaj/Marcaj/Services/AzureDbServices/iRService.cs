@@ -24,6 +24,8 @@ namespace Marcaj.Services
         Task PostOrderTransactionActive(List<OrderTransactionsModel> user, int tableId);
         Task<List<EmployeeFileModel>> GetAllEmployeeFiles();
         Task<int> GetLastIdEmployeeFiles();
+        Task<List<OrderHeadersModel>> GetActiveOrderHeadersBar();
+        Task<List<OrderHeadersModel>> GetActiveOrderHeadersRestaurant();
         Task PostEmployeeFiles(List<EmployeeFileModel> user);
         Task PutEmployeeFile(EmployeeFileModel item, int id);
         Task PostDineInTable(DineInTableModel user);
@@ -35,5 +37,7 @@ namespace Marcaj.Services
         Task<StationSettingsModel> GetStationSettings(string name);
         Task PostStationSettings(StationSettingsModel model);
         Task<List<DineInTableAndEmpModel>> GetDineInTablesAllByTableGroup(int groupID);
+        Task<List<OrderHeadersModel>> GetActiveOrderHeaders();
+        Task<List<OrderHeadersModel>> GetActiveOrderHeadersByEmpId(int empId);
     }
 }

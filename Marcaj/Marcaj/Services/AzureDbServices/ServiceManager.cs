@@ -61,6 +61,22 @@ namespace Marcaj.Services
             return Service.GetDineInTablesByTableGroup(groupID);
         }
 
+        public Task<List<OrderHeadersModel>> iGetActiveOrderHeadersByEmpId(int empId)
+        {
+            return Service.GetActiveOrderHeadersByEmpId(empId);
+        }
+        public Task<List<OrderHeadersModel>> iGetActiveOrderHeadersBar()
+        {
+            return Service.GetActiveOrderHeadersBar();
+        }
+        public Task<List<OrderHeadersModel>> iGetActiveOrderHeadersRestaurant()
+        {
+            return Service.GetActiveOrderHeadersRestaurant();
+        }
+        public Task<List<OrderHeadersModel>> iGetActiveOrderHeaders()
+        {
+            return Service.GetActiveOrderHeaders();
+        }
         public Task<List<DineInTableAndEmpModel>> iGetDineInTablesAllByTableGroup(int groupID)
         {
             return Service.GetDineInTablesAllByTableGroup(groupID);

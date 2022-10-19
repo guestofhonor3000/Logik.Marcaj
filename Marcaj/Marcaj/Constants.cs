@@ -38,6 +38,11 @@ namespace Marcaj
 
         //OrderHeaders
         public static string GetUriOrderHeadersSync = "https://elogik.azurewebsites.net/api/OrderHeaders?sync=Now";
+        public static string GetUriActiveOrderHeaders = "https://elogik.azurewebsites.net/api/OrderHeaders?sync=No";
+        public static string GetUriActiveOrderHeadersBar = "https://elogik.azurewebsites.net/api/OrderHeaders?sync=Bar";
+        public static string GetUriActiveOrderHeadersByEmp = "https://elogik.azurewebsites.net/api/OrderHeaders?sync=EmpLogged&empId=";
+        public static string GetUriActiveOrderHeadersRestaurant = "https://elogik.azurewebsites.net/api/OrderHeaders?sync=Restaurant";
+
         public static string GetUriOrderHeaders = "https://elogik.azurewebsites.net/api/OrderHeaders";
         public static string GetUriOrderHeadersByTableID = "https://elogik.azurewebsites.net/api/OrderHeaders?type=DineInTable&getID=";
         public static string GetUriOrderHeadersByID = "https://elogik.azurewebsites.net/api/OrderHeaders?type=OrderHeader&getID=";

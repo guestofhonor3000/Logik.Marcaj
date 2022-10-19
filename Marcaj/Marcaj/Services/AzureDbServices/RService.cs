@@ -397,6 +397,57 @@ namespace Marcaj.Services
             orderHeaders = JsonConvert.DeserializeObject<List<OrderHeadersModel>>(content);
             return orderHeaders;
         }
+        //Get Active OrderHeaders
+
+        public async Task<List<OrderHeadersModel>> GetActiveOrderHeaders()
+        {
+            HttpClient clien = new HttpClient();
+            orderHeaders = new List<OrderHeadersModel>();
+            Uri uri = new Uri(string.Format(Constants.GetUriActiveOrderHeaders, string.Empty));
+            HttpResponseMessage response = await client.GetAsync(uri);
+            var content = await response.Content.ReadAsStringAsync();
+            orderHeaders = JsonConvert.DeserializeObject<List<OrderHeadersModel>>(content);
+            return orderHeaders;
+
+        }
+        //Get Active OrderHeaders Bar
+
+        public async Task<List<OrderHeadersModel>> GetActiveOrderHeadersBar()
+        {
+            HttpClient clien = new HttpClient();
+            orderHeaders = new List<OrderHeadersModel>();
+            Uri uri = new Uri(string.Format(Constants.GetUriActiveOrderHeadersBar, string.Empty));
+            HttpResponseMessage response = await client.GetAsync(uri);
+            var content = await response.Content.ReadAsStringAsync();
+            orderHeaders = JsonConvert.DeserializeObject<List<OrderHeadersModel>>(content);
+            return orderHeaders;
+
+        }
+        //Get Active OrderHeaders Restaurant
+
+        public async Task<List<OrderHeadersModel>> GetActiveOrderHeadersRestaurant()
+        {
+            HttpClient clien = new HttpClient();
+            orderHeaders = new List<OrderHeadersModel>();
+            Uri uri = new Uri(string.Format(Constants.GetUriActiveOrderHeadersBar, string.Empty));
+            HttpResponseMessage response = await client.GetAsync(uri);
+            var content = await response.Content.ReadAsStringAsync();
+            orderHeaders = JsonConvert.DeserializeObject<List<OrderHeadersModel>>(content);
+            return orderHeaders;
+
+        }
+        //Get Active OrderHeaders by Emp Id
+        public async Task<List<OrderHeadersModel>> GetActiveOrderHeadersByEmpId(int empId)
+        {
+            HttpClient clien = new HttpClient();
+            orderHeaders = new List<OrderHeadersModel>();
+            Uri uri = new Uri(string.Format(Constants.GetUriActiveOrderHeadersByEmp+empId, string.Empty));
+            HttpResponseMessage response = await client.GetAsync(uri);
+            var content = await response.Content.ReadAsStringAsync();
+            orderHeaders = JsonConvert.DeserializeObject<List<OrderHeadersModel>>(content);
+            return orderHeaders;
+
+        }
         //Get OrderHeaders
         public async Task<List<OrderHeadersModel>> GetOrderHeaders()
         {

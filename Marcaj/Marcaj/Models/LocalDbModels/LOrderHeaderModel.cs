@@ -23,6 +23,7 @@ namespace Marcaj.Models.LocalDbModels
         public bool GuestCheckPrinted { get; set; }
         public float SalesTaxRate { get; set; }
         public float SubTotal { get; set; }
+        public Nullable<bool> BarOrder { get; set; }
         public string RowGUID { get; set; }
 
     }
