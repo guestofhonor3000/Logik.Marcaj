@@ -383,7 +383,7 @@ namespace Marcaj.Services
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(@"ERROR {0}", ex.Message);
+                Debug.WriteLine(@"ERROR {0}",  ex.InnerException);
             }
         }
         //Get OrderHeaders Sync(By Date)

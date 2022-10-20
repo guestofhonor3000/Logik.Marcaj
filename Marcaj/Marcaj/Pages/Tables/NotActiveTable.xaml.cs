@@ -197,11 +197,12 @@ namespace Marcaj.Pages.Tables
             {
                 if(orderTraList.Count>0)
                 {
+                  
                     var ordHd = new OrderHeadersModel();
-
+                    var stat = await App.manager.iGetStationSettings(DeviceInfo.Name);
                     ordHd.OrderDateTime = DateTime.Now;
                     ordHd.EmployeeID = EmpFile.EmployeeID;
-                    ordHd.StationID = StationModel.StationID;
+                    ordHd.StationID = stat.StationID;
                     ordHd.OrderType = "1";
                     ordHd.DineInTableID = DineIn.DineInTableID;
                     ordHd.OrderStatus = "1";
@@ -216,6 +217,12 @@ namespace Marcaj.Pages.Tables
                     ordHd.SalesTaxRate = 0;
                     ordHd.SubTotal = ordHd.AmountDue;
                     ordHd.RowGUID = Guid.NewGuid().ToString();
+
+                    Debug.WriteLine(ordHd.OrderDateTime);
+                    Debug.WriteLine(ordHd.EmployeeID);
+                    Debug.WriteLine(ordHd.StationID);
+                    Debug.WriteLine(ordHd.DineInTableID);
+                    Debug.WriteLine(ordHd.RowGUID);
                     await App.manager.iPostOrderHeader(ordHd);
 
                     var ordTraListToPost = new List<OrderTransactionsModel>();
@@ -237,7 +244,7 @@ namespace Marcaj.Pages.Tables
                     }
 
                     await App.manager.iPostOrderTransactionNotActive(ordTraListToPost, DineIn.DineInTableID);
-                    DineIn.DineInTableInActive = true;
+                    //DineIn.DineInTableInActive = true;
                     //await App.manager.iPutDineInTable(DineIn, DineIn.DineInTableID);
 
                     MessagingCenter.Send<NotActiveTable>(this, "Up");
@@ -295,7 +302,7 @@ namespace Marcaj.Pages.Tables
                     dineIn.DineInTableText = DineIn.DineInTableText;
                     dineIn.DineInTableID = DineIn.DineInTableID;
                     dineIn.TableGroupID = DineIn.TableGroupID;
-                    dineIn.DineInTableInActive = DineIn.DineInTableInActive;
+                    //dineIn.DineInTableInActive = DineIn.DineInTableInActive;
                     //await App.lDatabase.lPutDineInTable(dineIn);
 
                     MessagingCenter.Send<NotActiveTable>(this, "Up");
