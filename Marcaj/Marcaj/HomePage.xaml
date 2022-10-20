@@ -64,14 +64,14 @@
 
                     <ImageButton Source="HomeMeseButton.png" Grid.Row="0" Grid.Column="0"  x:Name="btnMese" Clicked="btnMese_Clicked"/>
                     <ImageButton Source="HomeBarButton.png" Grid.Row="0" Grid.Column="1"/>
-                    <ImageButton Source="HomePayButton.png" Grid.Row="0" Grid.Column="2" />
+                    <ImageButton Source="HomePayButton.png" Grid.Row="0" Grid.Column="2" x:Name="btAchita" Clicked="btnAchita_Clicked"/>
                     <ImageButton Source="HomeVoidButton.png" Grid.Row="0" Grid.Column="3" />
                     <ImageButton Source="HomeRecallButton.png" Grid.Row="0" Grid.Column="4" />
 
                     <ImageButton Source="HomeNoSaleButton.png" Grid.Row="1" Grid.Column="0" />
                     <ImageButton Source="HomePayBackButton.png" Grid.Row="1" Grid.Column="1" />
                     <ImageButton Source="HomeSettingsButton.png" Clicked="btnSettings_Clicked" x:Name="btnSettings" Grid.Row="1" Grid.Column="2" />
-                    <ImageButton Source="HomePlaceholderButton.png" Grid.Row="1" Grid.Column="3" />
+                    <ImageButton Source="HomePlaceholderButton.png" Grid.Row="1" Grid.Column="3" Clicked="btnGrid_Clicked"/>
                     <ImageButton Source="HomePlaceholderButton.png" Grid.Row="1" Grid.Column="4" />
                 </Grid>
             </Grid>
