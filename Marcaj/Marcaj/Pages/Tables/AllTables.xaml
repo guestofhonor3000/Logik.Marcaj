@@ -68,7 +68,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" Grid.Column="0" TextColor="Black" Text="DineInTableText"/>
-                            <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" Grid.Column="1"  TextColor="Black" Text="DineInTableInActive"/>
+                            <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" Grid.Column="1"  TextColor="Black" Text="Opened"/>
                             <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" Grid.Column="2"  TextColor="Black" Text="EmpName"/>
                         </Grid>
                     </ListView.Header>
@@ -82,7 +82,7 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Label VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0" TextColor="Black" Text="{Binding DineIn.DineInTableText}"/>
-                                    <Label VerticalOptions="Center" HorizontalOptions="Center"   Grid.Column="1"  TextColor="Black" Text="{Binding DineIn.DineInTableInActive}"/>
+                                    <Label VerticalOptions="Center" HorizontalOptions="Center"   Grid.Column="1"  TextColor="Black" Text="{Binding Opened}"/>
                                     <Label VerticalOptions="Center" HorizontalOptions="Center"   Grid.Column="2"  TextColor="Black" Text="{Binding EmpName}"/>
                                 </Grid>
                             </ViewCell>

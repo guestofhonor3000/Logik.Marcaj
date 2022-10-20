@@ -9,5 +9,6 @@ namespace Marcaj.Models.CustomModels
     {
         public DineInTableModel DineIn { get; set; }
         public string EmpName { get; set; }
+        public bool Opened { get; set; }
     }
 }
