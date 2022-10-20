@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Marcaj.Pages.Settings.Mese;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace Marcaj.Pages.Settings
         }
         private async void btnMeseConf_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new ConfigurareMesePage());
+            await Navigation.PushAsync(new MeseSetariMainPage());
         }
     }
 }

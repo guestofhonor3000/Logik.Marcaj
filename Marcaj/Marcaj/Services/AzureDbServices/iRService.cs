@@ -21,6 +21,8 @@ namespace Marcaj.Services
         Task PostOrderHeader(OrderHeadersModel user);
         Task<List<OrderHeadersModel>> GetOrderHeadersByDineInTableID(int id);
         Task<OrderHeadersModel> GetOrderHeaderByID(int id);
+        Task DeleteTableGroup(int id);
+        Task PutTableGroups(DineInTableGroupModel item, int id);
         Task PostOrderTransactionActive(List<OrderTransactionsModel> user, int tableId);
         Task<List<EmployeeFileModel>> GetAllEmployeeFiles();
         Task<int> GetLastIdEmployeeFiles();

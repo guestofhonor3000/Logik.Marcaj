@@ -196,6 +196,8 @@ namespace Marcaj.Services
         #endregion
 
         #region DineInTableGroups
+
+        //Get TableGroups
         public async Task<List<DineInTableGroupModel>> GetDineInTableGroups()
         {
             HttpClient client = new HttpClient();
@@ -205,6 +207,46 @@ namespace Marcaj.Services
             var content = await response.Content.ReadAsStringAsync();
             dineInGroups = JsonConvert.DeserializeObject<List<DineInTableGroupModel>>(content);
             return dineInGroups;
+        }
+
+        //Put TableGroups
+        public async Task PutTableGroups(DineInTableGroupModel item, int id)
+        {
+            Uri uri = new Uri(string.Format(Constants.PutUriDineInTableGroups + id, string.Empty));
+            try
+            {
+                string json = System.Text.Json.JsonSerializer.Serialize<DineInTableGroupModel>(item, serializerOptions);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = null;
+                response = await client.PutAsync(uri, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine(@"Menu Groups updated");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"ERROR {0}", ex.Message);
+            }
+        }
+        //Delete TableGroups
+        public async Task DeleteTableGroup(int id)
+        {
+            HttpClient client = new HttpClient();
+            Uri uri = new Uri(string.Format(Constants.DeleteUriDineInTableGroup + id, string.Empty)); ;
+            try
+            {
+                HttpResponseMessage response = null;
+                response = await client.DeleteAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine(@"\Menu Group deleted.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"\tERROR {0}", ex.Message);
+            }
         }
         #endregion
 
@@ -232,6 +274,8 @@ namespace Marcaj.Services
         #endregion
 
         #region MenuItemsGroups
+
+        //Get Menu Groups
         public async Task<List<MenuGroupsModel>> GetMenuGroups()
         {
             HttpClient client = new HttpClient();
@@ -242,6 +286,9 @@ namespace Marcaj.Services
             menuGroups = JsonConvert.DeserializeObject<List<MenuGroupsModel>>(content);
             return menuGroups;
         }
+
+    
+
         #endregion
 
         #region OrderTransactions
