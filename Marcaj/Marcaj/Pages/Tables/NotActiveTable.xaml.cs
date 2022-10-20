@@ -238,7 +238,7 @@ namespace Marcaj.Pages.Tables
 
                     await App.manager.iPostOrderTransactionNotActive(ordTraListToPost, DineIn.DineInTableID);
                     DineIn.DineInTableInActive = true;
-                    await App.manager.iPutDineInTable(DineIn, DineIn.DineInTableID);
+                    //await App.manager.iPutDineInTable(DineIn, DineIn.DineInTableID);
 
                     MessagingCenter.Send<NotActiveTable>(this, "Up");
                 }
@@ -296,7 +296,7 @@ namespace Marcaj.Pages.Tables
                     dineIn.DineInTableID = DineIn.DineInTableID;
                     dineIn.TableGroupID = DineIn.TableGroupID;
                     dineIn.DineInTableInActive = DineIn.DineInTableInActive;
-                    await App.lDatabase.lPutDineInTable(dineIn);
+                    //await App.lDatabase.lPutDineInTable(dineIn);
 
                     MessagingCenter.Send<NotActiveTable>(this, "Up");
                 }

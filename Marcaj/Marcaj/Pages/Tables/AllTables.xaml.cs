@@ -280,7 +280,7 @@ namespace Marcaj.Pages.Tables
                 {
                     var a = e.SelectedItem as DineInTableAndEmpModel;
                     dineIn = a.DineIn;
-                    if (dineIn.DineInTableInActive == true)
+                    if (a.Opened == true)
                     {
                         await Navigation.PushAsync(new ActiveTable(dineIn, EmplFl));
                     }
