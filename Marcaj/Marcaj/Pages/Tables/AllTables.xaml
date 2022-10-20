@@ -104,7 +104,7 @@
                                         <RowDefinition Height=".4*"/>
                                     </Grid.RowDefinitions>
                                     <Label VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0" TextColor="Black" Text="{Binding DineIn.DineInTableText}"/>
-                                    <Label VerticalOptions="Center" HorizontalOptions="Center"   Grid.Row="1"  TextColor="Black" Text="{Binding DineIn.DineInTableInActive}"/>
+                                    <Label VerticalOptions="Center" HorizontalOptions="Center"   Grid.Row="1"  TextColor="Black" Text="{Binding Opened}"/>
                                     <Label VerticalOptions="Center" HorizontalOptions="Center"   Grid.Row="2"  TextColor="Black" Text="{Binding EmpName}"/>
                                     <ImageButton Grid.Row="3"  Source="Table6Open.png"/>
                                 </Grid>
