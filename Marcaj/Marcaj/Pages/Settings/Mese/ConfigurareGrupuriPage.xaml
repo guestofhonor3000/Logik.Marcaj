@@ -5,6 +5,7 @@
              BackgroundColor="White">
     <ContentPage.Content>
         <StackLayout>
+            <Button x:Name="btnAddTableGroup" Text="Add" Clicked="btnAddTableGroup_Clicked" BackgroundColor="DimGray"/>
             <ListView x:Name="lstvwGrupMese" ItemSelected="lstvwGrupMese_ItemSelected">
 
                 <ListView.ItemTemplate>

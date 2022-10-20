@@ -19,6 +19,7 @@ namespace Marcaj.Services
         Task PostOrderTransactionNotActive(List<OrderTransactionsModel> user, int tableId);
         Task PutOrderHeaders(OrderHeadersModel item, int id);
         Task PostOrderHeader(OrderHeadersModel user);
+        Task PostTableGroup(DineInTableGroupModel model);
         Task<List<OrderHeadersModel>> GetOrderHeadersByDineInTableID(int id);
         Task<OrderHeadersModel> GetOrderHeaderByID(int id);
         Task DeleteTableGroup(int id);

@@ -23,6 +23,7 @@ namespace Marcaj
         public static string GetUriDineInTablesGroups = "https://elogik.azurewebsites.net/api/DineInTableGroup";
         public static string DeleteUriDineInTableGroup = "https://elogik.azurewebsites.net/api/DineInTableGroup?id=";
         public static string PutUriDineInTableGroups = "https://elogik.azurewebsites.net/api/DineInTableGroup?id=";
+        public static string PostUriDineInTableGroups = "https://elogik.azurewebsites.net/api/DineInTableGroup";
 
 
         //MenuItems

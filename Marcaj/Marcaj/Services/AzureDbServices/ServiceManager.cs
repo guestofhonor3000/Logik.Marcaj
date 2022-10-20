@@ -28,6 +28,10 @@ namespace Marcaj.Services
         {
             return Service.PutEmployeeFile(item, id);
         }
+        public Task iPostTableGroup(DineInTableGroupModel model)
+        {
+            return Service.PostTableGroup(model);
+        }
         public Task iDeleteTableGroup(int id)
         {
             return Service.DeleteTableGroup(id);

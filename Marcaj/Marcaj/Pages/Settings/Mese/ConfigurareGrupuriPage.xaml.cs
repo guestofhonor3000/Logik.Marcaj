@@ -56,5 +56,23 @@ namespace Marcaj.Pages.Settings.Mese
                 }
             }
         }
+
+        private async void btnAddTableGroup_Clicked(object sender, EventArgs e)
+        {
+            var name = await DisplayPromptAsync("Add", "Choose a Name", "Ok", "Cancel", "Table Group Name");
+            if(name != null)
+            {
+                if(name != "Cancel")
+                {
+                    var model = new DineInTableGroupModel();
+
+                    model.TableGroupText=name;
+                    model.RowGUID = Guid.NewGuid().ToString();
+
+                    await App.manager.iPostTableGroup(model);
+                    PopList();
+                }
+            }
+        }
     }
 }

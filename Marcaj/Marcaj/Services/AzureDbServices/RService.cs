@@ -229,6 +229,26 @@ namespace Marcaj.Services
                 Debug.WriteLine(@"ERROR {0}", ex.Message);
             }
         }
+
+        //Post TableGroups
+        public async Task PostTableGroup(DineInTableGroupModel model)
+        {
+            HttpClient client = new HttpClient();
+            Uri uri = new Uri(string.Format(Constants.PostUriDineInTableGroups , string.Empty));
+            try
+            {
+                string json = JsonConvert.SerializeObject(model);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = null;
+                response = await client.PostAsync(uri, content);
+                Debug.WriteLine(@"TableGroup added");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"ERROR {0}", ex.Message);
+            }
+        }
+
         //Delete TableGroups
         public async Task DeleteTableGroup(int id)
         {
