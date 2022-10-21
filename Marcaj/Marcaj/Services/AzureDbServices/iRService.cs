@@ -42,5 +42,6 @@ namespace Marcaj.Services
         Task<List<DineInTableAndEmpModel>> GetDineInTablesAllByTableGroup(int groupID);
         Task<List<OrderHeadersModel>> GetActiveOrderHeaders();
         Task<List<OrderHeadersModel>> GetActiveOrderHeadersByEmpId(int empId);
+        //Task GetPosition(TableLayoutModel model);
     }
 }

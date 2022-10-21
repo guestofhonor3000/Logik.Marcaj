@@ -3,18 +3,69 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Marcaj.Page1">
     <ContentPage.Content>
-        <CollectionView BackgroundColor="Black" SelectionMode="Multiple" x:Name="grid" >
-  
+        <Grid  RowSpacing="0" 
+               ColumnSpacing="0"  
+               BackgroundColor="#66717d">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="9*"/>
+            </Grid.ColumnDefinitions>
+
+            <ScrollView Grid.Column="0"  
+                        VerticalScrollBarVisibility="Never">
+
+                <Grid BackgroundColor="#171a1d" 
+                      HorizontalOptions="FillAndExpand" 
+                      VerticalOptions="FillAndExpand" 
+                      RowSpacing="10" 
+                      Margin="0" 
+                      Padding="10">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <ImageButton Source="Table2Open.png" Grid.Row="0" x:Name="btnTbl2" Clicked="btnTbl2_Clicked"/>
+                    <ImageButton Source="Table4Open.png" Grid.Row="1"  x:Name="btnTbl4" Clicked="btnTbl4_Clicked"/>
+                    <ImageButton Source="Table6Open.png" Grid.Row="2"  x:Name="btnTbl6" Clicked="btnTbl6_Clicked"/>
+                    <ImageButton Source="Table8Open.png" Grid.Row="3" x:Name="btnTbl8" Clicked="btnTbl8_Clicked"/>
+                    <Entry Grid.Row="4" 
+                           x:Name="tblVect"
+                           TextColor="Black"
+                           BackgroundColor="White"
+                           IsReadOnly="True"
+                           />
+                </Grid>
+            </ScrollView>
+
+            <CollectionView Grid.Column="1" 
+                            x:Name="tblLayoutColl"
+                            SelectionMode="Multiple" 
+                            BackgroundColor="#66717d">
+
+            <CollectionView.ItemsLayout>
+                    <GridItemsLayout     Orientation="Vertical" 
+                                         Span="10" 
+                                         VerticalItemSpacing="5" 
+                                         HorizontalItemSpacing="5"/>
+                </CollectionView.ItemsLayout>
+
                 <CollectionView.ItemTemplate>
-
                     <DataTemplate>
-
-                        <Label BackgroundColor="White"/>
-
+                        <StackLayout>
+                            <Label Text="{Binding Position}" BackgroundColor="#394046"/>
+                            <Label Text="{Binding Text}" TextColor="Black" BackgroundColor="DeepPink"/>
+                        </StackLayout>
+                       
                     </DataTemplate>
-
                 </CollectionView.ItemTemplate>
-      
-        </CollectionView>
+            </CollectionView>
+
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

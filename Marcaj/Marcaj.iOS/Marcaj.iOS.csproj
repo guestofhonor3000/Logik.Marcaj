@@ -232,4 +232,13 @@
   <ItemGroup>
     <BundleResource Include="Resources\PayDoneButton.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Table8Open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Table2Open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Table4Open.png" />
+  </ItemGroup>
 </Project>

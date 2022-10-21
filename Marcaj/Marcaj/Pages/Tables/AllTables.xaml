@@ -29,7 +29,7 @@
                 <ImageButton Source="MainRecallButton.png" Grid.Row="4" />
                 <ImageButton Source="MainNoSaleButton.png" Grid.Row="5" />
                 <ImageButton Source="MainPayBackButton.png" Grid.Row="6"/>
-                <ImageButton Source="MainPlaceholderButton.png" Grid.Row="7" />
+                    <ImageButton Source="MainPlaceholderButton.png" Grid.Row="7"  x:Name="btnTblLayoutPage" Clicked="btnTblLayoutPage_Clicked"/>
                 <ImageButton Source="MainPlaceholderButton.png" Grid.Row="8" />
                 <ImageButton Source="MainPlaceholderButton.png" Grid.Row="9" />
             </Grid>
