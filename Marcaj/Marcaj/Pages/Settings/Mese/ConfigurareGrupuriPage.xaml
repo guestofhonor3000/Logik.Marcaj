@@ -4,21 +4,84 @@
              x:Class="Marcaj.Pages.Settings.Mese.ConfigurareGrupuriPage"
              BackgroundColor="White">
     <ContentPage.Content>
-        <StackLayout>
-            <Button x:Name="btnAddTableGroup" Text="Add" Clicked="btnAddTableGroup_Clicked" BackgroundColor="DimGray"/>
-            <ListView x:Name="lstvwGrupMese" ItemSelected="lstvwGrupMese_ItemSelected">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="8*"/>
+            </Grid.ColumnDefinitions>
+            <StackLayout Grid.Column="0">
+                <Button x:Name="btnAddTableGroup" Text="Add" Clicked="btnAddTableGroup_Clicked" BackgroundColor="DimGray"/>
+                <ListView x:Name="lstvwGrupMese" ItemSelected="lstvwGrupMese_ItemSelected">
 
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout>
-                                <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold"  TextColor="White" BackgroundColor="#8f99a3" Padding="10,20,10,20" Text="{Binding TableGroupText}"/>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold"  TextColor="White" BackgroundColor="#8f99a3" Padding="10,20,10,20" Text="{Binding TableGroupText}"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
 
-            </ListView>
-        </StackLayout>
+                </ListView>
+
+            </StackLayout>
+
+
+            <Grid Grid.Column="1" RowDefinitions="{Binding Rows}" ColumnDefinitions="{Binding Columns}">
+                <Grid.GestureRecognizers>
+                    <SwipeGestureRecognizer Swiped="SwipeGestureRecognizer_Swiped" />
+                </Grid.GestureRecognizers>
+            <!--<Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions> 
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>-->
+
+                <BoxView Grid.Column="0" Grid.Row="0" Grid.RowSpan="10" BackgroundColor="Blue" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+                <BoxView Grid.Column="1" Grid.Row="0" Grid.RowSpan="10" BackgroundColor="Blue" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+                <BoxView Grid.Column="2" Grid.Row="0" Grid.RowSpan="10" BackgroundColor="Blue" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+                <BoxView Grid.Column="3" Grid.Row="0" Grid.RowSpan="10" BackgroundColor="Blue" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+                <BoxView Grid.Column="4" Grid.Row="0" Grid.RowSpan="10" BackgroundColor="Blue" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+                <BoxView Grid.Column="5" Grid.Row="0" Grid.RowSpan="10" BackgroundColor="Blue" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+                <BoxView Grid.Column="6" Grid.Row="0" Grid.RowSpan="10" BackgroundColor="Blue" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+                <BoxView Grid.Column="7" Grid.Row="0" Grid.RowSpan="10" BackgroundColor="Blue" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+                <BoxView Grid.Column="8" Grid.Row="0" Grid.RowSpan="10" BackgroundColor="Blue" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+                <BoxView Grid.Column="9" Grid.Row="0" Grid.RowSpan="10" BackgroundColor="Blue" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+                <BoxView Grid.Column="10" Grid.Row="0" Grid.RowSpan="10" BackgroundColor="Blue" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+                <BoxView Grid.Column="11" Grid.Row="0" Grid.RowSpan="10" BackgroundColor="Blue" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+                
+                <BoxView Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="12" BackgroundColor="Red" HeightRequest="1" VerticalOptions="End"  HorizontalOptions="FillAndExpand"/>
+                <BoxView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="12" BackgroundColor="Red" HeightRequest="1" VerticalOptions="End"  HorizontalOptions="FillAndExpand"/>
+                <BoxView Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="12" BackgroundColor="Red" HeightRequest="1" VerticalOptions="End"  HorizontalOptions="FillAndExpand"/>
+                <BoxView Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="12" BackgroundColor="Red" HeightRequest="1" VerticalOptions="End"  HorizontalOptions="FillAndExpand"/>
+                <BoxView Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="12" BackgroundColor="Red" HeightRequest="1" VerticalOptions="End"  HorizontalOptions="FillAndExpand"/>
+                <BoxView Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="12" BackgroundColor="Red" HeightRequest="1" VerticalOptions="End"  HorizontalOptions="FillAndExpand"/>
+                <BoxView Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="12" BackgroundColor="Red" HeightRequest="1" VerticalOptions="End"  HorizontalOptions="FillAndExpand"/>
+                <BoxView Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="12" BackgroundColor="Red" HeightRequest="1" VerticalOptions="End"  HorizontalOptions="FillAndExpand"/>
+                <BoxView Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="12" BackgroundColor="Red" HeightRequest="1" VerticalOptions="End"  HorizontalOptions="FillAndExpand"/>
+                <BoxView Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="12" BackgroundColor="Red" HeightRequest="1" VerticalOptions="End"  HorizontalOptions="FillAndExpand"/>
+
+                <Button Grid.Column="0" Grid.Row="0" TextColor="Black" Text="Unassigned" x:Name="aaCell" Clicked="aaCell_Clicked"/>
+            </Grid>
+
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

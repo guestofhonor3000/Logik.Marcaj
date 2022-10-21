@@ -1,6 +1,8 @@
 ﻿using Marcaj.Models.DbModels;
+using Marcaj.Pages.Tables;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -11,15 +13,33 @@ using Xamarin.Forms.Xaml;
 
 namespace Marcaj.Pages.Settings.Mese
 {
+   
+    public class GridDefinitions
+    {
+        public int Rows { get; set; }
+        public int Columns { get; set; }
+    }
+
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ConfigurareGrupuriPage : ContentPage
     {
+        int GroupId;
+        Button btnAssigned;
+        public ObservableCollection<GridDefinitions> gridDefs;
         public ConfigurareGrupuriPage()
         {
             InitializeComponent();
             PopList();
+            MessagingCenter.Subscribe<ListMeseModalPage, string>(this, "Up", (sender, result) =>
+            {
+                btnAssigned.Text = result;
+            });
         }
 
+        void PopGrid()
+        {
+
+        }
         async void PopList()
         {
             var b = await App.manager.iGetDineInTableGroups();
@@ -32,7 +52,7 @@ namespace Marcaj.Pages.Settings.Mese
         private async void lstvwGrupMese_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var a = e.SelectedItem as DineInTableGroupModel;
-            var result = await DisplayActionSheet("What do you want to do?", "Cancel", "Close", "Delete", "Edit");
+            var result = await DisplayActionSheet("What do you want to do?", "Cancel", "Close", "Delete", "Edit", "Assign");
             if (result == "Edit")
             {
                 var edit = await DisplayPromptAsync("Edit", "Choose a Name", "OK", "Cancel", a.TableGroupText);
@@ -55,6 +75,10 @@ namespace Marcaj.Pages.Settings.Mese
                     PopList();
                 }
             }
+            else if(result == "Assign")
+            {
+                GroupId = a.TableGroupID;
+            }
         }
 
         private async void btnAddTableGroup_Clicked(object sender, EventArgs e)
@@ -73,6 +97,18 @@ namespace Marcaj.Pages.Settings.Mese
                     PopList();
                 }
             }
+        }
+
+        private async void aaCell_Clicked(object sender, EventArgs e)
+        {
+            btnAssigned = sender as Button;
+            
+            await Navigation.PushModalAsync(new ListMeseModalPage(GroupId));
+        }
+
+        private void SwipeGestureRecognizer_Swiped(object sender, SwipedEventArgs e)
+        {
+            Debug.WriteLine("Swiped");
         }
     }
 }

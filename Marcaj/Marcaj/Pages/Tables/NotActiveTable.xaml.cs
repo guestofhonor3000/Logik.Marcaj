@@ -249,6 +249,7 @@ namespace Marcaj.Pages.Tables
 
                     MessagingCenter.Send<NotActiveTable>(this, "Up");
                 }
+
                 
             }
            else
