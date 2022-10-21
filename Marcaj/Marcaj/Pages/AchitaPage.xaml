@@ -4,7 +4,10 @@
              x:Class="Marcaj.Pages.AchitaPage">
     
     <ContentPage.Content>
-        <Grid  RowSpacing="0" ColumnSpacing="0"  BackgroundColor="#66717d">
+        <Grid  RowSpacing="0" 
+               ColumnSpacing="0"  
+               BackgroundColor="#66717d">
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -12,8 +15,16 @@
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
-            <ScrollView Grid.Column="0"  VerticalScrollBarVisibility="Never">
-                <Grid BackgroundColor="#171a1d" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" RowSpacing="10" Margin="0" Padding="10">
+            <ScrollView Grid.Column="0"  
+                        VerticalScrollBarVisibility="Never">
+                
+                <Grid BackgroundColor="#171a1d" 
+                      HorizontalOptions="FillAndExpand" 
+                      VerticalOptions="FillAndExpand" 
+                      RowSpacing="10" 
+                      Margin="0" 
+                      Padding="10">
+                    
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
@@ -39,9 +50,16 @@
             </ScrollView>
 
 
-            <ScrollView Grid.Column="1"  VerticalScrollBarVisibility="Never">
+            <ScrollView Grid.Column="1"  
+                        VerticalScrollBarVisibility="Never">
                 
-                <Grid BackgroundColor="#394046" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" RowSpacing="10" Margin="0" Padding="10">
+                <Grid BackgroundColor="#394046" 
+                      HorizontalOptions="FillAndExpand" 
+                      VerticalOptions="StartAndExpand" 
+                      RowSpacing="10" 
+                      Margin="0" 
+                      Padding="10">
+                    
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
@@ -49,46 +67,64 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Grid Grid.Row="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <ImageButton Grid.Row="0" Source="SecondaryBlankButton.png" x:Name="btnToate" Clicked="btnToate_Clicked"/>
-                        <Label Grid.Row="0" Text="Toate" FontAttributes="Bold" FontSize="22" FontFamily="Verdana" VerticalOptions="Center" HorizontalOptions="Center"/>
-                    </Grid>
+                          
+                        <Button Grid.Row="0" 
+                                    BackgroundColor="#8f99a3"
+                                    CornerRadius="10"
+                                    Text="Toate"
+                                    FontAttributes="Bold"
+                                    TextColor="White"
+                                    FontSize="Medium"
+                                    x:Name="btnToate"
+                                    Clicked="btnToate_Clicked"/>
+                                                                
+                     
+                        <Button Grid.Row="1"                              
+                                    BackgroundColor="#8f99a3"
+                                    CornerRadius="10"
+                                    Text="DineIn"
+                                    FontAttributes="Bold"
+                                    TextColor="White"
+                                    FontSize="Medium"
+                                    x:Name="btnDineIn"
+                                    Clicked="btnDineIn_Clicked"/>
                     
-                    <Grid Grid.Row="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <ImageButton Grid.Row="0" Source="SecondaryBlankButton.png" x:Name="btnDineIn" Clicked="btnToate_Clicked"/>
-                        <Label Grid.Row="0" Text="DineIn" FontAttributes="Bold" FontSize="22" FontFamily="Verdana" VerticalOptions="Center" HorizontalOptions="Center"/>
-                    </Grid>
 
-                    <Grid Grid.Row="2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <ImageButton Grid.Row="0" Source="SecondaryBlankButton.png" x:Name="btnBar" Clicked="btnToate_Clicked"/>
-                        <Label Grid.Row="0" Text="Bar" FontAttributes="Bold" FontSize="22" FontFamily="Verdana" VerticalOptions="Center" HorizontalOptions="Center"/>
-                    </Grid>
+                        <Button Grid.Row="2"                              
+                                    BackgroundColor="#8f99a3"
+                                    CornerRadius="10"
+                                    Text="Bar"
+                                    FontAttributes="Bold"
+                                    TextColor="White"
+                                    FontSize="Medium"
+                                    x:Name="btnBar"
+                                    Clicked="btnBar_Clicked"/>
 
-                    <Grid Grid.Row="3">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <ImageButton Grid.Row="0" Source="SecondaryBlankButton.png" x:Name="btnEmp" Clicked="btnToate_Clicked"/>
-                        <Label Grid.Row="0" Text="Server" FontAttributes="Bold" FontSize="22" FontFamily="Verdana" VerticalOptions="Center" HorizontalOptions="Center"/>
-                    </Grid>
+                        <Button Grid.Row="3"                              
+                                    BackgroundColor="#8f99a3"
+                                    CornerRadius="10"
+                                    Text="Server"
+                                    FontAttributes="Bold"
+                                    TextColor="White"
+                                    FontSize="Medium"
+                                    x:Name="btnServer"
+                                    Clicked="btnEmp_Clicked"/>
 
                 </Grid>
             </ScrollView>
 
 
-            <CollectionView Grid.Column="2" SelectionMode="None" x:Name="tabList" Margin="10,0,10,0" BackgroundColor="#66717d">
+            <CollectionView Grid.Column="2" 
+                            SelectionMode="None" 
+                            x:Name="tabList" 
+                            Margin="10,0,10,0" 
+                            BackgroundColor="#66717d">
 
                     <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="3" VerticalItemSpacing="10" HorizontalItemSpacing="10"/>
+                        <GridItemsLayout Orientation="Vertical" 
+                                         Span="3" 
+                                         VerticalItemSpacing="10" 
+                                         HorizontalItemSpacing="10"/>
                     </CollectionView.ItemsLayout>
 
                     <CollectionView.ItemTemplate>
@@ -97,45 +133,129 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <ImageButton Grid.Row="0" Source="CheckBackButton.png" />
-                            <Label Grid.Row="0" Text="{Binding OrderID, StringFormat='#{0:F0}'}" FontAttributes="Bold" FontSize="22" FontFamily="Verdana" VerticalOptions="Start" HorizontalOptions="Center" TextColor="Black" Padding="0,10,0,0"/>
+                            <ImageButton Grid.Row="0" 
+                                         Source="CheckBackButton.png" />
+                            <Label Grid.Row="0" 
+                                   Text="{Binding OrderID, StringFormat='#{0:F0}'}" 
+                                   FontAttributes="Bold" 
+                                   FontSize="22" 
+                                   FontFamily="Verdana" 
+                                   VerticalOptions="Start" 
+                                   HorizontalOptions="Center" 
+                                   TextColor="Black" 
+                                   Padding="0,10,0,0"/>
                         </Grid>
                     </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
 
-            <Grid Grid.Column="3" BackgroundColor="#171a1d" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" RowSpacing="10" ColumnSpacing="10" Margin="0" Padding="10">
+            <Grid Grid.Column="3" 
+                      BackgroundColor="#171a1d" 
+                      HorizontalOptions="FillAndExpand" 
+                      VerticalOptions="FillAndExpand" 
+                      RowSpacing="10" 
+                      ColumnSpacing="10" 
+                      Margin="0"
+                      Padding="10">
+
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="1.2*"/>
+                    <RowDefinition Height="1.8*"/>
+                    <RowDefinition Height="3.6*"/>
+                    <RowDefinition Height="1.4*"/>
                 </Grid.RowDefinitions>
-                
+
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Grid Grid.Row="0" Grid.ColumnSpan="2">
+                <Grid Grid.Row="0" 
+                      Grid.ColumnSpan="2"
+                      BackgroundColor="#394046" 
+                      HorizontalOptions="FillAndExpand" 
+                      VerticalOptions="FillAndExpand" 
+                      RowSpacing="10"
+                      ColumnSpacing="10"
+                      Margin="0" 
+                      Padding="10">
                     
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Entry Grid.Row="0" 
+                           x:Name="orderNr"
+                           TextChanged="orderNr_TextChanged"
+                           Grid.ColumnSpan="3"
+                           Text="#"
+                           TextColor="Black"
+                           BackgroundColor="White"
+                           IsReadOnly="True"
+                           />
+
+                    <Button Grid.Row="0" Grid.Column="3" Text="DEL"  x:Name="btnDel" Clicked="btnDel_Clicked"/>
+                    
+                    <Button Grid.Row="1" Grid.Column="0" Text="7" x:Name="btn7" Clicked="btn7_Clicked"/>
+                    <Button Grid.Row="1" Grid.Column="1" Text="8" x:Name="btn8" Clicked="btn8_Clicked"/>
+                    <Button Grid.Row="1" Grid.Column="2" Text="9" x:Name="btn9" Clicked="btn9_Clicked"/>
+                    <Button Grid.Row="1" Grid.RowSpan="2" Grid.Column="3" Text="0" x:Name="btn0" Clicked="btn0_Clicked"/>
+
+                    <Button Grid.Row="2" Grid.Column="0" Text="4" x:Name="btn4" Clicked="btn4_Clicked"/>
+                    <Button Grid.Row="2" Grid.Column="1" Text="5" x:Name="btn5" Clicked="btn5_Clicked"/>
+                    <Button Grid.Row="2" Grid.Column="2" Text="6"  x:Name="btn6" Clicked="btn6_Clicked"/>
+
+                    <Button Grid.Row="3" Grid.Column="0" Text="1" x:Name="btn1" Clicked="btn1_Clicked"/>
+                    <Button Grid.Row="3" Grid.Column="1" Text="2" x:Name="btn2" Clicked="btn2_Clicked"/>
+                    <Button Grid.Row="3" Grid.Column="2" Text="3" x:Name="btn3" Clicked="btn3_Clicked"/>
+                    <Button Grid.Row="3" Grid.Column="3" Text="OK" x:Name="btnOk" Clicked="btnOk_Clicked"/>
+
+
                 </Grid>
 
-                <ImageButton Grid.Row="1" Grid.Column="0" Source="PayGratuityButton.png"/>
-                <ImageButton Grid.Row="1" Grid.Column="1" Source="PayHouseAccountButton.png"/>
-
-                <ImageButton Grid.Row="2" Grid.Column="0" Source="PayCashButton.png"/>
-                <ImageButton Grid.Row="2" Grid.Column="1" Source="PayCardButton.png"/>
-
-                <Grid Grid.Row="3" Grid.ColumnSpan="2">
-                    
-                </Grid>
-
-                <ImageButton Grid.Row="4" Grid.ColumnSpan="2" Source="PayDoneButton.png"/>
+                <ImageButton Grid.Row="1" 
+                             Grid.Column="0" 
+                             Source="PayGratuityButton.png"/>
                 
+                <ImageButton Grid.Row="1" 
+                             Grid.Column="1"
+                             Source="PayHouseAccountButton.png"/>
+
+                <ImageButton Grid.Row="2" 
+                             Grid.Column="0" 
+                             Source="PayCashButton.png"/>
+                
+                <ImageButton Grid.Row="2" 
+                             Grid.Column="1" 
+                             Source="PayCardButton.png"/>
+
+                <ScrollView Grid.Row="3" Grid.ColumnSpan="2">
+                    <Grid 
+                      BackgroundColor="#394046" 
+                      HorizontalOptions="FillAndExpand" 
+                      VerticalOptions="FillAndExpand" 
+                      RowSpacing="10"
+                      ColumnSpacing="10"
+                      Margin="0" 
+                      Padding="10">
+                    
+                </Grid>
+                </ScrollView>
+                <ImageButton Grid.Row="4" Grid.ColumnSpan="2" Source="PayDoneButton.png"/>
+
             </Grid>
-        
+
         </Grid>
     </ContentPage.Content>
 </ContentPage>

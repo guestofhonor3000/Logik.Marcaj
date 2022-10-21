@@ -77,10 +77,74 @@ namespace Marcaj.Pages
         {
             PopList("Emp");
         }
-        /*private void btnBar_Clicked(object sender, EventArgs e)
+
+        private void orderNr_TextChanged(object sender, TextChangedEventArgs e)
         {
-            PopList("Bar");
-        }*/
+
+        }
+
+        private void btn7_Clicked(object sender, EventArgs e)
+        {
+            orderNr.Text += "7";
+        }
+
+        private void btn8_Clicked(object sender, EventArgs e)
+        {
+            orderNr.Text += "8";
+        }
+
+        private void btn9_Clicked(object sender, EventArgs e)
+        {
+            orderNr.Text += "9";
+        }
+        private void btn0_Clicked(object sender, EventArgs e)
+        {
+            orderNr.Text += "0";
+        }
+
+        private void btn4_Clicked(object sender, EventArgs e)
+        {
+            orderNr.Text += "4";
+        }
+
+        private void btn5_Clicked(object sender, EventArgs e)
+        {
+            orderNr.Text += "5";
+        }
+
+        private void btn6_Clicked(object sender, EventArgs e)
+        {
+            orderNr.Text += "6";
+        }
+
+        private void btn1_Clicked(object sender, EventArgs e)
+        {
+            orderNr.Text += "1";
+        }
+
+        private void btn2_Clicked(object sender, EventArgs e)
+        {
+            orderNr.Text += "2";
+        }
+
+        private void btn3_Clicked(object sender, EventArgs e)
+        {
+            orderNr.Text += "3";
+        }
+
+        private void btnDel_Clicked(object sender, EventArgs e)
+        {
+            string s = orderNr.Text.Substring(0, orderNr.Text.Length - 1);
+            orderNr.Text = s;
+        }
+        private void btnOk_Clicked(object sender, EventArgs e)
+        {
+
+        }
+        /*private void btnBar_Clicked(object sender, EventArgs e)
+{
+PopList("Bar");
+}*/
 
     }
 
