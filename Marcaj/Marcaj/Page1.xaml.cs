@@ -24,31 +24,31 @@ namespace Marcaj
             InitializeComponent();
             tblLayout = new ObservableCollection<TableLayoutModel>
             {
-            new TableLayoutModel { Position="1", Text="" },
-            new TableLayoutModel { Position="2" , Text=""},
-            new TableLayoutModel { Position="3" , Text=""},
-            new TableLayoutModel { Position="4" , Text=""},
-            new TableLayoutModel { Position="5" , Text=""},
-            new TableLayoutModel { Position="6" , Text = ""},
-            new TableLayoutModel { Position="7" , Text = ""},
-            new TableLayoutModel { Position="8" , Text = ""},
-            new TableLayoutModel { Position="9" , Text = ""},
-            new TableLayoutModel { Position="10" , Text = ""},
-            new TableLayoutModel { Position="11" , Text = ""},
-            new TableLayoutModel { Position="12" , Text = ""},
-            new TableLayoutModel { Position="13" , Text = ""},
-            new TableLayoutModel { Position="14" , Text = ""},
-            new TableLayoutModel { Position="15" , Text = ""},
-            new TableLayoutModel { Position="16" , Text = ""},
-            new TableLayoutModel { Position="17" , Text=""},
-            new TableLayoutModel { Position="18" , Text=""},
-            new TableLayoutModel { Position="19" , Text="" },
-            new TableLayoutModel { Position="20", Text="" }
+            new TableLayoutModel { Position="1", Text="" , Visible=false},
+            new TableLayoutModel { Position="2" , Text="", Visible=false},
+            new TableLayoutModel { Position="3" , Text="", Visible=false},
+            new TableLayoutModel { Position="4" , Text="", Visible=false},
+            new TableLayoutModel { Position="5" , Text="", Visible = false},
+            new TableLayoutModel { Position="6" , Text = "", Visible = false},
+            new TableLayoutModel { Position="7" , Text = "", Visible = false},
+            new TableLayoutModel { Position="8" , Text = "", Visible = false},
+            new TableLayoutModel { Position="9" , Text = "", Visible = false},
+            new TableLayoutModel { Position="10" , Text = "", Visible = false},
+            new TableLayoutModel { Position="11" , Text = "", Visible = false},
+            new TableLayoutModel { Position="12" , Text = "", Visible = false},
+            new TableLayoutModel { Position="13" , Text = "", Visible = false},
+            new TableLayoutModel { Position="14" , Text = "", Visible = false},
+            new TableLayoutModel { Position="15" , Text = "", Visible = false},
+            new TableLayoutModel { Position="16" , Text = "", Visible=false    },
+            new TableLayoutModel { Position="17" , Text=""  , Visible=false},
+            new TableLayoutModel { Position="18" , Text="", Visible=false},
+            new TableLayoutModel { Position="19" , Text="" , Visible=false},
+            new TableLayoutModel { Position="20", Text="", Visible=false }
 
             
         };
             /*private static void grid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-           {
+           {aoleuaoleu
                var previous = e.PreviousSelection;
                var current = e.CurrentSelection;
            }*/
@@ -63,15 +63,14 @@ namespace Marcaj
         private void btnTbl2_Clicked(object sender, EventArgs e)
         {
            
-            tblVect.Text = "";
             foreach(var a in tblLayoutColl.SelectedItems)
             {
                 var b = a as TableLayoutModel;
                 var c = tblLayout.Where(x => x.Position == b.Position).FirstOrDefault();
-                c.Text = "2";
+                c.Text = "Table2Open.png";
+                c.Visible = true;
                 tblLayoutColl.ItemsSource = null;
                 tblLayoutColl.ItemsSource = tblLayout;  
-                tblVect.Text +=" "+b.Position ;
             }
 
             tblLayoutColl.SelectedItems = null;
@@ -79,15 +78,15 @@ namespace Marcaj
 
         private void btnTbl4_Clicked(object sender, EventArgs e)
         {
-            tblVect.Text = "";
+            
             foreach (var a in tblLayoutColl.SelectedItems)
             {
                 var b = a as TableLayoutModel;
                 var c = tblLayout.Where(x => x.Position == b.Position).FirstOrDefault();
-                c.Text = "4";
+                c.Text = "Table4Open.png"; c.Visible = true;
+
                 tblLayoutColl.ItemsSource = null;
                 tblLayoutColl.ItemsSource = tblLayout;
-                tblVect.Text += " " + b.Position;
             }
             tblLayoutColl.SelectedItems = null;
 
@@ -95,30 +94,29 @@ namespace Marcaj
 
         private void btnTbl6_Clicked(object sender, EventArgs e)
         {
-            tblVect.Text = "";
+            
             foreach (var a in tblLayoutColl.SelectedItems)
             {
                 var b = a as TableLayoutModel;
                 var c = tblLayout.Where(x => x.Position == b.Position).FirstOrDefault();
-                c.Text = "6";
+                c.Text = "Table6Open.png"; c.Visible = true;
+
                 tblLayoutColl.ItemsSource = null;
                 tblLayoutColl.ItemsSource = tblLayout;
-                tblVect.Text += " " + b.Position;
             }
             tblLayoutColl.SelectedItems = null;
 
         }
         private void btnTbl8_Clicked(object sender, EventArgs e)
         {
-            tblVect.Text = "";
             foreach (var a in tblLayoutColl.SelectedItems)
             {
                 var b = a as TableLayoutModel;
                 var c = tblLayout.Where(x => x.Position == b.Position).FirstOrDefault();
-                c.Text = "8";
+                c.Text = "Table8Open.png"; c.Visible = true;
+
                 tblLayoutColl.ItemsSource = null;
                 tblLayoutColl.ItemsSource = tblLayout;
-                tblVect.Text += " " + b.Position;
             }
             tblLayoutColl.SelectedItems = null;
 
@@ -131,6 +129,11 @@ namespace Marcaj
         }
 
         private void tblVect_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void btnDone_Clicked(object sender, EventArgs e)
         {
 
         }

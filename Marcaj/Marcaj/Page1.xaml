@@ -34,12 +34,7 @@
                     <ImageButton Source="Table4Open.png" Grid.Row="1"  x:Name="btnTbl4" Clicked="btnTbl4_Clicked"/>
                     <ImageButton Source="Table6Open.png" Grid.Row="2"  x:Name="btnTbl6" Clicked="btnTbl6_Clicked"/>
                     <ImageButton Source="Table8Open.png" Grid.Row="3" x:Name="btnTbl8" Clicked="btnTbl8_Clicked"/>
-                    <Entry Grid.Row="4" 
-                           x:Name="tblVect"
-                           TextColor="Black"
-                           BackgroundColor="White"
-                           IsReadOnly="True"
-                           />
+                    <Button Text="Done" x:Name="btnDone" Clicked="btnDone_Clicked" Grid.Row="4" />
                 </Grid>
             </ScrollView>
 
@@ -57,9 +52,9 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout>
-                            <Label Text="{Binding Position}" BackgroundColor="#394046"/>
-                            <Label Text="{Binding Text}" TextColor="Black" BackgroundColor="DeepPink"/>
+                        <StackLayout WidthRequest="120" HeightRequest="120" >
+                            <Label Text="{Binding Position}" BackgroundColor="Transparent"/>
+                            <Image IsVisible="{Binding Visible}" Source="{Binding Text}"/>
                         </StackLayout>
                        
                     </DataTemplate>
