@@ -20,6 +20,7 @@ namespace Marcaj.Services
         Task PutOrderHeaders(OrderHeadersModel item, int id);
         Task PostOrderHeader(OrderHeadersModel user);
         Task PostTableGroup(DineInTableGroupModel model);
+        Task PutDineInTablesPosition(DineInTableModel item, int id);
         Task<List<OrderHeadersModel>> GetOrderHeadersByDineInTableID(int id);
         Task<OrderHeadersModel> GetOrderHeaderByID(int id);
         Task DeleteTableGroup(int id);

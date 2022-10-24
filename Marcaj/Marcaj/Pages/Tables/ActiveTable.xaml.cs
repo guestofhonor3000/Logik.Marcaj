@@ -77,7 +77,6 @@ namespace Marcaj.Pages.Tables
 						{
 							Header = new Grid
 							{
-
 								ColumnDefinitions =
 								{
 								new ColumnDefinition { Width = GridLength.Star },

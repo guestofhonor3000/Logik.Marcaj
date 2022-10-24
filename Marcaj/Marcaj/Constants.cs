@@ -15,7 +15,8 @@ namespace Marcaj
 
         //DineInTables
         public static string GetUriDineInTables = "https://elogik.azurewebsites.net/api/DineInTables";
-        public static string PutUriDineInTables = "https://elogik.azurewebsites.net/api/DineInTables?id=";
+        public static string PutUriDineInTables = "https://elogik.azurewebsites.net/api/DineInTables?type=status&id=";
+        public static string PutUriDineInTablesPosition = "https://elogik.azurewebsites.net/api/DineInTables?type=position&id=";
         public static string GetUriDineInTablesByTableGroupID = "https://elogik.azurewebsites.net/api/DineInTables?dineInTableGroupID=";
         public static string PostUriDineInTable = "https://elogik.azurewebsites.net/api/DineInTables";
 

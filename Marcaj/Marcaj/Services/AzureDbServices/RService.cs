@@ -172,6 +172,27 @@ namespace Marcaj.Services
             }
         }
 
+        //Put Table Position
+        public async Task PutDineInTablesPosition(DineInTableModel item, int id)
+        {
+            Uri uri = new Uri(string.Format(Constants.PutUriDineInTablesPosition + id, string.Empty));
+            try
+            {
+                string json = System.Text.Json.JsonSerializer.Serialize<DineInTableModel>(item, serializerOptions);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = null;
+                response = await client.PutAsync(uri, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine(@"DineInTable Position updated");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"ERROR {0}", ex.Message);
+            }
+        }
+
         //Put Table Activity
         public async Task PutDineInTable(DineInTableModel item, int id)
         {

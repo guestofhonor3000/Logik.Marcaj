@@ -11,6 +11,7 @@ namespace Marcaj.Models.LocalDbModels
         public int DineInTableID { get; set; }
         public string DineInTableText { get; set; }
         public int TableGroupID { get; set; }
+        public string DisplayPosition { get; set; }
         public bool DineInTableInActive { get; set; }
     }
 }

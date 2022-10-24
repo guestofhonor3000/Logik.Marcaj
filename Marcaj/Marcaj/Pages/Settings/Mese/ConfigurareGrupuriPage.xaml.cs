@@ -77,7 +77,8 @@ namespace Marcaj.Pages.Settings.Mese
             }
             else if(result == "Assign")
             {
-                GroupId = a.TableGroupID;
+                await Navigation.PushModalAsync(new ConfigurarePozitiaMeselorPage(a.TableGroupID));
+                //GroupId = a.TableGroupID;
             }
         }
 

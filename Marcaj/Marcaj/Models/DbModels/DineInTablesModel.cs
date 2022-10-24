@@ -20,6 +20,7 @@ namespace Marcaj.Models.DbModels
         public Nullable<int> MaxGuests { get; set; }
         public Nullable<bool> Hibachi { get; set; }
         public string HBStyle { get; set; }
+        public string DisplayPosition { get; set; }
         public string HibachiBridgeTo { get; set; }
         public Nullable<short> HibachiBridgeSeats { get; set; }
         public Nullable<short> HBLeftSeats { get; set; }

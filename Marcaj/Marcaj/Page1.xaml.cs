@@ -135,7 +135,12 @@ namespace Marcaj
 
         private void btnDone_Clicked(object sender, EventArgs e)
         {
-
+            foreach(var i in tblLayout)
+            {
+                Debug.WriteLine(i.Text);
+                Debug.WriteLine(i.Visible);
+                Debug.WriteLine(i.Position);
+            }
         }
     } 
 }
