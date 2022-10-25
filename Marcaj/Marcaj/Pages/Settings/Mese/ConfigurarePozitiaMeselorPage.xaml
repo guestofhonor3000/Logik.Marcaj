@@ -9,7 +9,8 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="9*"/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <ScrollView Grid.Column="0"  
@@ -20,43 +21,89 @@
                       VerticalOptions="FillAndExpand" 
                       RowSpacing="10" 
                       Margin="0" 
-                      Padding="10">
+                      Padding="20">
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Picker x:Name="gridPicker" Grid.Row="5"  SelectedIndexChanged="gridPicker_SelectedIndexChanged"/>
-                    <ImageButton Source="Table2Open.png" Grid.Row="0" x:Name="btnTbl2" Clicked="btnTbl2_Clicked"/>
-                    <ImageButton Source="Table4Open.png" Grid.Row="1"  x:Name="btnTbl4" Clicked="btnTbl4_Clicked"/>
-                    <ImageButton Source="Table6Open.png" Grid.Row="2"  x:Name="btnTbl6" Clicked="btnTbl6_Clicked"/>
-                    <ImageButton Source="Table8Open.png" Grid.Row="3" x:Name="btnTbl8" Clicked="btnTbl8_Clicked"/>
-                    <Button Text="Done" x:Name="btnDone" Clicked="btnDone_Clicked" Grid.Row="4" />
+                    
+                    <Picker x:Name="gridPicker" Grid.Row="0"  SelectedIndexChanged="gridPicker_SelectedIndexChanged"/>
                 </Grid>
+                
             </ScrollView>
 
             <CollectionView Grid.Column="1" 
                             x:Name="tblLayoutColl"
                             SelectionMode="Multiple"
                             BackgroundColor="#66717d" 
-                             SelectionChanged="tblLayoutColl_SelectionChanged">
+                            SelectionChanged="tblLayoutColl_SelectionChanged">
 
                  
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout WidthRequest="120" HeightRequest="120" >
-                            <Label Text="{Binding Position}" BackgroundColor="Transparent"/>
-                            <Image IsVisible="{Binding Visible}" Source="{Binding Text}"/>
-                            <Label Text="{Binding TableText}" HorizontalOptions="Center" FontAttributes="Bold" BackgroundColor="Transparent"/>
-                        </StackLayout>
+                        
+                            <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="5*"/>
+                            </Grid.RowDefinitions>
+                                    
+                                <Label Grid.Row="0" 
+                                       Text="{Binding Position}" 
+                                       FontSize="18" 
+                                       FontFamily="Verdana" 
+                                       BackgroundColor="Transparent"/>
+                                
+                                <Grid Grid.Row="1">
+                                    <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Image Grid.Row="0" 
+                                       IsVisible="{Binding Visible}" 
+                                       Source="{Binding Text}" 
+                                       HorizontalOptions="Center" 
+                                       VerticalOptions="Center" 
+                                       Aspect="AspectFit"/>
+                                    
+                                    <Label Grid.Row="0" 
+                                           Text="{Binding TableText}" 
+                                           FontSize="26" 
+                                           FontFamily="Verdana" 
+                                           HorizontalOptions="Center" 
+                                           VerticalOptions="Center" 
+                                           FontAttributes="Bold" 
+                                           Padding="0,0,0,30" 
+                                           BackgroundColor="Transparent"/>
+                                </Grid>
+                            </Grid>
+                    
 
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+               
+            <Grid  Grid.Column="2"
+                   BackgroundColor="#171a1d" 
+                   HorizontalOptions="FillAndExpand" 
+                   VerticalOptions="FillAndExpand" 
+                   RowSpacing="10" 
+                   Margin="0" 
+                   Padding="20">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <ImageButton Source="Table2Open.png" Grid.Row="0" x:Name="btnTbl2" Clicked="btnTbl2_Clicked"/>
+                <ImageButton Source="Table4Open.png" Grid.Row="1"  x:Name="btnTbl4" Clicked="btnTbl4_Clicked"/>
+                <ImageButton Source="Table6Open.png" Grid.Row="2"  x:Name="btnTbl6" Clicked="btnTbl6_Clicked"/>
+                <ImageButton Source="Table8Open.png" Grid.Row="3" x:Name="btnTbl8" Clicked="btnTbl8_Clicked"/>
+                <Button Text="Done" x:Name="btnDone" Grid.Row="4" Clicked="btnDone_Clicked"/>
+            </Grid>
 
         </Grid>
     </ContentPage.Content>
