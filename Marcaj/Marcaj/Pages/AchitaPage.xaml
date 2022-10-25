@@ -224,6 +224,24 @@
 
                 </Grid>
 
+                <!--  <CollectionView>
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout     Orientation="Vertical"  
+                                         VerticalItemSpacing="2" 
+                                         HorizontalItemSpacing="2"/>
+                    </CollectionView.ItemsLayout>
+
+                  <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout >
+                                <Label Text=""/>
+                            </StackLayout>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView> -->
+
                 <ImageButton Grid.Row="1" 
                              Grid.Column="0" 
                              Source="PayGratuityButton.png"/>

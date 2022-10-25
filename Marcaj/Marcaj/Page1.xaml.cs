@@ -133,7 +133,7 @@ namespace Marcaj
 
         }
 
-        private void btnDone_Clicked(object sender, EventArgs e)
+        private async void btnDone_Clicked(object sender, EventArgs e)
         {
             foreach(var i in tblLayout)
             {
