@@ -26,7 +26,7 @@ namespace Marcaj
             PopPage();
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-                //SyncLocal();
+                SyncLocal();
             }
         }
 
@@ -36,8 +36,8 @@ namespace Marcaj
 
             var a = await App.lDatabase.lGetStationSettings(deviceName);
 
-            StationName.Text = "Station: "+ a.ComputerName;
-            EmployeeName.Text = "Employee: " + EmplFl.FirstName;
+            //StationName.Text = "Station: "+ a.ComputerName;
+            //EmployeeName.Text = "Employee: " + EmplFl.FirstName;
         }
         async void SyncLocal()
         {

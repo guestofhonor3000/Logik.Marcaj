@@ -1,7 +1,6 @@
 ﻿using Marcaj.Models.DbModels;
 using Marcaj.Models.LocalDbModels;
 using Marcaj.Pages.Tables;
-using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

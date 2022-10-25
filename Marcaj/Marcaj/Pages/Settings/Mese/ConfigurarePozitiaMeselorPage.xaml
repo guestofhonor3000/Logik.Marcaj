@@ -51,6 +51,7 @@
                         <StackLayout WidthRequest="120" HeightRequest="120" >
                             <Label Text="{Binding Position}" BackgroundColor="Transparent"/>
                             <Image IsVisible="{Binding Visible}" Source="{Binding Text}"/>
+                            <Label Text="{Binding TableText}" HorizontalOptions="Center" FontAttributes="Bold" BackgroundColor="Transparent"/>
                         </StackLayout>
 
                     </DataTemplate>
