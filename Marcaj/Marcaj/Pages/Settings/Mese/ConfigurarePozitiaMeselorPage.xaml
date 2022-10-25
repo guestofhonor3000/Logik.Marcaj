@@ -41,16 +41,11 @@
 
             <CollectionView Grid.Column="1" 
                             x:Name="tblLayoutColl"
-                            SelectionMode="Multiple" 
-                            BackgroundColor="#66717d">
+                            SelectionMode="Multiple"
+                            BackgroundColor="#66717d" 
+                             SelectionChanged="tblLayoutColl_SelectionChanged">
 
-              <!--   <CollectionView.ItemsLayout>
-                    <GridItemsLayout     Orientation="Vertical" 
-                                         Span="10" 
-                                         VerticalItemSpacing="5" 
-                                         HorizontalItemSpacing="5"/>
-                </CollectionView.ItemsLayout>
--->
+                 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout WidthRequest="120" HeightRequest="120" >

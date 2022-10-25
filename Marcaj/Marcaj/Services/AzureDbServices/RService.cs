@@ -132,22 +132,35 @@ namespace Marcaj.Services
             return dineInTables;
         }
 
-        //Get Tables By Table Group
+        //Get Tables & Emp By Table Group
         public async Task<List<DineInTableAndEmpModel>> GetDineInTablesByTableGroup(int groupID)
         {
             HttpClient client = new HttpClient();
             dineInFull = new List<DineInTableAndEmpModel>();
-            Uri uri = new Uri(string.Format(Constants.GetUriDineInTablesByTableGroupID + groupID + "&type=active", string.Empty));
+            Uri uri = new Uri(string.Format(Constants.GetUriDineInTablesByTableGroupIDEmp + groupID + "&type=active", string.Empty));
             HttpResponseMessage response = await client.GetAsync(uri);
             var content = await response.Content.ReadAsStringAsync();
             dineInFull = JsonConvert.DeserializeObject<List<DineInTableAndEmpModel>>(content);
             return dineInFull;
         }
+
+        //Get Tables by Group ID
+        public async Task<List<DineInTableModel>> GetOnlyDineInTablesByTableGroup(int groupID)
+        {
+            HttpClient client = new HttpClient();
+            dineInTables = new List<DineInTableModel>();
+            Uri uri = new Uri(string.Format(Constants.GetUriDineInTablesByTableGroupID + groupID , string.Empty));
+            HttpResponseMessage response = await client.GetAsync(uri);
+            var content = await response.Content.ReadAsStringAsync();
+            dineInTables = JsonConvert.DeserializeObject<List<DineInTableModel>>(content);
+            return dineInTables;
+        }
+
         public async Task<List<DineInTableAndEmpModel>> GetDineInTablesAllByTableGroup(int groupID)
         {
             HttpClient client = new HttpClient();
             dineInFull = new List<DineInTableAndEmpModel>();
-            Uri uri = new Uri(string.Format(Constants.GetUriDineInTablesByTableGroupID + groupID+"&type=all", string.Empty));
+            Uri uri = new Uri(string.Format(Constants.GetUriDineInTablesByTableGroupIDEmp + groupID+"&type=all", string.Empty));
             HttpResponseMessage response = await client.GetAsync(uri);
             var content = await response.Content.ReadAsStringAsync();
             dineInFull = JsonConvert.DeserializeObject<List<DineInTableAndEmpModel>>(content);

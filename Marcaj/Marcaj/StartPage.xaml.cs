@@ -38,11 +38,12 @@ namespace Marcaj
             {
                 deviceName =device.Remove(19);
             }
+         
+            Debug.WriteLine(deviceName);
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
                 var a = await App.manager.iGetStationSettings(deviceName);
-                //Debug.WriteLine("Az: "+a.ComputerName);
-                //Debug.WriteLine(deviceName);
+               
                 
                 if (a == null)
                 {
