@@ -20,6 +20,7 @@ namespace Marcaj.Models.DbModels
         public Nullable<int> RemoteOrigRowID { get; set; }
         public string GlobalID { get; set; }
         public string RowVer { get; set; }
+        public string GridSize { get; set; }
         public Nullable<System.DateTime> SynchVer { get; set; }
         public Nullable<int> StoreNumber { get; set; }
         public string HQRowID { get; set; }

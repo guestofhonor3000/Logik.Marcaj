@@ -18,26 +18,35 @@ namespace Marcaj.Pages.Settings.Mese
     public partial class ConfigurarePozitiaMeselorPage : ContentPage
     {
         public ObservableCollection<TableLayoutModel> tblLayout;
-        int GroupId;
+        DineInTableGroupModel dineInGroup;
         List<DineInTableModel> dineIns;
-        public ConfigurarePozitiaMeselorPage(int tblGroupId)
+        public ConfigurarePozitiaMeselorPage(DineInTableGroupModel groupModel)
         {
             InitializeComponent();
             dineIns = new List<DineInTableModel>();
-            GroupId = tblGroupId;
+            dineInGroup = groupModel;
             PopList();
         }
 
         async void PopList()
         {
+
             List<string> lstPckr = new List<string>();
             lstPckr.Add("10x8");
             lstPckr.Add("8x9");
             lstPckr.Add("20x10");
             gridPicker.ItemsSource = lstPckr;
-           
-            gridPicker.SelectedIndex = 0;
+            if(dineInGroup.GridSize != "")
+            {
+                var index = lstPckr.IndexOf(dineInGroup.GridSize);
+                gridPicker.SelectedIndex = index;
+            }
+            else
+            {
+                gridPicker.SelectedIndex = 0;
+            }
             tblLayout = new ObservableCollection<TableLayoutModel>();
+
             int col = Convert.ToInt32(gridPicker.SelectedItem.ToString().Split('x')[0]);
             int row = Convert.ToInt32(gridPicker.SelectedItem.ToString().Split('x')[1]);
             int nrPos = col * row;
@@ -56,8 +65,38 @@ namespace Marcaj.Pages.Settings.Mese
                 VerticalItemSpacing = 5,
                 HorizontalItemSpacing = 5
             };
+            
+
+            dineIns = await App.manager.iGetOnlyDineInTablesByTableGroup(dineInGroup.TableGroupID);
+            foreach(var dine in dineIns)
+            {
+                if (dine.DisplayPosition != null)
+                {
+                    if(dine.MaxGuests == 2)
+                    {
+                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
+                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
+                    }
+                    else if(dine.MaxGuests == 4)
+                    {
+                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
+                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
+                    }
+                    else if(dine.MaxGuests == 6)
+                    {
+                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
+                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
+                    }
+                    else if(dine.MaxGuests == 8)
+                    {
+                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
+                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
+                    }
+                    
+                }
+            }
+
             tblLayoutColl.ItemsSource = tblLayout;
-            dineIns = await App.manager.iGetOnlyDineInTablesByTableGroup(GroupId);
         }
 
         private async void btnTbl2_Clicked(object sender, EventArgs e)
@@ -186,7 +225,6 @@ namespace Marcaj.Pages.Settings.Mese
                 model.Position = (i + 1).ToString();
                 model.Text = "";
                 model.Visible = false;
-
                 tblLayout.Add(model);
             }
             tblLayoutColl.ItemsLayout = new GridItemsLayout(col, ItemsLayoutOrientation.Vertical)
@@ -200,7 +238,7 @@ namespace Marcaj.Pages.Settings.Mese
 
         private void tblLayoutColl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Debug.WriteLine("clicked");
+           
         }
     }
 }
