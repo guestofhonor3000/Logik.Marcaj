@@ -35,7 +35,7 @@
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
             <Frame Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" CornerRadius="10" BackgroundColor="#e5e5e5">
-                <Entry x:Name="codEntry" Placeholder="COD ACCES" FontFamily="Verdana" FontSize="22" BackgroundColor="Transparent" PlaceholderColor="Black" TextColor="Black" HorizontalTextAlignment="Center" IsPassword="True" IsReadOnly="True" Margin="-20"/>
+                <Entry x:Name="codEntry" Placeholder="COD ACCES" FontFamily="Verdana" FontSize="22" BackgroundColor="Transparent" PlaceholderColor="Black" TextColor="Black" HorizontalTextAlignment="Center" IsPassword="True" IsReadOnly="False" Margin="-20"/>
             </Frame>
             <Button Grid.Row="2" Grid.Column="1" Text="1" x:Name="btn1" Clicked="btn1_Clicked" BackgroundColor="#515a63" CornerRadius="10" FontFamily="Verdana" FontSize="18"/>
             <Button Grid.Row="2" Grid.Column="2" Text="2" x:Name="btn2" Clicked="btn2_Clicked" BackgroundColor="#515a63" CornerRadius="10" FontFamily="Verdana" FontSize="18"/>
