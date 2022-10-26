@@ -255,7 +255,7 @@ namespace Marcaj.Services
                 response = await client.PutAsync(uri, content);
                 if (response.IsSuccessStatusCode)
                 {
-                    Debug.WriteLine(@"Menu Groups updated");
+                    Debug.WriteLine(@"Table Groups updated");
                 }
             }
             catch (Exception ex)

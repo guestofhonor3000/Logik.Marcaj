@@ -36,8 +36,9 @@ namespace Marcaj.Pages.Settings.Mese
             lstPckr.Add("8x9");
             lstPckr.Add("20x10");
             gridPicker.ItemsSource = lstPckr;
-            if(dineInGroup.GridSize != "")
+            if (dineInGroup.GridSize != "")
             {
+                Debug.WriteLine(dineInGroup.GridSize);
                 var index = lstPckr.IndexOf(dineInGroup.GridSize);
                 gridPicker.SelectedIndex = index;
             }
@@ -65,32 +66,32 @@ namespace Marcaj.Pages.Settings.Mese
                 VerticalItemSpacing = 5,
                 HorizontalItemSpacing = 5
             };
-            
+
 
             dineIns = await App.manager.iGetOnlyDineInTablesByTableGroup(dineInGroup.TableGroupID);
-            foreach(var dine in dineIns)
+            foreach (var dine in dineIns)
             {
                 if (dine.DisplayPosition != null)
                 {
-                    if(dine.MaxGuests == 2)
+                    if (dine.MaxGuests == 2)
                     {
                         tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
                         tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
                         tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
                     }
-                    else if(dine.MaxGuests == 4)
+                    else if (dine.MaxGuests == 4)
                     {
                         tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
                         tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
                         tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
                     }
-                    else if(dine.MaxGuests == 6)
+                    else if (dine.MaxGuests == 6)
                     {
                         tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
                         tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
                         tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
                     }
-                    else if(dine.MaxGuests == 8)
+                    else if (dine.MaxGuests == 8)
                     {
                         tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
                         tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
@@ -106,12 +107,12 @@ namespace Marcaj.Pages.Settings.Mese
         private async void btnTbl2_Clicked(object sender, EventArgs e)
         {
             var dineIns2 = dineIns.Where(x => x.MaxGuests == 2).ToList();
-            if(dineIns2.Count >= tblLayoutColl.SelectedItems.Count)
+            if (dineIns2.Count >= tblLayoutColl.SelectedItems.Count)
             {
                 int i = 0;
                 foreach (var a in tblLayoutColl.SelectedItems)
                 {
-                    
+
                     var b = a as TableLayoutModel;
                     var c = tblLayout.Where(x => x.Position == b.Position).FirstOrDefault();
                     c.Text = "Table2Open.png";
@@ -213,23 +214,27 @@ namespace Marcaj.Pages.Settings.Mese
 
         private async void btnDone_Clicked(object sender, EventArgs e)
         {
-            if(tblLayout.Where(x=> x.Text=="").ToList().Count == tblLayout.Count)
+            if (tblLayout.Where(x => x.Text == "").ToList().Count == tblLayout.Count)
             {
-             
+                var model = new DineInTableGroupModel();
+                model.GridSize = gridPicker.SelectedItem.ToString();
+                await App.manager.iPutTableGroups(model, dineInGroup.TableGroupID);
             }
             else
             {
-                foreach(var tbl in tblLayout.Where(x=> x.Text!="").ToList())
+                foreach (var tbl in tblLayout.Where(x => x.Text != "").ToList())
                 {
                     var model = new DineInTableModel();
                     model.DisplayPosition = tbl.Position;
-                    await App.manager.iPutDineInTable(model, dineIns.Where(x => x.DineInTableText == tbl.TableText).FirstOrDefault().DineInTableID);
+
+                    await App.manager.iPutDineInTablesPosition(model, dineIns.Where(x => x.DineInTableText == tbl.TableText).FirstOrDefault().DineInTableID);
                 }
             }
+            await Navigation.PopModalAsync();
         }
 
         private void gridPicker_SelectedIndexChanged(object sender, EventArgs e)
-        { 
+        {
             tblLayout = new ObservableCollection<TableLayoutModel>();
             int col = Convert.ToInt32(gridPicker.SelectedItem.ToString().Split('x')[0]);
             int row = Convert.ToInt32(gridPicker.SelectedItem.ToString().Split('x')[1]);
@@ -250,11 +255,6 @@ namespace Marcaj.Pages.Settings.Mese
             };
             tblLayoutColl.ItemsSource = tblLayout;
             tblLayoutColl.SelectionMode = SelectionMode.Multiple;
-        }
-
-        private void tblLayoutColl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-           
         }
     }
 }
