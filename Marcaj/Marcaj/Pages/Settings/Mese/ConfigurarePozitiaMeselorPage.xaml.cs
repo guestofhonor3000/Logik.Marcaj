@@ -73,31 +73,33 @@ namespace Marcaj.Pages.Settings.Mese
             {
                 if (dine.DisplayPosition != null)
                 {
-                    if (dine.MaxGuests == 2)
+                    if(Convert.ToInt32(dine.DisplayPosition) <= (col*row))
                     {
-                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
-                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
-                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
+                        if (dine.MaxGuests == 2)
+                        {
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
+                        }
+                        else if (dine.MaxGuests == 4)
+                        {
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
+                        }
+                        else if (dine.MaxGuests == 6)
+                        {
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
+                        }
+                        else if (dine.MaxGuests == 8)
+                        {
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
+                        }
                     }
-                    else if (dine.MaxGuests == 4)
-                    {
-                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
-                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
-                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
-                    }
-                    else if (dine.MaxGuests == 6)
-                    {
-                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
-                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
-                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
-                    }
-                    else if (dine.MaxGuests == 8)
-                    {
-                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
-                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
-                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
-                    }
-
                 }
             }
 
@@ -233,7 +235,7 @@ namespace Marcaj.Pages.Settings.Mese
             await Navigation.PopModalAsync();
         }
 
-        private void gridPicker_SelectedIndexChanged(object sender, EventArgs e)
+        private async void gridPicker_SelectedIndexChanged(object sender, EventArgs e)
         {
             tblLayout = new ObservableCollection<TableLayoutModel>();
             int col = Convert.ToInt32(gridPicker.SelectedItem.ToString().Split('x')[0]);
@@ -253,8 +255,44 @@ namespace Marcaj.Pages.Settings.Mese
                 VerticalItemSpacing = 5,
                 HorizontalItemSpacing = 5
             };
-            tblLayoutColl.ItemsSource = tblLayout;
+           // tblLayoutColl.ItemsSource = tblLayout;
             tblLayoutColl.SelectionMode = SelectionMode.Multiple;
+            dineIns = await App.manager.iGetOnlyDineInTablesByTableGroup(dineInGroup.TableGroupID);
+            foreach (var dine in dineIns)
+            {
+                if (dine.DisplayPosition != null)
+                {
+                    if (Convert.ToInt32(dine.DisplayPosition) <= (col * row))
+                    {
+                        if (dine.MaxGuests == 2)
+                        {
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
+                        }
+                        else if (dine.MaxGuests == 4)
+                        {
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
+                        }
+                        else if (dine.MaxGuests == 6)
+                        {
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
+                        }
+                        else if (dine.MaxGuests == 8)
+                        {
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
+                        }
+                    }
+                }
+            }
+
+            tblLayoutColl.ItemsSource = tblLayout;
         }
     }
 }
