@@ -255,7 +255,6 @@ namespace Marcaj.Pages.Settings.Mese
                 VerticalItemSpacing = 5,
                 HorizontalItemSpacing = 5
             };
-           // tblLayoutColl.ItemsSource = tblLayout;
             tblLayoutColl.SelectionMode = SelectionMode.Multiple;
             dineIns = await App.manager.iGetOnlyDineInTablesByTableGroup(dineInGroup.TableGroupID);
             foreach (var dine in dineIns)

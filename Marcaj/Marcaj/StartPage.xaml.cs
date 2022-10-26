@@ -226,6 +226,8 @@ namespace Marcaj
           
         }
 
+      
+
         private void btn7_Clicked(object sender, EventArgs e)
         {
             codEntry.Text += "7";
