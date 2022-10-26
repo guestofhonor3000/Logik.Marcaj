@@ -76,23 +76,27 @@ namespace Marcaj.Pages.Settings.Mese
                     {
                         tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
                         tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
+                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
                     }
                     else if(dine.MaxGuests == 4)
                     {
                         tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
                         tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
+                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
                     }
                     else if(dine.MaxGuests == 6)
                     {
                         tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
                         tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
+                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
                     }
                     else if(dine.MaxGuests == 8)
                     {
                         tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
                         tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
+                        tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
                     }
-                    
+
                 }
             }
 
@@ -207,9 +211,21 @@ namespace Marcaj.Pages.Settings.Mese
             }
         }
 
-        private void btnDone_Clicked(object sender, EventArgs e)
+        private async void btnDone_Clicked(object sender, EventArgs e)
         {
-
+            if(tblLayout.Where(x=> x.Text=="").ToList().Count == tblLayout.Count)
+            {
+             
+            }
+            else
+            {
+                foreach(var tbl in tblLayout.Where(x=> x.Text!="").ToList())
+                {
+                    var model = new DineInTableModel();
+                    model.DisplayPosition = tbl.Position;
+                    await App.manager.iPutDineInTable(model, dineIns.Where(x => x.DineInTableText == tbl.TableText).FirstOrDefault().DineInTableID);
+                }
+            }
         }
 
         private void gridPicker_SelectedIndexChanged(object sender, EventArgs e)
