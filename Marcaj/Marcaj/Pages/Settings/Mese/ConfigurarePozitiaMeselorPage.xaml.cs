@@ -38,6 +38,7 @@ namespace Marcaj.Pages.Settings.Mese
             gridPicker.ItemsSource = lstPckr;
             if(dineInGroup.GridSize != "")
             {
+                Debug.WriteLine(dineInGroup.GridSize);
                 var index = lstPckr.IndexOf(dineInGroup.GridSize);
                 gridPicker.SelectedIndex = index;
             }
@@ -215,7 +216,9 @@ namespace Marcaj.Pages.Settings.Mese
         {
             if(tblLayout.Where(x=> x.Text=="").ToList().Count == tblLayout.Count)
             {
-             
+                var model = new DineInTableGroupModel();
+                model.GridSize = gridPicker.SelectedItem.ToString();
+                await App.manager.iPutTableGroups(model, dineInGroup.TableGroupID);
             }
             else
             {
@@ -223,9 +226,11 @@ namespace Marcaj.Pages.Settings.Mese
                 {
                     var model = new DineInTableModel();
                     model.DisplayPosition = tbl.Position;
-                    await App.manager.iPutDineInTable(model, dineIns.Where(x => x.DineInTableText == tbl.TableText).FirstOrDefault().DineInTableID);
+
+                    await App.manager.iPutDineInTablesPosition(model, dineIns.Where(x => x.DineInTableText == tbl.TableText).FirstOrDefault().DineInTableID);
                 }
             }
+            await Navigation.PopModalAsync();
         }
 
         private void gridPicker_SelectedIndexChanged(object sender, EventArgs e)
