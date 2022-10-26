@@ -35,8 +35,7 @@
             <CollectionView Grid.Column="1" 
                             x:Name="tblLayoutColl"
                             SelectionMode="Multiple"
-                            BackgroundColor="#66717d" 
-                            SelectionChanged="tblLayoutColl_SelectionChanged">
+                            BackgroundColor="#66717d">
 
                  
                 <CollectionView.ItemTemplate>
