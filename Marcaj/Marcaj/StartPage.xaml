@@ -3,10 +3,58 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Marcaj.StartPage">
     <ContentPage.Content>
-        <StackLayout>
+        <!--StackLayout>
             <Label Text="Introduceti codul de acces!"/>
             <Entry x:Name="codEntry" Placeholder="Cod..."/>
             <Button Clicked="btnSignIn_Clicked" x:Name="btnSignIn" Text="GO"/>
-        </StackLayout>
+        </StackLayout-->
+        <Grid 
+              BackgroundColor="#171a1d"
+              HorizontalOptions="FillAndExpand" 
+              VerticalOptions="FillAndExpand" 
+              RowSpacing="10"
+              ColumnSpacing="10"
+              Margin="0" 
+              Padding="10">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <Frame Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" CornerRadius="10" BackgroundColor="#e5e5e5">
+                <Entry x:Name="codEntry" Placeholder="COD ACCES" FontFamily="Verdana" FontSize="22" BackgroundColor="Transparent" PlaceholderColor="Black" TextColor="Black" HorizontalTextAlignment="Center" IsPassword="True" IsReadOnly="True" Margin="-20"/>
+            </Frame>
+            <Button Grid.Row="2" Grid.Column="1" Text="1" x:Name="btn1" Clicked="btn1_Clicked" BackgroundColor="#515a63" CornerRadius="10" FontFamily="Verdana" FontSize="18"/>
+            <Button Grid.Row="2" Grid.Column="2" Text="2" x:Name="btn2" Clicked="btn2_Clicked" BackgroundColor="#515a63" CornerRadius="10" FontFamily="Verdana" FontSize="18"/>
+            <Button Grid.Row="2" Grid.Column="3" Text="3" x:Name="btn3" Clicked="btn3_Clicked" BackgroundColor="#515a63" CornerRadius="10" FontFamily="Verdana" FontSize="18"/>
+
+            <Button Grid.Row="3" Grid.Column="1" Text="4" x:Name="btn4" Clicked="btn4_Clicked" BackgroundColor="#515a63" CornerRadius="10" FontFamily="Verdana" FontSize="18"/>
+            <Button Grid.Row="3" Grid.Column="2" Text="5" x:Name="btn5" Clicked="btn5_Clicked" BackgroundColor="#515a63" CornerRadius="10" FontFamily="Verdana" FontSize="18"/>
+            <Button Grid.Row="3" Grid.Column="3" Text="6"  x:Name="btn6" Clicked="btn6_Clicked" BackgroundColor="#515a63" CornerRadius="10" FontFamily="Verdana" FontSize="18"/>
+
+            <Button Grid.Row="4" Grid.Column="1" Text="7" x:Name="btn7" Clicked="btn7_Clicked" BackgroundColor="#515a63" CornerRadius="10" FontFamily="Verdana" FontSize="18"/>
+            <Button Grid.Row="4" Grid.Column="2" Text="8" x:Name="btn8" Clicked="btn8_Clicked" BackgroundColor="#515a63" CornerRadius="10" FontFamily="Verdana" FontSize="18"/>
+            <Button Grid.Row="4" Grid.Column="3" Text="9" x:Name="btn9" Clicked="btn9_Clicked" BackgroundColor="#515a63" CornerRadius="10" FontFamily="Verdana" FontSize="18"/>
+
+            <Button Grid.Row="5"  Grid.Column="1" Text="DEL"  x:Name="btnDel" Clicked="btnDel_Clicked" BackgroundColor="#515a63" CornerRadius="10" FontFamily="Verdana" FontSize="18"/>
+            <Button Grid.Row="5"  Grid.Column="2" Text="0" x:Name="btn0" Clicked="btn0_Clicked"  BackgroundColor="#515a63" CornerRadius="10" FontFamily="Verdana" FontSize="18"/>
+            <Button Grid.Row="5" Grid.Column="3"  Text="OK" x:Name="btnSignIn" Clicked="btnSignIn_Clicked" BackgroundColor="#478547" CornerRadius="10" FontFamily="Verdana" FontSize="18"/>
+
+
+        </Grid>
+
     </ContentPage.Content>
 </ContentPage>

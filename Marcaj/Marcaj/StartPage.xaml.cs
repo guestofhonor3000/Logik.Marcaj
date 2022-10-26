@@ -225,5 +225,60 @@ namespace Marcaj
             }
           
         }
+
+        private void btn7_Clicked(object sender, EventArgs e)
+        {
+            codEntry.Text += "7";
+        }
+
+        private void btn8_Clicked(object sender, EventArgs e)
+        {
+            codEntry.Text += "8";
+        }
+
+        private void btn9_Clicked(object sender, EventArgs e)
+        {
+            codEntry.Text += "9";
+        }
+        private void btn0_Clicked(object sender, EventArgs e)
+        {
+            codEntry.Text += "0";
+        }
+
+        private void btn4_Clicked(object sender, EventArgs e)
+        {
+            codEntry.Text += "4";
+        }
+
+        private void btn5_Clicked(object sender, EventArgs e)
+        {
+            codEntry.Text += "5";
+        }
+
+        private void btn6_Clicked(object sender, EventArgs e)
+        {
+            codEntry.Text += "6";
+        }
+
+        private void btn1_Clicked(object sender, EventArgs e)
+        {
+            codEntry.Text += "1";
+        }
+
+        private void btn2_Clicked(object sender, EventArgs e)
+        {
+            codEntry.Text += "2";
+        }
+
+        private void btn3_Clicked(object sender, EventArgs e)
+        {
+            codEntry.Text += "3";
+        }
+
+        private void btnDel_Clicked(object sender, EventArgs e)
+        {
+            //string s = codEntry.Text.Substring(0, codEntry.Text.Length - 1);
+            codEntry.Text = "";
+        }
     }
 }
