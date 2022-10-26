@@ -142,6 +142,7 @@
     <Content Include="HomeSettingsButton.png" />
     <Content Include="HomeTabButton.png" />
     <Content Include="HomeVoidButton.png" />
+    <Content Include="MainAddButtton.png" />
     <Content Include="MainBackButtton.png" />
     <Content Include="MainBarButton.png" />
     <Content Include="MainMeseButton.png" />
@@ -151,6 +152,7 @@
     <Content Include="MainPayButton.png" />
     <Content Include="MainPlaceholderButton.png" />
     <Content Include="MainRecallButton.png" />
+    <Content Include="MainSettingsSelectedButton.png" />
     <Content Include="MainVoidButton.png" />
     <Content Include="PayCardButton.png" />
     <Content Include="PayCashButton.png" />

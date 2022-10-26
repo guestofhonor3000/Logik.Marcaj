@@ -241,4 +241,10 @@
   <ItemGroup>
     <BundleResource Include="Resources\Table4Open.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\MainSettingsSelectedButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\MainAddButtton.png" />
+  </ItemGroup>
 </Project>

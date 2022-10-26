@@ -4,20 +4,52 @@
              x:Class="Marcaj.Pages.Settings.Mese.ConfigurareGrupuriPage"
              BackgroundColor="White">
     <ContentPage.Content>
-        <Grid>
+        <Grid   RowSpacing="0" 
+               ColumnSpacing="0"  
+               BackgroundColor="#66717d">
+            
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".5*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
-            <StackLayout Grid.Column="0">
-                <Button x:Name="btnAddTableGroup" Text="Add" Clicked="btnAddTableGroup_Clicked" BackgroundColor="DimGray"/>
+
+            <StackLayout Grid.Column="0"
+                         BackgroundColor="#171a1d"
+                         VerticalOptions="Fill"
+                         Padding="10"
+                         Spacing="10">
+                
+                <ImageButton  Source="MainSettingsSelectedButton.png" 
+                              VerticalOptions="Start"/>
+                <ImageButton  Source="MainAddButtton.png" 
+                              VerticalOptions="StartAndExpand" 
+                              x:Name="btnAddTableGroup" 
+                              Clicked="btnAddTableGroup_Clicked"/>
+                <ImageButton  Source="MainBackButtton.png" 
+                              VerticalOptions="End"/>
+            
+            </StackLayout>
+
+            <StackLayout Grid.Column="1"
+                         BackgroundColor="#394046"
+                         VerticalOptions="Fill"
+                         Padding="10"
+                         Spacing="10">
+
                 <ListView x:Name="lstvwGrupMese" ItemSelected="lstvwGrupMese_ItemSelected">
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <StackLayout>
-                                    <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold"  TextColor="White" BackgroundColor="#8f99a3" Padding="10,20,10,20" Text="{Binding TableGroupText}"/>
+                                    <Label VerticalOptions="Center" 
+                                           HorizontalOptions="Center" 
+                                           FontAttributes="Bold"  
+                                           TextColor="White" 
+                                           BackgroundColor="#8f99a3" 
+                                           Padding="10,20,10,20" Text="{Binding TableGroupText}"/>
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>
@@ -28,7 +60,10 @@
             </StackLayout>
 
 
-            <Grid Grid.Column="1" RowDefinitions="{Binding Rows}" ColumnDefinitions="{Binding Columns}">
+            <Grid Grid.Column="2" 
+                  BackgroundColor="White"
+                  RowDefinitions="{Binding Rows}" 
+                  ColumnDefinitions="{Binding Columns}">
                 <Grid.GestureRecognizers>
                     <SwipeGestureRecognizer Swiped="SwipeGestureRecognizer_Swiped" />
                 </Grid.GestureRecognizers>

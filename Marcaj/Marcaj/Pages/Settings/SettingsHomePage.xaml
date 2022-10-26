@@ -3,8 +3,83 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Marcaj.Pages.Settings.SettingsHomePage">
     <ContentPage.Content>
-        <StackLayout>
-            <Button Text="Mese" x:Name="btnMeseConf" Clicked="btnMeseConf_Clicked" />
-        </StackLayout>
+        
+        <Grid  RowSpacing="0" 
+               ColumnSpacing="0"  
+               BackgroundColor="#66717d">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="9*"/>
+
+        
+            </Grid.ColumnDefinitions>
+
+            <ScrollView Grid.Column="0"  
+                        VerticalScrollBarVisibility="Never">
+
+                <Grid BackgroundColor="#171a1d" 
+                      HorizontalOptions="FillAndExpand" 
+                      VerticalOptions="FillAndExpand" 
+                      RowSpacing="10" 
+                      Margin="0" 
+                      Padding="10">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <ImageButton Grid.Row="0" 
+                                 Source="MainMeseButton.png" 
+                                 x:Name="btnMeseConf" 
+                                 Clicked="btnMeseConf_Clicked" 
+                                 VerticalOptions="Start"/>
+
+                </Grid>
+            </ScrollView>
+
+            <ScrollView Grid.Column="1"  
+                        VerticalScrollBarVisibility="Never">
+
+                <CollectionView  SelectionMode="Single"
+                                 SelectionChanged="optionsListColl_SelectionChanged"
+                                 x:Name="optionsListColl" 
+                                 Margin="20,0,20,0">
+
+                <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical"
+                                           ItemSpacing ="10"/>
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Button Grid.Row="0" 
+                                        BackgroundColor="#8f99a3" 
+                                        CornerRadius="10" 
+                                        IsEnabled="False"/>
+                                <Label Grid.Row="0" 
+                                       Text="{Binding Text}" 
+                                       FontAttributes="Bold" 
+                                       FontSize="20" 
+                                       FontFamily="Verdana" 
+                                       HorizontalTextAlignment="Center"
+                                       VerticalOptions="Center" 
+                                       HorizontalOptions="CenterAndExpand" 
+                                       TextColor="White"   
+                                       Padding="0,30,0,30"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+
+            
+
+        </Grid>
+
     </ContentPage.Content>
 </ContentPage>
