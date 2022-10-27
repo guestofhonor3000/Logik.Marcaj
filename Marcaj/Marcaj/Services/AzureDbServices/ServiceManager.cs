@@ -93,9 +93,9 @@ namespace Marcaj.Services
         {
             return Service.GetDineInTablesAllByTableGroup(groupID);
         }
-        public Task iPutDineInTablesPosition(DineInTableModel item, int id)
+        public Task iPutDineInTablesPosition(List<DineInTableModel> items)
         {
-            return Service.PutDineInTablesPosition(item, id);
+            return Service.PutDineInTablesPosition(items);
         }
 
         public Task<List<DineInTableModel>> iGetOnlyDineInTablesByTableGroup(int groupID)

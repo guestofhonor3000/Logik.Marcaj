@@ -186,12 +186,12 @@ namespace Marcaj.Services
         }
 
         //Put Table Position
-        public async Task PutDineInTablesPosition(DineInTableModel item, int id)
+        public async Task PutDineInTablesPosition(List<DineInTableModel> items)
         {
-            Uri uri = new Uri(string.Format(Constants.PutUriDineInTablesPosition + id, string.Empty));
+            Uri uri = new Uri(string.Format(Constants.PutUriDineInTablesPosition, string.Empty));
             try
             {
-                string json = System.Text.Json.JsonSerializer.Serialize<DineInTableModel>(item, serializerOptions);
+                string json = System.Text.Json.JsonSerializer.Serialize<List<DineInTableModel>>(items, serializerOptions);
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = null;
                 response = await client.PutAsync(uri, content);

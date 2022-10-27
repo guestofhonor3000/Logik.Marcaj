@@ -109,6 +109,16 @@ namespace Marcaj.Pages.Settings.Mese
         private async void btnTbl2_Clicked(object sender, EventArgs e)
         {
             var dineIns2 = dineIns.Where(x => x.MaxGuests == 2).ToList();
+            foreach (var dineIn in dineIns2)
+            {
+                var toNull = tblLayout.Where(x => x.TableText == dineIn.DineInTableText).FirstOrDefault();
+                if (toNull != null)
+                {
+                    toNull.Visible = false;
+                    toNull.TableText = "";
+                    toNull.Text = "";
+                }
+            }
             if (dineIns2.Count >= tblLayoutColl.SelectedItems.Count)
             {
                 int i = 0;
@@ -135,7 +145,17 @@ namespace Marcaj.Pages.Settings.Mese
 
         private async void btnTbl4_Clicked(object sender, EventArgs e)
         {
-            var dineIns4 = dineIns.Where(x => x.MaxGuests == 4).ToList();
+            var dineIns4 = dineIns.Where(x => x.MaxGuests == 4).ToList(); 
+            foreach (var dineIn in dineIns4)
+            {
+                var toNull = tblLayout.Where(x => x.TableText == dineIn.DineInTableText).FirstOrDefault();
+                if (toNull != null)
+                {
+                    toNull.Visible = false;
+                    toNull.TableText = "";
+                    toNull.Text = "";
+                }
+            }
             if (dineIns4.Count >= tblLayoutColl.SelectedItems.Count)
             {
                 int i = 0;
@@ -163,6 +183,16 @@ namespace Marcaj.Pages.Settings.Mese
         private async void btnTbl6_Clicked(object sender, EventArgs e)
         {
             var dineIns6 = dineIns.Where(x => x.MaxGuests == 6).ToList();
+            foreach (var dineIn in dineIns6)
+            {
+                var toNull = tblLayout.Where(x => x.TableText == dineIn.DineInTableText).FirstOrDefault();
+                if (toNull != null)
+                {
+                    toNull.Visible = false;
+                    toNull.TableText = "";
+                    toNull.Text = "";
+                }
+            }
             if (dineIns6.Count >= tblLayoutColl.SelectedItems.Count)
             {
                 int i = 0;
@@ -190,6 +220,16 @@ namespace Marcaj.Pages.Settings.Mese
         private async void btnTbl8_Clicked(object sender, EventArgs e)
         {
             var dineIns8 = dineIns.Where(x => x.MaxGuests == 8).ToList();
+            foreach (var dineIn in dineIns8)
+            {
+                var toNull = tblLayout.Where(x => x.TableText == dineIn.DineInTableText).FirstOrDefault();
+                if (toNull != null)
+                {
+                    toNull.Visible = false;
+                    toNull.TableText = "";
+                    toNull.Text = "";
+                }
+            }
             if (dineIns8.Count >= tblLayoutColl.SelectedItems.Count)
             {
                 int i = 0;
@@ -224,13 +264,16 @@ namespace Marcaj.Pages.Settings.Mese
             }
             else
             {
+                List<DineInTableModel> putLst = new List<DineInTableModel>();
                 foreach (var tbl in tblLayout.Where(x => x.Text != "").ToList())
                 {
                     var model = new DineInTableModel();
                     model.DisplayPosition = tbl.Position;
+                    model.DineInTableID = dineIns.Where(x => x.DineInTableText == tbl.TableText).FirstOrDefault().DineInTableID;
 
-                    await App.manager.iPutDineInTablesPosition(model, dineIns.Where(x => x.DineInTableText == tbl.TableText).FirstOrDefault().DineInTableID);
+                    putLst.Add(model);
                 }
+                await App.manager.iPutDineInTablesPosition(putLst);
             }
             await Navigation.PopModalAsync();
         }
