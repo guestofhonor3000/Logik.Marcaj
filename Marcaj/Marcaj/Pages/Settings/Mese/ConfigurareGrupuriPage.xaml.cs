@@ -50,39 +50,6 @@ namespace Marcaj.Pages.Settings.Mese
             }
         }
 
-        private async void lstvwGrupMese_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            var a = e.SelectedItem as DineInTableGroupModel;
-            var result = await DisplayActionSheet("What do you want to do?", "Cancel", "Close", "Delete", "Edit", "Assign");
-            if (result == "Edit")
-            {
-                var edit = await DisplayPromptAsync("Edit", "Choose a Name", "OK", "Cancel", a.TableGroupText);
-                if (edit != null)
-                {
-                    if (edit != "Cancel")
-                    {
-                        a.TableGroupText = edit;
-                        await App.manager.iPutTableGroups(a, a.TableGroupID);
-                        PopList();
-                    }
-                }
-            }
-            else if (result == "Delete")
-            {
-                var prompt = await DisplayAlert("Delete", "Are you sure?", "OK", "Cancel");
-                if (prompt == true)
-                {
-                    await App.manager.iDeleteTableGroup(a.TableGroupID);
-                    PopList();
-                }
-            }
-            else if(result == "Assign")
-            {
-                await Navigation.PushModalAsync(new ConfigurarePozitiaMeselorPage(a));
-                //GroupId = a.TableGroupID;
-            }
-        }
-
         private async void btnAddTableGroup_Clicked(object sender, EventArgs e)
         {
             var name = await DisplayPromptAsync("Add", "Choose a Name", "Ok", "Cancel", "Table Group Name");
@@ -113,9 +80,20 @@ namespace Marcaj.Pages.Settings.Mese
             Debug.WriteLine("Swiped");
         }
 
-        private void btnGroupNameEdit_Clicked(object sender, EventArgs e)
+        private async void btnGroupNameEdit_Clicked(object sender, EventArgs e)
         {
+            var a = lstvwGrupMese.SelectedItem as DineInTableGroupModel;
+            var edit = await DisplayPromptAsync("Edit", "Choose a Name", "OK", "Cancel", a.TableGroupText);
+            if (edit != null)
+            {
+                if (edit != "Cancel")
+                {
+                    a.TableGroupText = edit;
+                    await App.manager.iPutTableGroups(a, a.TableGroupID);
+                    PopList();
+                }
 
+            }
         }
 
         private async void btnAssignTables_Clicked(object sender, EventArgs e)

@@ -38,14 +38,16 @@
                         BackgroundColor="#394046">
 
                 <ListView x:Name="lstvwGrupMese" 
-                          ItemSelected="lstvwGrupMese_ItemSelected"
                           Margin="10,5,10,5"
                           HasUnevenRows="True">
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Frame CornerRadius="10" BackgroundColor="#8f99a3" Margin="0,5,0,5">
+                                <Frame CornerRadius="10" 
+                                       BackgroundColor="#8f99a3" 
+                                       Margin="0,5,0,5">
+                                    
                                     <Label Text="{Binding TableGroupText}"
                                            VerticalOptions="Center" 
                                            HorizontalOptions="CenterAndExpand"
@@ -77,9 +79,14 @@
                        VerticalOptions="Start">
                     
                         <Button  
-                            Text="Redenumeste" 
+                            Text="Redenumeste"
+                            FontSize="20" 
+                            FontFamily="Verdana"
+                            FontAttributes="Bold"  
+                            TextColor="White" 
                             x:Name="btnGroupNameEdit" 
-                            Clicked="btnGroupNameEdit_Clicked"/>
+                            Clicked="btnGroupNameEdit_Clicked"
+                            BackgroundColor="#8f99a3"/>
                 </Frame>
 
                 <Frame CornerRadius="10" 
@@ -88,8 +95,13 @@
                     
                         <Button  
                             Text="Editeaza" 
+                            FontSize="20" 
+                            FontFamily="Verdana"
+                            FontAttributes="Bold"  
+                            TextColor="White" 
                             x:Name="btnAssignTables" 
-                            Clicked="btnAssignTables_Clicked"/>
+                            Clicked="btnAssignTables_Clicked"
+                            BackgroundColor="#8f99a3"/>
                 </Frame>
 
                 <Frame CornerRadius="10" 
@@ -98,8 +110,13 @@
                     
                         <Button  
                             Text="Sterge" 
+                            FontSize="20" 
+                            FontFamily="Verdana"
+                            FontAttributes="Bold"  
+                            TextColor="White" 
                             x:Name="btnDeleteGroup" 
-                            Clicked="btnDeleteGroup_Clicked"/>
+                            Clicked="btnDeleteGroup_Clicked"
+                            BackgroundColor="#8f99a3"/>
                 </Frame>
 
             </StackLayout>
