@@ -145,6 +145,7 @@
     <Content Include="MainAddButtton.png" />
     <Content Include="MainBackButtton.png" />
     <Content Include="MainBarButton.png" />
+    <Content Include="MainDoneButton.png" />
     <Content Include="MainMeseButton.png" />
     <Content Include="MainMoreButtton.png" />
     <Content Include="MainNoSaleButton.png" />

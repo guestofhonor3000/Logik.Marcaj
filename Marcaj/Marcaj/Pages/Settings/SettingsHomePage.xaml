@@ -41,40 +41,32 @@
             <ScrollView Grid.Column="1"  
                         VerticalScrollBarVisibility="Never">
 
-                <CollectionView  SelectionMode="Single"
-                                 SelectionChanged="optionsListColl_SelectionChanged"
-                                 x:Name="optionsListColl" 
-                                 Margin="20,0,20,0">
-
-                <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Vertical"
-                                           ItemSpacing ="10"/>
-                    </CollectionView.ItemsLayout>
-
-                    <CollectionView.ItemTemplate>
+                <ListView x:Name="optionsList"
+                          ItemSelected="optionsList_ItemSelected"
+                          Margin="40,5,40,5"
+                          HasUnevenRows="True">
+           
+                    <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <Button Grid.Row="0" 
-                                        BackgroundColor="#8f99a3" 
-                                        CornerRadius="10" 
-                                        IsEnabled="False"/>
-                                <Label Grid.Row="0" 
-                                       Text="{Binding Text}" 
-                                       FontAttributes="Bold" 
-                                       FontSize="20" 
-                                       FontFamily="Verdana" 
-                                       HorizontalTextAlignment="Center"
-                                       VerticalOptions="Center" 
-                                       HorizontalOptions="CenterAndExpand" 
-                                       TextColor="White"   
-                                       Padding="0,30,0,30"/>
-                            </Grid>
+                            <ViewCell>
+
+                                <Frame CornerRadius="10" BackgroundColor="#8f99a3" Margin="0,5,0,5">
+                                        <Label Text="{Binding Text}" 
+                                           FontAttributes="Bold" 
+                                           FontSize="20" 
+                                           FontFamily="Verdana" 
+                                           HorizontalTextAlignment="Center"
+                                           VerticalOptions="Center" 
+                                           HorizontalOptions="CenterAndExpand" 
+                                           TextColor="White"
+                                           Padding="10"
+                                          />
+                                    </Frame>
+                              
+                            </ViewCell>
                         </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                    </ListView.ItemTemplate>
+                </ListView>
             </ScrollView>
 
             

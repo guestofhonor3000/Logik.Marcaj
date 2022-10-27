@@ -1,4 +1,5 @@
-﻿using Marcaj.Models.DbModels;
+﻿using Marcaj.Models.CustomModels;
+using Marcaj.Models.DbModels;
 using Marcaj.Pages.Tables;
 using System;
 using System.Collections.Generic;
@@ -26,20 +27,20 @@ namespace Marcaj.Pages.Settings.Mese
         int GroupId;
         Button btnAssigned;
         public ObservableCollection<GridDefinitions> gridDefs;
+        public ObservableCollection<TableLayoutModel> tblLayout;
         public ConfigurareGrupuriPage()
         {
             InitializeComponent();
             PopList();
+            
+       
+
             MessagingCenter.Subscribe<ListMeseModalPage, string>(this, "Up", (sender, result) =>
             {
                 btnAssigned.Text = result;
             });
         }
 
-        void PopGrid()
-        {
-
-        }
         async void PopList()
         {
             var b = await App.manager.iGetDineInTableGroups();
@@ -110,6 +111,28 @@ namespace Marcaj.Pages.Settings.Mese
         private void SwipeGestureRecognizer_Swiped(object sender, SwipedEventArgs e)
         {
             Debug.WriteLine("Swiped");
+        }
+
+        private void btnGroupNameEdit_Clicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void btnAssignTables_Clicked(object sender, EventArgs e)
+        {
+            var a = lstvwGrupMese.SelectedItem as DineInTableGroupModel;
+            await Navigation.PushModalAsync(new ConfigurarePozitiaMeselorPage(a));
+        }
+
+        private async void btnDeleteGroup_Clicked(object sender, EventArgs e)
+        {
+            var a = lstvwGrupMese.SelectedItem as DineInTableGroupModel;
+            var prompt = await DisplayAlert("Delete", "Are you sure?", "OK", "Cancel");
+            if (prompt == true)
+            {
+                await App.manager.iDeleteTableGroup(a.TableGroupID);
+                PopList();
+            }
         }
     }
 }

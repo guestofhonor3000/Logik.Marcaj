@@ -7,7 +7,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="4*"/>
                 <RowDefinition Height="40*"/>
-                <RowDefinition Height="2*"/>
+
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0" BackgroundColor="#171a1d" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" ColumnSpacing="5" Margin="0" Padding="0,0,0,10">
@@ -76,16 +76,7 @@
                 </Grid>
             </Grid>
             
-            <Grid Grid.Row="2"  BackgroundColor="#171a1d">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <Label HorizontalOptions="Center" Grid.Column="0" x:Name="StationName"/>
-                <Label HorizontalOptions="Center" Grid.Column="1" x:Name="EmployeeName"/>
-
-            </Grid>
+            
         </Grid>
     </ContentPage.Content>
 </ContentPage>

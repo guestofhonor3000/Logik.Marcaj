@@ -26,28 +26,36 @@ namespace Marcaj.Pages.Settings
             new MeseOptionsModel { Text="Mese Active/Inactive"},
             new MeseOptionsModel { Text="Grupuri" }
         };
-            optionsListColl.ItemsSource = meseOpt;
+            optionsList.ItemsSource = meseOpt;
         }
         private async void btnMeseConf_Clicked(object sender, EventArgs e)
         {
-            optionsListColl.ItemsSource = meseOpt;
+            optionsList.ItemsSource = meseOpt;
         }
 
         
-        private async void optionsListColl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void optionsList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             
             
-            string current = (e.CurrentSelection.FirstOrDefault() as MeseOptionsModel)?.Text;
-                   if (current == "Mese Active/Inactive")
+                   var current = e.SelectedItem as MeseOptionsModel;
+                
+                  if (((ListView)sender).SelectedItem == null)
+                  return;
+            
+               
+                   if (current.Text == "Mese Active/Inactive")
                     {
                         await Navigation.PushAsync(new ConfigurareMesePage());
+                
                     }
-                    else if(current == "Grupuri")
+                    else if(current.Text == "Grupuri")
                     {
                         await Navigation.PushAsync(new ConfigurareGrupuriPage());
+        
                     }
-             
+
+                   ((ListView)sender).SelectedItem = null;
         }
     }
 }
