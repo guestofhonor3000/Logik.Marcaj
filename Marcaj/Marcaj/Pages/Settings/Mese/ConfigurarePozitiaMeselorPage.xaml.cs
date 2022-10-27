@@ -273,6 +273,17 @@ namespace Marcaj.Pages.Settings.Mese
 
                     putLst.Add(model);
                 }
+                foreach(var dineIn in dineIns)
+                {
+                    if(tblLayout.Where(x=>x.TableText == dineIn.DineInTableText).FirstOrDefault()==null)
+                    {
+                        var model = new DineInTableModel();
+                        model.DisplayPosition = null;
+                        model.DineInTableID = dineIn.DineInTableID;
+
+                        putLst.Add(model);
+                    }
+                }
                 await App.manager.iPutDineInTablesPosition(putLst);
             }
             await Navigation.PopModalAsync();
