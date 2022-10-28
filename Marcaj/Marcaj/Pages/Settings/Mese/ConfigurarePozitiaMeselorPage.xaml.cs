@@ -18,6 +18,7 @@ namespace Marcaj.Pages.Settings.Mese
     public partial class ConfigurarePozitiaMeselorPage : ContentPage
     {
         public ObservableCollection<TableLayoutModel> tblLayout;
+        EmployeeFileModel EmplFl;
         DineInTableGroupModel dineInGroup;
         List<DineInTableModel> dineIns;
         public ConfigurarePozitiaMeselorPage(DineInTableGroupModel groupModel)
@@ -32,9 +33,10 @@ namespace Marcaj.Pages.Settings.Mese
         {
 
             List<string> lstPckr = new List<string>();
-            lstPckr.Add("10x8");
+            lstPckr.Add("8x6");
             lstPckr.Add("8x9");
-            lstPckr.Add("20x10");
+            lstPckr.Add("10x8");
+           
             gridPicker.ItemsSource = lstPckr;
             if (dineInGroup.GridSize != "")
             {
@@ -264,6 +266,9 @@ namespace Marcaj.Pages.Settings.Mese
             }
             else
             {
+                var modelGr = new DineInTableGroupModel();
+                modelGr.GridSize = gridPicker.SelectedItem.ToString();
+                await App.manager.iPutTableGroups(modelGr, dineInGroup.TableGroupID);
                 List<DineInTableModel> putLst = new List<DineInTableModel>();
                 foreach (var tbl in tblLayout.Where(x => x.Text != "").ToList())
                 {
