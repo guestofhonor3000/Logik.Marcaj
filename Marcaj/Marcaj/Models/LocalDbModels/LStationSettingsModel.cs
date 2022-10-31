@@ -18,6 +18,7 @@ namespace Marcaj.Models.LocalDbModels
         public bool DedicatedToCashier { get; set; }
         public string UserInterfaceLocale { get; set; }
         public string ReceiptPrinterName { get; set; }
+        public Nullable<bool> PopUpBool { get; set; }
         public bool FastBar { get; set; }
         public bool BarTab { get; set; }
         public bool OrderRecallToBrowse { get; set; }

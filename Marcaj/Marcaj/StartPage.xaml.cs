@@ -49,55 +49,35 @@ namespace Marcaj
 
                     if (a == null)
                     {
-                        var model = new StationSettingsModel();
+                        var prompt = await DisplayPromptAsync("Code", "Enter the code for the desired db.", "Ok", "Cancel", "Code...",4,Keyboard.Numeric);
+                        if (prompt == "1234")
+                        {
+                            var stations = await App.manager.iGetAllStationSettings();
+                            var stationNames = new List<string>();
+                            foreach (var st in stations)
+                            {
+                                stationNames.Add(st.ComputerName);
+                            }
+                            var action = await DisplayActionSheet("Choose", "Cancel", null, stationNames.ToArray());
+                            if (action != null)
+                            {
+                                var alert = await DisplayAlert("Warning", "About to edit the chosen station", "Ok", "Cancel");
+                                if(alert == true)
+                                {
+                                    var modell = stations.Where(x => x.ComputerName == action).FirstOrDefault();
 
-                        model.ComputerName = deviceName;
-                        model.ReceiptPrinterPort = "No Printer Attached";
-                        model.ReceiptPrinterType = 1;
-                        model.CashDrawerAttached = false;
-                        model.KitchenPrinter1Title = "Bucatarie";
-                        model.KitchenPrinter1Port = "No Printer Attached";
-                        model.KitchenPrinter1Type = 1;
-                        model.KitchenPrinter1Name = "No Printer Attached";
-                        model.DedicatedToCashier = false;
-                        model.UserInterfaceLocale = "3";
-                        model.ReceiptPrinterName = "No Printer Attached";
-                        model.FastBar = false;
-                        model.BarTab = false;
-                        model.OrderRecallToBrowse = false;
-                        model.DefaultToMenuGroupsInOrderEntry = false;
-                        model.HasEDC = false;
-                        model.DriveThruStation = false;
-                        model.KeepInOrderEntryAfterSent = false;
-                        model.RowGUID = Guid.NewGuid().ToString();
+                                    modell.ComputerName = deviceName;
 
+                                    await App.manager.iPutStationName(modell);
 
-
-                        await App.manager.iPostStationSettings(model);
-
-                        var lmodel = new LStationSettingsModel();
-
-                        lmodel.ComputerName = deviceName;
-                        lmodel.ReceiptPrinterPort = "No Printer Attached";
-                        lmodel.ReceiptPrinterType = 1;
-                        lmodel.CashDrawerAttached = false;
-                        lmodel.KitchenPrinter1Title = "Bucatarie";
-                        lmodel.KitchenPrinter1Port = "No Printer Attached";
-                        lmodel.KitchenPrinter1Type = 1;
-                        lmodel.KitchenPrinter1Name = "No Printer Attached";
-                        lmodel.DedicatedToCashier = false;
-                        lmodel.UserInterfaceLocale = "3";
-                        lmodel.ReceiptPrinterName = "No Printer Attached";
-                        lmodel.FastBar = false;
-                        lmodel.BarTab = false;
-                        lmodel.OrderRecallToBrowse = false;
-                        lmodel.DefaultToMenuGroupsInOrderEntry = false;
-                        lmodel.HasEDC = false;
-                        lmodel.DriveThruStation = false;
-                        lmodel.KeepInOrderEntryAfterSent = false;
-                        lmodel.RowGUID = Guid.NewGuid().ToString();
-
-                        await App.lDatabase.lPostStationSettings(lmodel);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Post(deviceName);
+                        }
+                        
                     }
 
                     var la = await App.lDatabase.lGetStationSettings(deviceName);
@@ -227,7 +207,58 @@ namespace Marcaj
         }
 
       
+        async void Post(string deviceName)
+        {
+            var model = new StationSettingsModel();
 
+            model.ComputerName = deviceName;
+            model.ReceiptPrinterPort = "No Printer Attached";
+            model.ReceiptPrinterType = 1;
+            model.CashDrawerAttached = false;
+            model.KitchenPrinter1Title = "Bucatarie";
+            model.KitchenPrinter1Port = "No Printer Attached";
+            model.KitchenPrinter1Type = 1;
+            model.KitchenPrinter1Name = "No Printer Attached";
+            model.DedicatedToCashier = false;
+            model.UserInterfaceLocale = "3";
+            model.ReceiptPrinterName = "No Printer Attached";
+            model.FastBar = false;
+            model.BarTab = false;
+            model.OrderRecallToBrowse = false;
+            model.DefaultToMenuGroupsInOrderEntry = false;
+            model.HasEDC = false;
+            model.DriveThruStation = false;
+            model.KeepInOrderEntryAfterSent = false;
+            model.RowGUID = Guid.NewGuid().ToString();
+
+
+
+            await App.manager.iPostStationSettings(model);
+
+            var lmodel = new LStationSettingsModel();
+
+            lmodel.ComputerName = deviceName;
+            lmodel.ReceiptPrinterPort = "No Printer Attached";
+            lmodel.ReceiptPrinterType = 1;
+            lmodel.CashDrawerAttached = false;
+            lmodel.KitchenPrinter1Title = "Bucatarie";
+            lmodel.KitchenPrinter1Port = "No Printer Attached";
+            lmodel.KitchenPrinter1Type = 1;
+            lmodel.KitchenPrinter1Name = "No Printer Attached";
+            lmodel.DedicatedToCashier = false;
+            lmodel.UserInterfaceLocale = "3";
+            lmodel.ReceiptPrinterName = "No Printer Attached";
+            lmodel.FastBar = false;
+            lmodel.BarTab = false;
+            lmodel.OrderRecallToBrowse = false;
+            lmodel.DefaultToMenuGroupsInOrderEntry = false;
+            lmodel.HasEDC = false;
+            lmodel.DriveThruStation = false;
+            lmodel.KeepInOrderEntryAfterSent = false;
+            lmodel.RowGUID = Guid.NewGuid().ToString();
+
+            await App.lDatabase.lPostStationSettings(lmodel);
+        }
         private void btn7_Clicked(object sender, EventArgs e)
         {
             codEntry.Text += "7";

@@ -24,6 +24,7 @@ namespace Marcaj.Services
         List<OrderTransactionsModel> orderTransactions;
         List<OrderHeadersModel> orderHeaders;
         List<EmployeeFileModel> employeeFiles;
+        List<StationSettingsModel> stationModels;
         #endregion
 
         #region Init
@@ -616,6 +617,61 @@ namespace Marcaj.Services
             }
         }
 
+        //Put DeviceName
+        public async Task PutStationName(StationSettingsModel item)
+        {
+            Uri uri = new Uri(string.Format(Constants.PutUriStationSettings, string.Empty));
+            try
+            {
+
+                string json = System.Text.Json.JsonSerializer.Serialize<StationSettingsModel>(item, serializerOptions);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = null;
+                response = await client.PutAsync(uri, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine(@"Station Name updated");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"ERROR {0}", ex.Message);
+            }
+        }
+
+        //Put PopUpSettings
+        public async Task PutPopUpSetting(StationSettingsModel model, bool popUp)
+        {
+            Uri uri = new Uri(string.Format(Constants.PutUriStationSettingsPop + popUp, string.Empty));
+            try
+            {
+                string json = System.Text.Json.JsonSerializer.Serialize<StationSettingsModel>(model, serializerOptions);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = null;
+                response = await client.PutAsync(uri, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine(@"Station Settings updated");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"ERROR {0}", ex.Message);
+            }
+        }
+     
+        //Get StationSettings
+        public async Task<List<StationSettingsModel>> GetAllStationSettings()
+        {
+            HttpClient client = new HttpClient();
+            stationModels= new List<StationSettingsModel>();
+            
+            Uri uri = new Uri(string.Format(Constants.GetUriAllStationSettings, string.Empty));
+            HttpResponseMessage response = await client.GetAsync(uri);
+            var content = await response.Content.ReadAsStringAsync();
+            stationModels = JsonConvert.DeserializeObject<List<StationSettingsModel>>(content);
+            return stationModels;
+        }
         //Get StationSettings
         public async Task<StationSettingsModel> GetStationSettings(string name)
         {

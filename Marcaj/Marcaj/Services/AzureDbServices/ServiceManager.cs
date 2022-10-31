@@ -89,6 +89,19 @@ namespace Marcaj.Services
         {
             return Service.GetActiveOrderHeaders();
         }
+        public Task iPutPopUpSetting(StationSettingsModel model, bool popUp)
+        {
+            return Service.PutPopUpSetting(model, popUp);
+        }
+        public Task<List<StationSettingsModel>> iGetAllStationSettings()
+        {
+            return Service.GetAllStationSettings();
+        }
+
+        public Task iPutStationName(StationSettingsModel item)
+        {
+            return Service.PutStationName(item);
+        }
         public Task<List<DineInTableAndEmpModel>> iGetDineInTablesAllByTableGroup(int groupID)
         {
             return Service.GetDineInTablesAllByTableGroup(groupID);

@@ -1,5 +1,6 @@
 ﻿using Marcaj.Models.CustomModels;
 using Marcaj.Pages.Settings.Mese;
+using Marcaj.Pages.Settings.Statie;
 using Marcaj.Pages.Tables;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,8 @@ namespace Marcaj.Pages.Settings
             meseOpt = new ObservableCollection<MeseOptionsModel>
             {
             new MeseOptionsModel { Text="Mese Active/Inactive"},
-            new MeseOptionsModel { Text="Grupuri" }
+            new MeseOptionsModel { Text="Grupuri" },
+            new MeseOptionsModel {Text ="Statie"}
         };
             optionsList.ItemsSource = meseOpt;
         }
@@ -33,27 +35,32 @@ namespace Marcaj.Pages.Settings
             optionsList.ItemsSource = meseOpt;
         }
 
-        
+
         private async void optionsList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            
-            
-                   var current = e.SelectedItem as MeseOptionsModel;
-                
-                  if (((ListView)sender).SelectedItem == null)
-                  return;
-            
-               
-                   if (current.Text == "Mese Active/Inactive")
-                    {
-                        await Navigation.PushAsync(new ConfigurareMesePage());
-                
-                    }
-                    else if(current.Text == "Grupuri")
-                    {
-                        await Navigation.PushAsync(new ConfigurareGrupuriPage());
-        
-                    }
+
+
+            var current = e.SelectedItem as MeseOptionsModel;
+
+            if (((ListView)sender).SelectedItem == null)
+                return;
+
+
+            if (current.Text == "Mese Active/Inactive")
+            {
+                await Navigation.PushAsync(new ConfigurareMesePage());
+
+            }
+            else if (current.Text == "Grupuri")
+            {
+                await Navigation.PushAsync(new ConfigurareGrupuriPage());
+
+            }
+            else if (current.Text == "Statie")
+            {
+                await Navigation.PushAsync(new StationSettingsMainPage());
+
+            }
 
                    ((ListView)sender).SelectedItem = null;
         }

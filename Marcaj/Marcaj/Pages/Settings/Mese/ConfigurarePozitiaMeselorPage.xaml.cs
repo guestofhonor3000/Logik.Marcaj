@@ -218,7 +218,43 @@ namespace Marcaj.Pages.Settings.Mese
                 await DisplayAlert("Error", "Too many tables selected. Try Again!", "Ok");
             }
         }
+        private async void btnDone_Clicked(object sender, EventArgs e)
+        {
+            if (tblLayout.Where(x => x.Text == "").ToList().Count == tblLayout.Count)
+            {
+                var model = new DineInTableGroupModel();
+                model.GridSize = gridPicker.SelectedItem.ToString();
+                await App.manager.iPutTableGroups(model, dineInGroup.TableGroupID);
+            }
+            else
+            {
+                var modelGr = new DineInTableGroupModel();
+                modelGr.GridSize = gridPicker.SelectedItem.ToString();
+                await App.manager.iPutTableGroups(modelGr, dineInGroup.TableGroupID);
+                List<DineInTableModel> putLst = new List<DineInTableModel>();
+                foreach (var tbl in tblLayout.Where(x => x.Text != "").ToList())
+                {
+                    var model = new DineInTableModel();
+                    model.DisplayPosition = tbl.Position;
+                    model.DineInTableID = dineIns.Where(x => x.DineInTableText == tbl.TableText).FirstOrDefault().DineInTableID;
 
+                    putLst.Add(model);
+                }
+                foreach (var dineIn in dineIns)
+                {
+                    if (tblLayout.Where(x => x.TableText == dineIn.DineInTableText).FirstOrDefault() == null)
+                    {
+                        var model = new DineInTableModel();
+                        model.DisplayPosition = null;
+                        model.DineInTableID = dineIn.DineInTableID;
+
+                        putLst.Add(model);
+                    }
+                }
+                await App.manager.iPutDineInTablesPosition(putLst);
+            }
+            await Navigation.PopModalAsync();
+        }
         private async void btnTbl8_Clicked(object sender, EventArgs e)
         {
             var dineIns8 = dineIns.Where(x => x.MaxGuests == 8).ToList();
@@ -256,43 +292,7 @@ namespace Marcaj.Pages.Settings.Mese
             }
         }
 
-        private async void btnDone_Clicked(object sender, EventArgs e)
-        {
-            if (tblLayout.Where(x => x.Text == "").ToList().Count == tblLayout.Count)
-            {
-                var model = new DineInTableGroupModel();
-                model.GridSize = gridPicker.SelectedItem.ToString();
-                await App.manager.iPutTableGroups(model, dineInGroup.TableGroupID);
-            }
-            else
-            {
-                var modelGr = new DineInTableGroupModel();
-                modelGr.GridSize = gridPicker.SelectedItem.ToString();
-                await App.manager.iPutTableGroups(modelGr, dineInGroup.TableGroupID);
-                List<DineInTableModel> putLst = new List<DineInTableModel>();
-                foreach (var tbl in tblLayout.Where(x => x.Text != "").ToList())
-                {
-                    var model = new DineInTableModel();
-                    model.DisplayPosition = tbl.Position;
-                    model.DineInTableID = dineIns.Where(x => x.DineInTableText == tbl.TableText).FirstOrDefault().DineInTableID;
-
-                    putLst.Add(model);
-                }
-                foreach(var dineIn in dineIns)
-                {
-                    if(tblLayout.Where(x=>x.TableText == dineIn.DineInTableText).FirstOrDefault()==null)
-                    {
-                        var model = new DineInTableModel();
-                        model.DisplayPosition = null;
-                        model.DineInTableID = dineIn.DineInTableID;
-
-                        putLst.Add(model);
-                    }
-                }
-                await App.manager.iPutDineInTablesPosition(putLst);
-            }
-            await Navigation.PopModalAsync();
-        }
+      
 
         private async void gridPicker_SelectedIndexChanged(object sender, EventArgs e)
         {
