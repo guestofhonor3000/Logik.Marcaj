@@ -111,6 +111,14 @@ namespace Marcaj.Pages.Settings.Mese
         private async void btnTbl2_Clicked(object sender, EventArgs e)
         {
             var dineIns2 = dineIns.Where(x => x.MaxGuests == 2).ToList();
+            foreach(var tbl in tblLayout)
+            {
+                var toRemove = dineIns2.Where(x => x.DineInTableText == tbl.TableText).FirstOrDefault();
+                if (toRemove != null)
+                {
+                    dineIns2.Remove(toRemove);
+                }
+            }
             foreach (var dineIn in dineIns2)
             {
                 var toNull = tblLayout.Where(x => x.TableText == dineIn.DineInTableText).FirstOrDefault();
@@ -141,13 +149,21 @@ namespace Marcaj.Pages.Settings.Mese
             }
             else
             {
-                await DisplayAlert("Error", "Too many tables selected. Try Again!", "Ok");
+                await DisplayAlert("Attention", "Too many tables selected. Try Again!", "Ok");
             }
         }
 
         private async void btnTbl4_Clicked(object sender, EventArgs e)
         {
-            var dineIns4 = dineIns.Where(x => x.MaxGuests == 4).ToList(); 
+            var dineIns4 = dineIns.Where(x => x.MaxGuests == 4).ToList();
+            foreach (var tbl in tblLayout)
+            {
+                var toRemove = dineIns4.Where(x => x.DineInTableText == tbl.TableText).FirstOrDefault();
+                if (toRemove != null)
+                {
+                    dineIns4.Remove(toRemove);
+                }
+            }
             foreach (var dineIn in dineIns4)
             {
                 var toNull = tblLayout.Where(x => x.TableText == dineIn.DineInTableText).FirstOrDefault();
@@ -185,6 +201,14 @@ namespace Marcaj.Pages.Settings.Mese
         private async void btnTbl6_Clicked(object sender, EventArgs e)
         {
             var dineIns6 = dineIns.Where(x => x.MaxGuests == 6).ToList();
+            foreach (var tbl in tblLayout)
+            {
+                var toRemove = dineIns6.Where(x => x.DineInTableText == tbl.TableText).FirstOrDefault();
+                if (toRemove != null)
+                {
+                    dineIns6.Remove(toRemove);
+                }
+            }
             foreach (var dineIn in dineIns6)
             {
                 var toNull = tblLayout.Where(x => x.TableText == dineIn.DineInTableText).FirstOrDefault();
@@ -217,6 +241,66 @@ namespace Marcaj.Pages.Settings.Mese
             {
                 await DisplayAlert("Error", "Too many tables selected. Try Again!", "Ok");
             }
+        }
+        private async void btnTbl8_Clicked(object sender, EventArgs e)
+        {
+            var dineIns8 = dineIns.Where(x => x.MaxGuests == 8).ToList();
+            foreach (var tbl in tblLayout)
+            {
+                var toRemove = dineIns8.Where(x => x.DineInTableText == tbl.TableText).FirstOrDefault();
+                if (toRemove != null)
+                {
+                    dineIns8.Remove(toRemove);
+                }
+            }
+            foreach (var dineIn in dineIns8)
+            {
+                var toNull = tblLayout.Where(x => x.TableText == dineIn.DineInTableText).FirstOrDefault();
+                if (toNull != null)
+                {
+                    toNull.Visible = false;
+                    toNull.TableText = "";
+                    toNull.Text = "";
+                }
+            }
+            if (dineIns8.Count >= tblLayoutColl.SelectedItems.Count)
+            {
+                int i = 0;
+                foreach (var a in tblLayoutColl.SelectedItems)
+                {
+
+                    var b = a as TableLayoutModel;
+                    var c = tblLayout.Where(x => x.Position == b.Position).FirstOrDefault();
+                    c.Text = "Table8Open.png";
+                    c.TableText = dineIns8[i].DineInTableText;
+                    c.Visible = true;
+                    tblLayoutColl.ItemsSource = null;
+                    tblLayoutColl.ItemsSource = tblLayout;
+                    i++;
+                }
+
+                tblLayoutColl.SelectedItems = null;
+            }
+            else
+            {
+                await DisplayAlert("Error", "Too many tables selected. Try Again!", "Ok");
+            }
+        }
+
+        private void btnClear_Clicked(object sender, EventArgs e)
+        {
+            foreach (var a in tblLayoutColl.SelectedItems)
+            {
+                var b = a as TableLayoutModel;
+                var c = tblLayout.Where(x => x.Position == b.Position).FirstOrDefault();
+                c.Text = "";
+                c.TableText = "";
+                c.Visible = false;
+                tblLayoutColl.ItemsSource = null;
+                tblLayoutColl.ItemsSource = tblLayout;
+
+            }
+            tblLayoutColl.SelectedItems = null;
         }
         private async void btnDone_Clicked(object sender, EventArgs e)
         {
@@ -255,59 +339,7 @@ namespace Marcaj.Pages.Settings.Mese
             }
             await Navigation.PopModalAsync();
         }
-        private async void btnTbl8_Clicked(object sender, EventArgs e)
-        {
-            var dineIns8 = dineIns.Where(x => x.MaxGuests == 8).ToList();
-            foreach (var dineIn in dineIns8)
-            {
-                var toNull = tblLayout.Where(x => x.TableText == dineIn.DineInTableText).FirstOrDefault();
-                if (toNull != null)
-                {
-                    toNull.Visible = false;
-                    toNull.TableText = "";
-                    toNull.Text = "";
-                }
-            }
-            if (dineIns8.Count >= tblLayoutColl.SelectedItems.Count)
-            {
-                int i = 0;
-                foreach (var a in tblLayoutColl.SelectedItems)
-                {
-
-                    var b = a as TableLayoutModel;
-                    var c = tblLayout.Where(x => x.Position == b.Position).FirstOrDefault();
-                    c.Text = "Table8Open.png";
-                    c.TableText = dineIns8[i].DineInTableText;
-                    c.Visible = true;
-                    tblLayoutColl.ItemsSource = null;
-                    tblLayoutColl.ItemsSource = tblLayout;
-                    i++;
-                }
-
-                tblLayoutColl.SelectedItems = null;
-            }
-            else
-            {
-                await DisplayAlert("Error", "Too many tables selected. Try Again!", "Ok");
-            }
-        }
-
-        private void btnClear_Clicked(object sender, EventArgs e)
-        {
-            foreach(var a in tblLayoutColl.SelectedItems)
-            {
-                var b = a as TableLayoutModel;
-                var c = tblLayout.Where(x => x.Position == b.Position).FirstOrDefault();
-                c.Text = "";
-                c.TableText = "";
-                c.Visible = false;
-                tblLayoutColl.ItemsSource = null;
-                tblLayoutColl.ItemsSource = tblLayout;
-
-            }
-            tblLayoutColl.SelectedItems = null;
-        }
-
+      
         private async void gridPicker_SelectedIndexChanged(object sender, EventArgs e)
         {
             tblLayout = new ObservableCollection<TableLayoutModel>();
@@ -365,8 +397,6 @@ namespace Marcaj.Pages.Settings.Mese
             }
 
             tblLayoutColl.ItemsSource = tblLayout;
-        }
-
-        
+        } 
     }
 }
