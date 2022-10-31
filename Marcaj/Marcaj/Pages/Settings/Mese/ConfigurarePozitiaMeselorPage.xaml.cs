@@ -303,7 +303,9 @@ namespace Marcaj.Pages.Settings.Mese
                 c.Visible = false;
                 tblLayoutColl.ItemsSource = null;
                 tblLayoutColl.ItemsSource = tblLayout;
+
             }
+            tblLayoutColl.SelectedItems = null;
         }
 
         private async void gridPicker_SelectedIndexChanged(object sender, EventArgs e)
