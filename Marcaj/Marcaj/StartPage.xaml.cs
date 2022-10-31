@@ -65,7 +65,7 @@ namespace Marcaj
                                 if(alert == true)
                                 {
                                     var modell = stations.Where(x => x.ComputerName == action).FirstOrDefault();
-
+                                    Debug.WriteLine(action);
                                     modell.ComputerName = deviceName;
 
                                     await App.manager.iPutStationName(modell);

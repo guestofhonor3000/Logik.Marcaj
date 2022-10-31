@@ -292,7 +292,19 @@ namespace Marcaj.Pages.Settings.Mese
             }
         }
 
-      
+        private void btnClear_Clicked(object sender, EventArgs e)
+        {
+            foreach(var a in tblLayoutColl.SelectedItems)
+            {
+                var b = a as TableLayoutModel;
+                var c = tblLayout.Where(x => x.Position == b.Position).FirstOrDefault();
+                c.Text = "";
+                c.TableText = "";
+                c.Visible = false;
+                tblLayoutColl.ItemsSource = null;
+                tblLayoutColl.ItemsSource = tblLayout;
+            }
+        }
 
         private async void gridPicker_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -352,5 +364,7 @@ namespace Marcaj.Pages.Settings.Mese
 
             tblLayoutColl.ItemsSource = tblLayout;
         }
+
+        
     }
 }

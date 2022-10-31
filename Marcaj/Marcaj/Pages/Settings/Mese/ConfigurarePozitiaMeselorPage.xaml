@@ -99,12 +99,15 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
+                
                 <ImageButton Source="Table2Open.png" Grid.Row="0" x:Name="btnTbl2" Clicked="btnTbl2_Clicked"/>
                 <ImageButton Source="Table4Open.png" Grid.Row="1"  x:Name="btnTbl4" Clicked="btnTbl4_Clicked"/>
                 <ImageButton Source="Table6Open.png" Grid.Row="2"  x:Name="btnTbl6" Clicked="btnTbl6_Clicked"/>
                 <ImageButton Source="Table8Open.png" Grid.Row="3" x:Name="btnTbl8" Clicked="btnTbl8_Clicked"/>
-                <ImageButton Source="MainDoneButton.png" x:Name="btnDone" Grid.Row="4" Clicked="btnDone_Clicked" VerticalOptions="End"/>
+                <Button Text="Clear" Grid.Row="4" x:Name="btnClear" Clicked="btnClear_Clicked"/>
+                <ImageButton Source="MainDoneButton.png" x:Name="btnDone" Grid.Row="5" Clicked="btnDone_Clicked" VerticalOptions="End"/>
             </Grid>
 
         </Grid>
