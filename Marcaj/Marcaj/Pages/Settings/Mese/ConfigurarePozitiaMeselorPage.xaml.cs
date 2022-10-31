@@ -18,7 +18,6 @@ namespace Marcaj.Pages.Settings.Mese
     public partial class ConfigurarePozitiaMeselorPage : ContentPage
     {
         public ObservableCollection<TableLayoutModel> tblLayout;
-        EmployeeFileModel EmplFl;
         DineInTableGroupModel dineInGroup;
         List<DineInTableModel> dineIns;
         public ConfigurarePozitiaMeselorPage(DineInTableGroupModel groupModel)
@@ -36,18 +35,19 @@ namespace Marcaj.Pages.Settings.Mese
             lstPckr.Add("8x6");
             lstPckr.Add("8x9");
             lstPckr.Add("10x8");
-           
             gridPicker.ItemsSource = lstPckr;
-            if (dineInGroup.GridSize != "")
+            
+
+            var index = lstPckr.IndexOf(dineInGroup.GridSize);
+            if(index != -1)
             {
-                Debug.WriteLine(dineInGroup.GridSize);
-                var index = lstPckr.IndexOf(dineInGroup.GridSize);
                 gridPicker.SelectedIndex = index;
             }
             else
             {
                 gridPicker.SelectedIndex = 0;
             }
+
             tblLayout = new ObservableCollection<TableLayoutModel>();
 
             int col = Convert.ToInt32(gridPicker.SelectedItem.ToString().Split('x')[0]);
@@ -75,7 +75,7 @@ namespace Marcaj.Pages.Settings.Mese
             {
                 if (dine.DisplayPosition != null)
                 {
-                    if(Convert.ToInt32(dine.DisplayPosition) <= (col*row))
+                    if (Convert.ToInt32(dine.DisplayPosition) <= (col * row))
                     {
                         if (dine.MaxGuests == 2)
                         {
@@ -106,6 +106,8 @@ namespace Marcaj.Pages.Settings.Mese
             }
 
             tblLayoutColl.ItemsSource = tblLayout;
+
+
         }
 
         private async void btnTbl2_Clicked(object sender, EventArgs e)
@@ -360,6 +362,7 @@ namespace Marcaj.Pages.Settings.Mese
                 VerticalItemSpacing = 5,
                 HorizontalItemSpacing = 5
             };
+            Debug.WriteLine(dineInGroup.TableGroupID);
             tblLayoutColl.SelectionMode = SelectionMode.Multiple;
             dineIns = await App.manager.iGetOnlyDineInTablesByTableGroup(dineInGroup.TableGroupID);
             foreach (var dine in dineIns)

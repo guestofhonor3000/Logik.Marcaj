@@ -9,8 +9,9 @@
                 <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-
-            <ListView Grid.Column="0" x:Name="lstvwMese" ItemSelected="lstvwMese_ItemSelected">
+            <StackLayout Grid.Column="0" >
+                <Button BackgroundColor="Black" x:Name="btnAdd" Text="Add" Clicked="btnAdd_Clicked"/>
+                <ListView x:Name="lstvwMese" ItemSelected="lstvwMese_ItemSelected">
                 <ListView.Header>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -38,7 +39,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-
+            </StackLayout>
             <ListView Grid.Column="1" x:Name="lstvwGrupMese" ItemSelected="lstvwGrupMese_ItemSelected">
                 <ListView.Header>
                     <Label VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black" FontAttributes="Bold" Text="Table Groups"/>
