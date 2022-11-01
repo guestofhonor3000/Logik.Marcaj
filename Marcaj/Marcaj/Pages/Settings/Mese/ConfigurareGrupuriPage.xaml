@@ -33,20 +33,16 @@
             </StackLayout>
 
             
-            <ScrollView Grid.Column="1"  
-                        VerticalScrollBarVisibility="Never"
-                        BackgroundColor="#394046">
-
-                <ListView x:Name="lstvwGrupMese" 
-                          Margin="10,5,10,5"
-                          HasUnevenRows="True">
+                <ListView Grid.Column="1"
+                          x:Name="lstvwGrupMese" 
+                          BackgroundColor="#394046">
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <Frame CornerRadius="10" 
                                        BackgroundColor="#8f99a3" 
-                                       Margin="0,5,0,5">
+                                       Margin="5,10,5,0">
                                     
                                     <Label Text="{Binding TableGroupText}"
                                            VerticalOptions="Center" 
@@ -64,7 +60,6 @@
 
                 </ListView>
 
-            </ScrollView>
 
 
             <StackLayout Grid.Column="3"

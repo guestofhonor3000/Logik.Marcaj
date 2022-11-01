@@ -11,6 +11,7 @@ using Marcaj.Pages.Tables;
 using Xamarin.Essentials;
 using Marcaj.Models.LocalDbModels;
 using Marcaj.Models.CustomModels;
+using System.Collections.ObjectModel;
 
 namespace Marcaj.Pages.Tables
 {
@@ -22,15 +23,20 @@ namespace Marcaj.Pages.Tables
         bool IsFirstLoad = true;
         DineInTableModel dineIn;
         LDineInTablesModel ldineIn;
+        List<DineInTableModel> dineIns;
+        List<DineInTableGroupModel> dineInGroups;
+        ObservableCollection<TableLayoutModel> tblLayout;
         public AllTables(EmployeeFileModel emplFl)
         {
             InitializeComponent();
 
             EmplFl = emplFl;
-            PopList(GroupId);
+           
             dineIn= new DineInTableModel();
             ldineIn = new LDineInTablesModel();
-
+            dineInGroups = new List<DineInTableGroupModel>();
+            dineIns = new List<DineInTableModel>();
+            PopList(GroupId);
             MessagingCenter.Subscribe<NotActiveTable>(this, "Up", (sender) =>
             {
                 PopList(GroupId);
@@ -216,6 +222,9 @@ namespace Marcaj.Pages.Tables
         }
         async void PopList(int GroupID)
         {
+            tblLayout = new ObservableCollection<TableLayoutModel>();
+
+
             if (IsFirstLoad == true)
             {
                 if (Connectivity.NetworkAccess == NetworkAccess.Internet)
@@ -223,9 +232,12 @@ namespace Marcaj.Pages.Tables
                     var a = await App.manager.iGetDineInTablesByTableGroup(GroupID);
                     if (a != null)
                     {
-                        lstvwMese.ItemsSource = a;
+                        tblLayoutColl.ItemsSource = tblLayout;
                     }
+                    
                     var b = await App.manager.iGetDineInTableGroups();
+                    dineInGroups = b;
+
                     if (b != null)
                     {
                         lstvwGrupMese.ItemsSource = b;
@@ -237,10 +249,12 @@ namespace Marcaj.Pages.Tables
                     var a =  App.lDatabase.lGetDineInTablesEmpNameByGroupID(GroupID);
                     if(a != null)
                     {
-                        lstvwMese.ItemsSource = a;
+                        tblLayoutColl.ItemsSource = tblLayout;
                     }
+                    
                     var b = await App.lDatabase.lGetDineInTableGroups();
-                    if(b != null)
+
+                    if (b != null)
                     {
                         lstvwGrupMese.ItemsSource = b;
                         lstvwGrupMese.SelectedItem = b[0];
@@ -255,7 +269,7 @@ namespace Marcaj.Pages.Tables
                     var a = await App.manager.iGetDineInTablesByTableGroup(GroupID);
                     if (a != null)
                     {
-                        lstvwMese.ItemsSource = a;
+                        tblLayoutColl.ItemsSource = tblLayout;
                     }
                 }
                 else
@@ -263,21 +277,80 @@ namespace Marcaj.Pages.Tables
                     var a =  App.lDatabase.lGetDineInTablesEmpNameByGroupID(GroupID);
                     if(a != null)
                     {
-                        lstvwMese.ItemsSource = a;
+                        tblLayoutColl.ItemsSource = tblLayout;
                     }
                 }
                 
             }
-            
+
+            var dineInGroup = dineInGroups.Where(x => x.TableGroupID == GroupID).FirstOrDefault();
+
+            int col = Convert.ToInt32(dineInGroup.GridSize.ToString().Split('x')[0]);
+            int row = Convert.ToInt32(dineInGroup.GridSize.ToString().Split('x')[1]);
+            int nrPos = col * row;
+
+            for (int i = 0; i < nrPos; i++)
+            {
+                var model = new TableLayoutModel();
+
+                model.Position = (i + 1).ToString();
+                model.Text = "";
+                model.Visible = false;
+
+                tblLayout.Add(model);
+            }
+            tblLayoutColl.ItemsLayout = new GridItemsLayout(col, ItemsLayoutOrientation.Vertical)
+            {
+                VerticalItemSpacing = 5,
+                HorizontalItemSpacing = 5
+
+            };
+
+            dineIns = await App.manager.iGetOnlyDineInTablesByTableGroup(dineInGroup.TableGroupID);
+
+            foreach (var dine in dineIns)
+            {
+                if (dine.DisplayPosition != null)
+                {
+                    if (Convert.ToInt32(dine.DisplayPosition) <= nrPos)
+                    {
+                        if (dine.MaxGuests == 2)
+                        {
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
+                        }
+                        else if (dine.MaxGuests == 4)
+                        {
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
+                        }
+                        else if (dine.MaxGuests == 6)
+                        {
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
+                        }
+                        else if (dine.MaxGuests == 8)
+                        {
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
+                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
+                        }
+                    }
+                }
+            }
+
         }
 
-        private async void lstvwMese_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private async void lstvwMese_ItemSelected(object sender, SelectionChangedEventArgs e)
         {
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-                if (lstvwMese.SelectedItem != null)
+                if (tblLayoutColl.SelectedItem != null)
                 {
-                    var a = e.SelectedItem as DineInTableAndEmpModel;
+                    var a = e.CurrentSelection as DineInTableAndEmpModel;
                     dineIn = a.DineIn;
                     if (a.Opened == true)
                     {
@@ -288,14 +361,14 @@ namespace Marcaj.Pages.Tables
                         await Navigation.PushAsync(new NotActiveTable(dineIn, EmplFl));
                     }
                 }
-                lstvwMese.SelectedItem = null;
+                tblLayoutColl.SelectedItem = null;
             }
             else
             {
                 
-                if(lstvwMese.SelectedItem != null)
+                if(tblLayoutColl.SelectedItem != null)
                 {
-                    var a = e.SelectedItem as LDineInTableAndEmpModel;
+                    var a = e.CurrentSelection as LDineInTableAndEmpModel;
 
                     ldineIn = a.DineIn;
 
@@ -312,7 +385,7 @@ namespace Marcaj.Pages.Tables
                     {
                         await Navigation.PushAsync(new NotActiveTable(dineIn, EmplFl));
                     }
-                    lstvwMese.SelectedItem = null;
+                    tblLayoutColl.SelectedItem = null;
                 }
             }
 
@@ -349,7 +422,7 @@ namespace Marcaj.Pages.Tables
 
         private async void btnTblLayoutPage_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new Page1());
+           
         }
     }
 }

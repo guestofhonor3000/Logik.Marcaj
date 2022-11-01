@@ -43,42 +43,31 @@
                  
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        
-                            <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="5*"/>
-                            </Grid.RowDefinitions>
-                                    
-                                <Label Grid.Row="0" 
-                                       Text="{Binding Position}" 
-                                       FontSize="18" 
-                                       FontFamily="Verdana" 
-                                       BackgroundColor="Transparent"/>
-                                
-                                <Grid Grid.Row="1">
-                                    <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
 
-                                <Image Grid.Row="0" 
-                                       IsVisible="{Binding Visible}" 
-                                       Source="{Binding Text}" 
-                                       HorizontalOptions="Center" 
-                                       VerticalOptions="Center" 
-                                       Aspect="AspectFit"/>
-                                    
-                                    <Label Grid.Row="0" 
-                                           Text="{Binding TableText}" 
+                        <AbsoluteLayout HeightRequest="112"
+                                        WidthRequest="140">
+
+                            <Image IsVisible="{Binding Visible}" 
+                                           Source="{Binding Text}"
+                                           AbsoluteLayout.LayoutFlags="All"
+                                           AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"/>
+                            
+                            <Label Text="{Binding Position}" 
+                                        FontSize="18" 
+                                        FontFamily="Verdana" 
+                                        BackgroundColor="Transparent"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                                        AbsoluteLayout.LayoutBounds="0.05,0"/>
+
+                            <Label Text="{Binding TableText}" 
                                            FontSize="26" 
                                            FontFamily="Verdana" 
-                                           HorizontalOptions="Center" 
-                                           VerticalOptions="Center" 
                                            FontAttributes="Bold" 
-                                           Padding="0,0,0,30" 
-                                           BackgroundColor="Transparent"/>
-                                </Grid>
-                            </Grid>
+                                           BackgroundColor="Transparent"
+                                           AbsoluteLayout.LayoutFlags="PositionProportional"
+                                           AbsoluteLayout.LayoutBounds="0.5,0.35"/>
+
+                        </AbsoluteLayout>
                     
 
                     </DataTemplate>

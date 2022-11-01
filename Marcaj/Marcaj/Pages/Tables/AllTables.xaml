@@ -35,63 +35,74 @@
             </Grid>
             </ScrollView>
            
-            <Grid Grid.Column="1" BackgroundColor="#394046" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" RowSpacing="10" Margin="0" Padding="0">
-
-                <ListView x:Name="lstvwGrupMese" ItemSelected="lstvwGrupMese_ItemSelected">
+           
+                <ListView Grid.Column="1" 
+                          BackgroundColor="#394046"
+                          x:Name="lstvwGrupMese" 
+                          ItemSelected="lstvwGrupMese_ItemSelected">
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout>
-                                    <Button VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold"  TextColor="White" BackgroundColor="#8f99a3" Padding="10,20,10,20" Text="{Binding TableGroupText}"/>
-                                </StackLayout>
+                                
+                                <Frame CornerRadius="10" 
+                                       BackgroundColor="#8f99a3" 
+                                       Margin="10,10,10,0">
+                                    
+                                    <Label Text="{Binding TableGroupText}"
+                                           VerticalOptions="Center" 
+                                           HorizontalOptions="CenterAndExpand"
+                                           HorizontalTextAlignment="Center"
+                                           FontSize="20" 
+                                           FontFamily="Verdana"
+                                           FontAttributes="Bold"  
+                                           TextColor="White" 
+                                           Padding="10"/>
+                                </Frame>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
 
                 </ListView>
-                
-            </Grid>
+  
 
-            <Grid Grid.Column="2" BackgroundColor="#66717d" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" ColumnSpacing="5" Margin="0" Padding="0">
-              
-                   
-                <ListView  x:Name="lstvwMese" ItemSelected="lstvwMese_ItemSelected">
-                   
-                    <!--ListView.Header>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" Grid.Column="0" TextColor="Black" Text="DineInTableText"/>
-                            <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" Grid.Column="1"  TextColor="Black" Text="DineInTableInActive"/>
-                            <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" Grid.Column="2"  TextColor="Black" Text="EmpName"/>
-                        </Grid>
-                    </ListView.Header-->
-                    
-                    <ListView.ItemTemplate>
+           
+
+
+                <CollectionView  x:Name="tblLayoutColl" 
+                                 SelectedItem="lstvwMese_ItemSelected" 
+                                 Grid.Column="2" 
+                                 BackgroundColor="#66717d">
+                     
+                    <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <ViewCell>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height=".2*"/>
-                                        <RowDefinition Height=".2*"/>
-                                        <RowDefinition Height=".2*"/>
-                                        <RowDefinition Height=".4*"/>
-                                    </Grid.RowDefinitions>
-                                    <Label VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0" TextColor="Black" Text="{Binding DineIn.DineInTableText}"/>
-                                    <Label VerticalOptions="Center" HorizontalOptions="Center"   Grid.Row="1"  TextColor="Black" Text="{Binding Opened}"/>
-                                    <Label VerticalOptions="Center" HorizontalOptions="Center"   Grid.Row="2"  TextColor="Black" Text="{Binding EmpName}"/>
-                                    <ImageButton Grid.Row="3"  Source="Table6Open.png"/>
-                                </Grid>
-                            </ViewCell>
+
+                        <AbsoluteLayout HeightRequest="112"
+                                        WidthRequest="140">
+                            
+                            <Image IsVisible="{Binding Visible}"
+                                       Source="{Binding Text}"
+                                       AbsoluteLayout.LayoutFlags="All"
+                                       AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"/>
+
+                            <Label  Text="{Binding TableText}"
+                                        TextColor="White" 
+                                        FontSize="26" 
+                                        FontFamily="Verdana"  
+                                        FontAttributes="Bold" 
+                                        BackgroundColor="Transparent"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                                        AbsoluteLayout.LayoutBounds="0.5,0.35"/>
+                                
+                                <!--Label VerticalOptions="Center" HorizontalOptions="Center"     TextColor="Black" Text="{Binding Opened}"/>
+                                    <Label VerticalOptions="Center" HorizontalOptions="Center"    TextColor="Black" Text="{Binding EmpName}"/-->
+                            </AbsoluteLayout>
+
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
                
-            </Grid>
+     
         
         </Grid>
     </ContentPage.Content>

@@ -238,7 +238,7 @@ namespace Marcaj
         }
         private async void btnGrid_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new Page1());
+           
         }
     }
 }

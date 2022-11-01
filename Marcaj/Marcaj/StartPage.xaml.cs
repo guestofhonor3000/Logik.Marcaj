@@ -50,7 +50,7 @@ namespace Marcaj
                     if (a == null)
                     {
                         var prompt = await DisplayPromptAsync("Code", "Enter the code for the desired db.", "Ok", "Cancel", "Code...",4,Keyboard.Numeric);
-                        if (b.Where(x => x.ClientDbCode == prompt).FirstOrDefault() != null)
+                        if (prompt=="1234")
                         {
                             var stations = await App.manager.iGetAllStationSettings();
                             var stationNames = new List<string>();
