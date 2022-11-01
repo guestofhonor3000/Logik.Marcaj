@@ -63,5 +63,8 @@ namespace Marcaj
         public static string PutUriStationSettingsPop = "https://elogik.azurewebsites.net/api/StationSettings?popUp=";
         public static string PutUriStationSettings = "https://elogik.azurewebsites.net/api/StationSettings";
 
+        //LGKMClients
+        public static string GetUriClients = "https://elogik.azurewebsites.net/api/lgkmclients";
+
     }
 }

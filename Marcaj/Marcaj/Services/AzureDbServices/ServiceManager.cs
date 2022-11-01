@@ -1,5 +1,6 @@
 ﻿using Marcaj.Models.CustomModels;
 using Marcaj.Models.DbModels;
+using Marcaj.Models.DbModels.LGK;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -35,6 +36,11 @@ namespace Marcaj.Services
         public Task iDeleteTableGroup(int id)
         {
             return Service.DeleteTableGroup(id);
+        }
+
+        public Task<List<LGKMClientsModel>> iGetAllClients()
+        {
+            return Service.GetAllClients();
         }
         public Task iPutTableGroups(DineInTableGroupModel item, int id)
         {

@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Marcaj.Models.CustomModels;
+using Marcaj.Models.DbModels.LGK;
 
 namespace Marcaj.Services
 {
@@ -25,6 +26,7 @@ namespace Marcaj.Services
         List<OrderHeadersModel> orderHeaders;
         List<EmployeeFileModel> employeeFiles;
         List<StationSettingsModel> stationModels;
+        List<LGKMClientsModel> clientsList;
         #endregion
 
         #region Init
@@ -682,6 +684,21 @@ namespace Marcaj.Services
             var content = await response.Content.ReadAsStringAsync();
             a = JsonConvert.DeserializeObject<StationSettingsModel>(content);
             return a;
+        }
+        #endregion
+
+        #region LGKMClients
+        
+        //Get Clients
+        public async Task<List<LGKMClientsModel>> GetAllClients()
+        {
+            HttpClient client = new HttpClient();
+            clientsList = new List<LGKMClientsModel>();
+            Uri uri = new Uri(string.Format(Constants.GetUriAllStationSettings, string.Empty));
+            HttpResponseMessage response = await client.GetAsync(uri);
+            var content = await response.Content.ReadAsStringAsync();
+            clientsList = JsonConvert.DeserializeObject<List<LGKMClientsModel>>(content);
+            return clientsList;
         }
         #endregion
 

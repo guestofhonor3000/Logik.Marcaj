@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Marcaj.Models.CustomModels;
+using Marcaj.Models.DbModels.LGK;
+
 namespace Marcaj.Services
 {
     public interface iRService
@@ -23,6 +25,7 @@ namespace Marcaj.Services
         Task PutDineInTablesPosition(List<DineInTableModel> items);
         Task PutPopUpSetting(StationSettingsModel model, bool popUp);
         Task PutStationName(StationSettingsModel item);
+        Task<List<LGKMClientsModel>> GetAllClients();
         Task<List<StationSettingsModel>> GetAllStationSettings();
         Task<List<DineInTableModel>> GetOnlyDineInTablesByTableGroup(int groupID);
         Task<List<OrderHeadersModel>> GetOrderHeadersByDineInTableID(int id);

@@ -45,12 +45,12 @@ namespace Marcaj
                 if (Connectivity.NetworkAccess == NetworkAccess.Internet)
                 {
                     var a = await App.manager.iGetStationSettings(deviceName);
-
+                    var b = await App.manager.iGetAllClients();
 
                     if (a == null)
                     {
                         var prompt = await DisplayPromptAsync("Code", "Enter the code for the desired db.", "Ok", "Cancel", "Code...",4,Keyboard.Numeric);
-                        if (prompt == "1234")
+                        if (b.Where(x => x.ClientDbCode == prompt).FirstOrDefault() != null)
                         {
                             var stations = await App.manager.iGetAllStationSettings();
                             var stationNames = new List<string>();
@@ -69,7 +69,6 @@ namespace Marcaj
                                     modell.ComputerName = deviceName;
 
                                     await App.manager.iPutStationName(modell);
-
                                 }
                             }
                         }
