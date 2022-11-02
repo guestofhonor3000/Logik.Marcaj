@@ -43,7 +43,7 @@ namespace Marcaj.Pages.Tables
             });
             MessagingCenter.Subscribe<App>(this, "ConOk", async (sender) =>
             {
-                SyncPage();
+               // SyncPage();
             });
         }
 

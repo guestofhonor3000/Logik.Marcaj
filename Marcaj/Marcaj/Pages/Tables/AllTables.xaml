@@ -3,7 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Marcaj.Pages.Tables.AllTables">
     <ContentPage.Content>
-        <Grid RowSpacing="0" ColumnSpacing="0">
+        <Grid RowSpacing="0" 
+              ColumnSpacing="0"
+              BackgroundColor="#66717d">
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -22,16 +25,30 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <ImageButton Source="MainMeseButton.png" Grid.Row="0"   x:Name="btnMese" Clicked="btnMese_Clicked"/>
-                <ImageButton Source="MainBarButton.png" Grid.Row="1" />
-                <ImageButton Source="MainPayButton.png" Grid.Row="2"  x:Name="btnAchita" Clicked="btnAchita_Clicked"/>
-                <ImageButton Source="MainVoidButton.png" Grid.Row="3" />
-                <ImageButton Source="MainRecallButton.png" Grid.Row="4" />
-                <ImageButton Source="MainNoSaleButton.png" Grid.Row="5" />
-                <ImageButton Source="MainPayBackButton.png" Grid.Row="6"/>
-                    <ImageButton Source="MainPlaceholderButton.png" Grid.Row="7"  x:Name="btnTblLayoutPage" Clicked="btnTblLayoutPage_Clicked"/>
-                <ImageButton Source="MainPlaceholderButton.png" Grid.Row="8" />
-                <ImageButton Source="MainPlaceholderButton.png" Grid.Row="9" />
+                <ImageButton Source="MainMeseButton.png" 
+                             Grid.Row="0"   
+                             x:Name="btnMese" 
+                             Clicked="btnMese_Clicked"/>
+                <ImageButton Source="MainBarButton.png" 
+                             Grid.Row="1" />
+                <ImageButton Source="MainPayButton.png" 
+                             Grid.Row="2"  
+                             x:Name="btnAchita" 
+                             Clicked="btnAchita_Clicked"/>
+                <ImageButton Source="MainVoidButton.png" 
+                             Grid.Row="3" />
+                <ImageButton Source="MainRecallButton.png" 
+                             Grid.Row="4" />
+                <ImageButton Source="MainNoSaleButton.png" 
+                             Grid.Row="5" />
+                <ImageButton Source="MainPayBackButton.png" 
+                             Grid.Row="6"/>
+                <ImageButton Source="MainPlaceholderButton.png" 
+                             Grid.Row="7"/>
+                <ImageButton Source="MainPlaceholderButton.png" 
+                             Grid.Row="8" />
+                <ImageButton Source="MainPlaceholderButton.png" 
+                             Grid.Row="9" />
             </Grid>
             </ScrollView>
            
@@ -72,7 +89,7 @@
                 <CollectionView  x:Name="tblLayoutColl" 
                                  SelectedItem="lstvwMese_ItemSelected" 
                                  Grid.Column="2" 
-                                 BackgroundColor="#66717d">
+                                 Margin="10">
                      
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
