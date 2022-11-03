@@ -250,4 +250,16 @@
   <ItemGroup>
     <BundleResource Include="Resources\MainDoneButton.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Table8Occupied.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Table2Occupied.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Table4Occupied.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Table6Occupied.png" />
+  </ItemGroup>
 </Project>

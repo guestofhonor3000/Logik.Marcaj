@@ -98,9 +98,10 @@
                                         WidthRequest="140">
                             
                             <Image IsVisible="{Binding Visible}"
-                                       Source="{Binding Text}"
-                                       AbsoluteLayout.LayoutFlags="All"
-                                       AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"/>
+                                   Source="{Binding Text}"
+                                   AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                                   AbsoluteLayout.LayoutFlags="All"
+                                   />
 
                             <Label  Text="{Binding TableText}"
                                         TextColor="White" 
@@ -109,11 +110,19 @@
                                         FontAttributes="Bold" 
                                         BackgroundColor="Transparent"
                                         AbsoluteLayout.LayoutFlags="PositionProportional"
-                                        AbsoluteLayout.LayoutBounds="0.5,0.35"/>
-                                
-                                <!--Label VerticalOptions="Center" HorizontalOptions="Center"     TextColor="Black" Text="{Binding Opened}"/>
-                                    <Label VerticalOptions="Center" HorizontalOptions="Center"    TextColor="Black" Text="{Binding EmpName}"/-->
-                            </AbsoluteLayout>
+                                        AbsoluteLayout.LayoutBounds="0.5,0.36"/>
+
+                                  
+                                <Label  FontSize="Micro"
+                                        TextColor="White"
+                                        FontFamily="Verdana"
+                                        FontAttributes="Italic"
+                                        Text="{Binding EmpName}"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                                        AbsoluteLayout.LayoutBounds="0,0"
+                                        />
+   
+                        </AbsoluteLayout>
 
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
