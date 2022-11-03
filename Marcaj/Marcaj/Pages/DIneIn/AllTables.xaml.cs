@@ -256,7 +256,6 @@ namespace Marcaj.Pages.Tables
                             model.Text = "";
                             model.Visible = false;
                             model.EmpName = "";
-                            model.TablePos = "";
 
                             tblLayout.Add(model);
                         }
@@ -283,8 +282,7 @@ namespace Marcaj.Pages.Tables
                                         if (dine.Opened)
                                         {
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TablePos = "0.2,0.5,0.4,0.4";
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableTextPos = "";
+
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Occupied.png";
                                             
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
@@ -293,7 +291,7 @@ namespace Marcaj.Pages.Tables
                                         else
                                         {
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TablePos = "0.5,0.5,1,1";
+                                           
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
                                             
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
@@ -304,7 +302,7 @@ namespace Marcaj.Pages.Tables
                                         if (dine.Opened)
                                         {
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TablePos = "0.5,0.5,1,1";
+                                           
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Occupied.png";
                                             
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
@@ -314,7 +312,7 @@ namespace Marcaj.Pages.Tables
                                         {
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TablePos = "0.5,0.5,1,1";
+                                        
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
                                         }
                                     }
@@ -324,7 +322,7 @@ namespace Marcaj.Pages.Tables
                                         {
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Occupied.png";
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TablePos = "0.5,0.5,1,1";
+                                          
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
                                         }
@@ -332,7 +330,7 @@ namespace Marcaj.Pages.Tables
                                         {
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TablePos = "0.5,0.5,1,1";
+                                          
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
                                         }
                                     }
@@ -342,7 +340,7 @@ namespace Marcaj.Pages.Tables
                                         {
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Occupied.png";
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TablePos = "0.5,0.5,1,1";
+                                          
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
                                         }
@@ -350,7 +348,7 @@ namespace Marcaj.Pages.Tables
                                         {
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TablePos = "0.5,0.5,1,1";
+                                         
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
                                         }
                                     }
