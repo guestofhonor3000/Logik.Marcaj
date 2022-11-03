@@ -229,12 +229,6 @@ namespace Marcaj.Pages.Tables
             {
                 if (Connectivity.NetworkAccess == NetworkAccess.Internet)
                 {
-                    var a = await App.manager.iGetDineInTablesByTableGroup(GroupID);
-                    if (a != null)
-                    {
-                        tblLayoutColl.ItemsSource = tblLayout;
-                    }
-                    
                     var b = await App.manager.iGetDineInTableGroups();
                     dineInGroups = b;
 
@@ -243,6 +237,77 @@ namespace Marcaj.Pages.Tables
                         lstvwGrupMese.ItemsSource = b;
                         lstvwGrupMese.SelectedItem = b[0];
                     }
+
+                    var dineInss = await App.manager.iGetDineInTablesByTableGroup(GroupID);
+                    if (dineInss != null)
+                    {
+
+                        var dineInGroup = dineInGroups.Where(x => x.TableGroupID == GroupID).FirstOrDefault();
+
+                        int col = Convert.ToInt32(dineInGroup.GridSize.ToString().Split('x')[0]);
+                        int row = Convert.ToInt32(dineInGroup.GridSize.ToString().Split('x')[1]);
+                        int nrPos = col * row;
+
+                        for (int i = 0; i < nrPos; i++)
+                        {
+                            var model = new TableLayoutModel();
+
+                            model.Position = (i + 1).ToString();
+                            model.Text = "";
+                            model.Visible = false;
+
+                            tblLayout.Add(model);
+                        }
+                        tblLayoutColl.ItemsLayout = new GridItemsLayout(col, ItemsLayoutOrientation.Vertical)
+                        {
+                            VerticalItemSpacing = 5,
+                            HorizontalItemSpacing = 5
+
+                        };
+
+                        
+
+                        foreach (var dine in dineInss)
+                        {
+                            if (dine.DineIn.DisplayPosition != null)
+                            {
+                                if (Convert.ToInt32(dine.DineIn.DisplayPosition) <= nrPos)
+                                {
+                                    Debug.WriteLine(dine.Opened);
+                                    Debug.WriteLine(dine.EmpName);
+
+                                    if (dine.DineIn.MaxGuests == 2)
+                                    {
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                    }
+                                    else if (dine.DineIn.MaxGuests == 4)
+                                    {
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                    }
+                                    else if (dine.DineIn.MaxGuests == 6)
+                                    {
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                    }
+                                    else if (dine.DineIn.MaxGuests == 8)
+                                    {
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                    }
+                                }
+                            }
+                        }
+                        tblLayoutColl.ItemsSource = tblLayout;
+                        IsFirstLoad = false;
+                    }
+                    
+                    
                 }
                 else
                 {
@@ -257,7 +322,6 @@ namespace Marcaj.Pages.Tables
                     if (b != null)
                     {
                         lstvwGrupMese.ItemsSource = b;
-                        lstvwGrupMese.SelectedItem = b[0];
                     }
                 }
                 
@@ -266,9 +330,71 @@ namespace Marcaj.Pages.Tables
             {
                 if (Connectivity.NetworkAccess == NetworkAccess.Internet)
                 {
-                    var a = await App.manager.iGetDineInTablesByTableGroup(GroupID);
-                    if (a != null)
+                    var dineInss = await App.manager.iGetDineInTablesByTableGroup(GroupID);
+                    if (dineInss != null)
                     {
+
+                        var dineInGroup = dineInGroups.Where(x => x.TableGroupID == GroupID).FirstOrDefault();
+
+                        int col = Convert.ToInt32(dineInGroup.GridSize.ToString().Split('x')[0]);
+                        int row = Convert.ToInt32(dineInGroup.GridSize.ToString().Split('x')[1]);
+                        int nrPos = col * row;
+
+                        for (int i = 0; i < nrPos; i++)
+                        {
+                            var model = new TableLayoutModel();
+
+                            model.Position = (i + 1).ToString();
+                            model.Text = "";
+                            model.Visible = false;
+
+                            tblLayout.Add(model);
+                        }
+                        tblLayoutColl.ItemsLayout = new GridItemsLayout(col, ItemsLayoutOrientation.Vertical)
+                        {
+                            VerticalItemSpacing = 5,
+                            HorizontalItemSpacing = 5
+
+                        };
+
+
+
+                        foreach (var dine in dineInss)
+                        {
+                            if (dine.DineIn.DisplayPosition != null)
+                            {
+                                if (Convert.ToInt32(dine.DineIn.DisplayPosition) <= nrPos)
+                                {
+                                    Debug.WriteLine(dine.Opened);
+                                    Debug.WriteLine(dine.EmpName);
+
+                                    if (dine.DineIn.MaxGuests == 2)
+                                    {
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                    }
+                                    else if (dine.DineIn.MaxGuests == 4)
+                                    {
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                    }
+                                    else if (dine.DineIn.MaxGuests == 6)
+                                    {
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                    }
+                                    else if (dine.DineIn.MaxGuests == 8)
+                                    {
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
+                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                    }
+                                }
+                            }
+                        }
                         tblLayoutColl.ItemsSource = tblLayout;
                     }
                 }
@@ -283,64 +409,6 @@ namespace Marcaj.Pages.Tables
                 
             }
 
-            var dineInGroup = dineInGroups.Where(x => x.TableGroupID == GroupID).FirstOrDefault();
-
-            int col = Convert.ToInt32(dineInGroup.GridSize.ToString().Split('x')[0]);
-            int row = Convert.ToInt32(dineInGroup.GridSize.ToString().Split('x')[1]);
-            int nrPos = col * row;
-
-            for (int i = 0; i < nrPos; i++)
-            {
-                var model = new TableLayoutModel();
-
-                model.Position = (i + 1).ToString();
-                model.Text = "";
-                model.Visible = false;
-
-                tblLayout.Add(model);
-            }
-            tblLayoutColl.ItemsLayout = new GridItemsLayout(col, ItemsLayoutOrientation.Vertical)
-            {
-                VerticalItemSpacing = 5,
-                HorizontalItemSpacing = 5
-
-            };
-
-            dineIns = await App.manager.iGetOnlyDineInTablesByTableGroup(dineInGroup.TableGroupID);
-
-            foreach (var dine in dineIns)
-            {
-                if (dine.DisplayPosition != null)
-                {
-                    if (Convert.ToInt32(dine.DisplayPosition) <= nrPos)
-                    {
-                        if (dine.MaxGuests == 2)
-                        {
-                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
-                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
-                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
-                        }
-                        else if (dine.MaxGuests == 4)
-                        {
-                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
-                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
-                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
-                        }
-                        else if (dine.MaxGuests == 6)
-                        {
-                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
-                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
-                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
-                        }
-                        else if (dine.MaxGuests == 8)
-                        {
-                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Visible = true;
-                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
-                            tblLayout.Where(x => x.Position == dine.DisplayPosition).FirstOrDefault().TableText = dine.DineInTableText;
-                        }
-                    }
-                }
-            }
 
         }
 
@@ -393,20 +461,24 @@ namespace Marcaj.Pages.Tables
 
         private void lstvwGrupMese_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+            if(IsFirstLoad != true)
             {
-                var selIt = e.SelectedItem as DineInTableGroupModel;
+                if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+                {
+                    var selIt = e.SelectedItem as DineInTableGroupModel;
                     GroupId = selIt.TableGroupID;
                     IsFirstLoad = false;
                     PopList(GroupId);
+                }
+                else
+                {
+                    var selIt = e.SelectedItem as LDineInTableGroupsModel;
+                    GroupId = selIt.TableGroupID;
+                    IsFirstLoad = false;
+                    PopList(GroupId);
+                }
             }
-            else
-            {
-                var selIt = e.SelectedItem as LDineInTableGroupsModel;
-                GroupId = selIt.TableGroupID;
-                IsFirstLoad = false;
-                PopList(GroupId);
-            }
+            
         }
 
 

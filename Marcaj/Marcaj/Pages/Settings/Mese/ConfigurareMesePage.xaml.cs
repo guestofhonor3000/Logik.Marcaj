@@ -26,14 +26,18 @@ namespace Marcaj.Pages.Settings
 
         private void lstvwGrupMese_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var selIt = e.SelectedItem as DineInTableGroupModel;
-            GroupId = selIt.TableGroupID;
-            IsFirstLoad = false;
-            PopList(GroupId);
+            if(IsFirstLoad!= true)
+            {
+                var selIt = e.SelectedItem as DineInTableGroupModel;
+                GroupId = selIt.TableGroupID;
+                PopList(GroupId);
+            }
+           
         }
 
         private async void lstvwMese_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
+            
             var a = e.SelectedItem as DineInTableAndEmpModel;
             await App.manager.iPutDineInTable(a.DineIn, a.DineIn.DineInTableID);
             PopList(GroupId);
@@ -43,16 +47,18 @@ namespace Marcaj.Pages.Settings
         {
             if(IsFirstLoad==true)
             {
-                var a = await App.manager.iGetDineInTablesAllByTableGroup(GroupID);
-                if (a != null)
-                {
-                    lstvwMese.ItemsSource = a;
-                }
+              
                 var b = await App.manager.iGetDineInTableGroups();
                 if (b != null)
                 {
                     lstvwGrupMese.ItemsSource = b;
                     lstvwGrupMese.SelectedItem = b[0];
+                }
+                var a = await App.manager.iGetDineInTablesAllByTableGroup(GroupID);
+                if (a != null)
+                {
+                    lstvwMese.ItemsSource = a;
+                    IsFirstLoad = false;
                 }
             }
             else
