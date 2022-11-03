@@ -8,6 +8,8 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Threading;
 using Xamarin.Essentials;
+using System.Collections.Generic;
+using Marcaj.Resources;
 
 namespace Marcaj
 {
@@ -31,7 +33,8 @@ namespace Marcaj
         public App()
         {
             InitializeComponent();
-
+            themeDictionary.MergedDictionaries.Clear();
+            themeDictionary.MergedDictionaries.Add(new DarkThemeStyle());
             manager = new ServiceManager(new RService());
             MainPage = new NavigationPage(new StartPage());
             MessagingCenter.Subscribe<StartPage>(this, "NoCon", (sender) => {

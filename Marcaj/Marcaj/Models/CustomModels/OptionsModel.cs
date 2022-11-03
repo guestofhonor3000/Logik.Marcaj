@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Marcaj.Models.CustomModels
 {
-    public class MeseOptionsModel
+    public class OptionsModel
     {
         public string Text { get; set; }
     }

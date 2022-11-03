@@ -4,9 +4,7 @@
              x:Class="Marcaj.Pages.Settings.SettingsHomePage">
     <ContentPage.Content>
         
-        <Grid  RowSpacing="0" 
-               ColumnSpacing="0"  
-               BackgroundColor="#66717d">
+        <Grid  Style="{StaticResource mainGrid}">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -15,33 +13,30 @@
         
             </Grid.ColumnDefinitions>
 
-            <ScrollView Grid.Column="0"  
-                        VerticalScrollBarVisibility="Never">
 
-                <Grid BackgroundColor="#171a1d" 
-                      HorizontalOptions="FillAndExpand" 
-                      VerticalOptions="FillAndExpand" 
-                      RowSpacing="10" 
+            <StackLayout Grid.Column="0"
+                      BackgroundColor="#171a1d" 
+                      VerticalOptions="Fill" 
                       Margin="0" 
-                      Padding="10">
+                      Padding="10"
+                         Spacing="10">
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    
-                    <ImageButton Grid.Row="0" 
+                <ImageButton Grid.Row="0" 
                                  Source="MainMeseButton.png" 
                                  x:Name="btnMeseConf" 
-                                 Clicked="btnMeseConf_Clicked" 
-                                 VerticalOptions="Start"/>
+                                 Clicked="btnMeseConf_Clicked"/>
 
-                </Grid>
-            </ScrollView>
+                <ImageButton Grid.Row="1" 
+                                 Source="MainPlaceholderButton.png" 
+                                 x:Name="btnStationConf" 
+                                 Clicked="btnStatationConf_Clicked"/>
 
-            <ScrollView Grid.Column="1"  
-                        VerticalScrollBarVisibility="Never">
+            </StackLayout> 
 
-                <ListView x:Name="optionsList"
+
+
+            <ListView x:Name="optionsList"
+                          Grid.Column="1"
                           ItemSelected="optionsList_ItemSelected"
                           Margin="40,5,40,5"
                           HasUnevenRows="True">
@@ -50,24 +45,16 @@
                         <DataTemplate>
                             <ViewCell>
 
-                                <Frame CornerRadius="10" BackgroundColor="#8f99a3" Margin="0,5,0,5">
-                                        <Label Text="{Binding Text}" 
-                                           FontAttributes="Bold" 
-                                           FontSize="20" 
-                                           FontFamily="Verdana" 
-                                           HorizontalTextAlignment="Center"
-                                           VerticalOptions="Center" 
-                                           HorizontalOptions="CenterAndExpand" 
-                                           TextColor="White"
-                                           Padding="10"
-                                          />
-                                    </Frame>
+                                <Frame Style="{DynamicResource btnFrame}">
+                                    <Label Text="{Binding Text}" 
+                                           Style="{DynamicResource btnLabel}"/>
+                                </Frame>
                               
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-            </ScrollView>
+
 
             
 

@@ -18,21 +18,30 @@ namespace Marcaj.Pages.Settings
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SettingsHomePage : ContentPage
     {
-        public ObservableCollection<MeseOptionsModel> meseOpt;
+        public ObservableCollection<OptionsModel> meseOpt;
+        public ObservableCollection<OptionsModel> stationOpt;
         public SettingsHomePage()
         {
             InitializeComponent();
-            meseOpt = new ObservableCollection<MeseOptionsModel>
+            meseOpt = new ObservableCollection<OptionsModel>
             {
-            new MeseOptionsModel { Text="Mese Active/Inactive"},
-            new MeseOptionsModel { Text="Grupuri" },
-            new MeseOptionsModel {Text ="Statie"}
-        };
+            new OptionsModel { Text="Mese Active/Inactive"},
+            new OptionsModel { Text="Grupuri" }
+            };
+            stationOpt = new ObservableCollection<OptionsModel>
+            {
+            new OptionsModel {Text ="Statie"},
+            new OptionsModel {Text ="Tema"}
+            };
             optionsList.ItemsSource = meseOpt;
         }
         private async void btnMeseConf_Clicked(object sender, EventArgs e)
         {
             optionsList.ItemsSource = meseOpt;
+        }
+        private void btnStatationConf_Clicked(object sender, EventArgs e)
+        {
+            optionsList.ItemsSource = stationOpt;
         }
 
 
@@ -40,7 +49,7 @@ namespace Marcaj.Pages.Settings
         {
 
 
-            var current = e.SelectedItem as MeseOptionsModel;
+            var current = e.SelectedItem as OptionsModel;
 
             if (((ListView)sender).SelectedItem == null)
                 return;
@@ -61,8 +70,15 @@ namespace Marcaj.Pages.Settings
                 await Navigation.PushAsync(new StationSettingsMainPage());
 
             }
+            else if (current.Text == "Tema")
+            {
+                await Navigation.PushAsync(new ThemePage());
+
+            }
 
                    ((ListView)sender).SelectedItem = null;
         }
+
+    
     }
 }

@@ -420,9 +420,6 @@ namespace Marcaj.Pages.Tables
             await Navigation.PushAsync(new AchitaPage(EmplFl));
         }
 
-        private async void btnTblLayoutPage_Clicked(object sender, EventArgs e)
-        {
-           
-        }
+
     }
 }

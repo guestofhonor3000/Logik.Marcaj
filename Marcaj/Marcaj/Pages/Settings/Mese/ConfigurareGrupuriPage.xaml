@@ -16,10 +16,7 @@
             </Grid.ColumnDefinitions>
 
             <StackLayout Grid.Column="0"
-                         BackgroundColor="#171a1d"
-                         VerticalOptions="Fill"
-                         Padding="10"
-                         Spacing="10">
+                         Style="{DynamicResource mainStack}">
 
                 <ImageButton  Source="MainSettingsSelectedButton.png" 
                               VerticalOptions="Start"/>
@@ -40,19 +37,9 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Frame CornerRadius="10" 
-                                       BackgroundColor="#8f99a3" 
-                                       Margin="5,10,5,0">
-                                    
+                                <Frame Style="{DynamicResource btnFrame}">
                                     <Label Text="{Binding TableGroupText}"
-                                           VerticalOptions="Center" 
-                                           HorizontalOptions="CenterAndExpand"
-                                           HorizontalTextAlignment="Center"
-                                           FontSize="20" 
-                                           FontFamily="Verdana"
-                                           FontAttributes="Bold"  
-                                           TextColor="White" 
-                                           Padding="10"/>
+                                           Style="{DynamicResource btnLabel}"/>
                                 </Frame>
                             </ViewCell>
                         </DataTemplate>
@@ -63,56 +50,25 @@
 
 
             <StackLayout Grid.Column="3"
-                         BackgroundColor="#171a1d"
-                         VerticalOptions="Fill"
-                         Padding="10"
-                         Spacing="10">
+                         Style="{DynamicResource mainStack}">
 
-                <Frame CornerRadius="10" 
-                       BackgroundColor="#8f99a3" 
-
-                       VerticalOptions="Start">
                     
-                        <Button  
-                            Text="Redenumeste"
-                            FontSize="20" 
-                            FontFamily="Verdana"
-                            FontAttributes="Bold"  
-                            TextColor="White" 
-                            x:Name="btnGroupNameEdit" 
-                            Clicked="btnGroupNameEdit_Clicked"
-                            BackgroundColor="#8f99a3"/>
-                </Frame>
+                        <Button Text="Redenumeste"
+                                Style="{DynamicResource btn}"
+                                x:Name="btnGroupNameEdit" 
+                                Clicked="btnGroupNameEdit_Clicked"/>
 
-                <Frame CornerRadius="10" 
-                       BackgroundColor="#8f99a3"
-                       VerticalOptions="Start">
-                    
-                        <Button  
-                            Text="Editeaza" 
-                            FontSize="20" 
-                            FontFamily="Verdana"
-                            FontAttributes="Bold"  
-                            TextColor="White" 
-                            x:Name="btnAssignTables" 
-                            Clicked="btnAssignTables_Clicked"
-                            BackgroundColor="#8f99a3"/>
-                </Frame>
 
-                <Frame CornerRadius="10" 
-                       BackgroundColor="#8f99a3" 
-                       VerticalOptions="Start">
-                    
-                        <Button  
-                            Text="Sterge" 
-                            FontSize="20" 
-                            FontFamily="Verdana"
-                            FontAttributes="Bold"  
-                            TextColor="White" 
-                            x:Name="btnDeleteGroup" 
-                            Clicked="btnDeleteGroup_Clicked"
-                            BackgroundColor="#8f99a3"/>
-                </Frame>
+                        <Button Text="Editeaza" 
+                                Style="{DynamicResource btn}"
+                                x:Name="btnAssignTables" 
+                                Clicked="btnAssignTables_Clicked"/>
+
+
+                        <Button Text="Sterge" 
+                                Style="{DynamicResource btn}"
+                                x:Name="btnDeleteGroup" 
+                                Clicked="btnDeleteGroup_Clicked"/>
 
             </StackLayout>
 
