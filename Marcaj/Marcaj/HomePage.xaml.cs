@@ -26,7 +26,7 @@ namespace Marcaj
             PopPage();
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-                SyncLocal();
+                //SyncLocal();
             }
         }
 

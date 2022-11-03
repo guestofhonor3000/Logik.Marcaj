@@ -47,6 +47,6 @@ namespace Marcaj.Models.DbModels
 
         //public virtual DineInTableGroup DineInTableGroup { get; set; }
         //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        //public virtual ICollection<OrderHeader> OrderHeaders { get; set; }
+        public virtual ICollection<OrderHeadersModel> OrderHeaders { get; set; }
     }
 }
