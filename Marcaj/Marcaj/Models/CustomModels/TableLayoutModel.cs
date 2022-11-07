@@ -12,5 +12,8 @@ namespace Marcaj.Models.CustomModels
         public bool Visible { get; set; }
         public string TableText { get; set; }
         public string EmpName { get; set; }
+        public bool Fumatori { get; set; }
+        public bool Cabina { get; set; }
+        public bool Fereastra { get; set; }
     }
 }

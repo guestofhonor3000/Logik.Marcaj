@@ -288,7 +288,44 @@ namespace Marcaj.Pages.Settings.Mese
                 await DisplayAlert("Error", "Too many tables selected. Try Again!", "Ok");
             }
         }
+        private void btnFumatori_Clicked(object sender, EventArgs e)
+        {
+            foreach(var a in tblLayoutColl.SelectedItems)
+            {
+                var b = a as TableLayoutModel;
+                if(b.Visible!=false)
+                {
+                    b.Fumatori = true;
+                }
+            }
+            tblLayoutColl.SelectedItems = null;
+        }
 
+        private void btnFereastra_Clicked(object sender, EventArgs e)
+        {
+            foreach (var a in tblLayoutColl.SelectedItems)
+            {
+                var b = a as TableLayoutModel;
+                if (b.Visible != false)
+                {
+                    b.Fereastra = true;
+                }
+            }
+            tblLayoutColl.SelectedItems = null;
+        }
+
+        private void btnCabina_Clicked(object sender, EventArgs e)
+        {
+            foreach (var a in tblLayoutColl.SelectedItems)
+            {
+                var b = a as TableLayoutModel;
+                if (b.Visible != false)
+                {
+                    b.Cabina = true;
+                }
+            }
+            tblLayoutColl.SelectedItems = null;
+        }
         private void btnClear_Clicked(object sender, EventArgs e)
         {
             foreach (var a in tblLayoutColl.SelectedItems)
@@ -321,6 +358,10 @@ namespace Marcaj.Pages.Settings.Mese
                 foreach (var tbl in tblLayout.Where(x => x.Text != "").ToList())
                 {
                     var model = new DineInTableModel();
+                    Debug.WriteLine(tbl.Fumatori);
+                    model.Smoking = tbl.Fumatori;
+                    model.Booth = tbl.Cabina;
+                    model.Window = tbl.Fereastra;
                     model.DisplayPosition = tbl.Position;
                     model.DineInTableID = dineIns.Where(x => x.DineInTableText == tbl.TableText).FirstOrDefault().DineInTableID;
 
@@ -400,6 +441,8 @@ namespace Marcaj.Pages.Settings.Mese
             }
 
             tblLayoutColl.ItemsSource = tblLayout;
-        } 
+        }
+
+        
     }
 }

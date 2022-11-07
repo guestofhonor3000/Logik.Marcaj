@@ -25,12 +25,19 @@
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     
                     <Picker x:Name="gridPicker" 
                             Grid.Row="0"  
                             SelectedIndexChanged="gridPicker_SelectedIndexChanged"
                             VerticalOptions="Start"/>
+                    <Button Grid.Row="1" x:Name="btnFumatori" Text="Fumatori" Clicked="btnFumatori_Clicked"/>
+                    <Button Grid.Row="2" x:Name="btnFereastra" Text="Fereastra" Clicked="btnFereastra_Clicked"/>
+                    <Button Grid.Row="3" x:Name="btnCabina" Text="Cabina" Clicked="btnCabina_Clicked"/>
+
                 </Grid>
                 
             </ScrollView>
