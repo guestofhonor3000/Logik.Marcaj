@@ -3,57 +3,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Marcaj.Pages.Tables.AllTables">
     <ContentPage.Content>
-        <Grid RowSpacing="0" 
-              ColumnSpacing="0"
-              BackgroundColor="#66717d">
+        <Grid Style="{DynamicResource mainGrid}">
             
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="8*"/>
             </Grid.ColumnDefinitions>
-            
-            <ScrollView VerticalScrollBarVisibility="Never">
-                <Grid Grid.Column="0" BackgroundColor="#171a1d" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" RowSpacing="10" Margin="0" Padding="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <ImageButton Source="MainMeseButton.png" 
-                             Grid.Row="0"   
+
+            <ScrollView Grid.Column="0" VerticalScrollBarVisibility="Never">
+                <StackLayout Style="{DynamicResource mainStack}">
+                    <ImageButton Source="MainMeseButton.png"  
                              x:Name="btnMese" 
                              Clicked="btnMese_Clicked"/>
-                <ImageButton Source="MainBarButton.png" 
-                             Grid.Row="1" />
-                <ImageButton Source="MainPayButton.png" 
-                             Grid.Row="2"  
+                    <ImageButton Source="MainBarButton.png" />
+                    <ImageButton Source="MainPayButton.png"   
                              x:Name="btnAchita" 
                              Clicked="btnAchita_Clicked"/>
-                <ImageButton Source="MainVoidButton.png" 
-                             Grid.Row="3" />
-                <ImageButton Source="MainRecallButton.png" 
-                             Grid.Row="4" />
-                <ImageButton Source="MainNoSaleButton.png" 
-                             Grid.Row="5" />
-                <ImageButton Source="MainPayBackButton.png" 
-                             Grid.Row="6"/>
-                <ImageButton Source="MainPlaceholderButton.png" 
-                             Grid.Row="7"/>
-                <ImageButton Source="MainPlaceholderButton.png" 
-                             Grid.Row="8" />
-                <ImageButton Source="MainPlaceholderButton.png" 
-                             Grid.Row="9" />
-            </Grid>
+                    <ImageButton Source="MainVoidButton.png"  />
+                    <ImageButton Source="MainRecallButton.png" />
+                    <ImageButton Source="MainNoSaleButton.png"  />
+                    <ImageButton Source="MainPayBackButton.png" />
+                    <ImageButton Source="MainPlaceholderButton.png" />
+                    <ImageButton Source="MainPlaceholderButton.png"  />
+                    <ImageButton Source="MainPlaceholderButton.png"  />
+                </StackLayout>
             </ScrollView>
-           
-           
-                <ListView Grid.Column="1" 
+
+
+
+            <ListView Grid.Column="1" 
                           BackgroundColor="#394046"
                           x:Name="lstvwGrupMese" 
                           ItemSelected="lstvwGrupMese_ItemSelected">
@@ -62,19 +41,10 @@
                         <DataTemplate>
                             <ViewCell>
                                 
-                                <Frame CornerRadius="10" 
-                                       BackgroundColor="#8f99a3" 
-                                       Margin="10,10,10,0">
+                                <Frame Style="{DynamicResource btnFrame}">
                                     
                                     <Label Text="{Binding TableGroupText}"
-                                           VerticalOptions="Center" 
-                                           HorizontalOptions="CenterAndExpand"
-                                           HorizontalTextAlignment="Center"
-                                           FontSize="20" 
-                                           FontFamily="Verdana"
-                                           FontAttributes="Bold"  
-                                           TextColor="White" 
-                                           Padding="10"/>
+                                           Style="{DynamicResource btnLabel}"/>
                                 </Frame>
                             </ViewCell>
                         </DataTemplate>
@@ -94,13 +64,14 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
 
-                        <AbsoluteLayout HeightRequest="112"
+                        <AbsoluteLayout HeightRequest="106"
                                         WidthRequest="140">
                             
                             <Image IsVisible="{Binding Visible}"
-                                       Source="{Binding Text}"
-                                       AbsoluteLayout.LayoutFlags="All"
-                                       AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"/>
+                                   Source="{Binding Text}"
+                                   AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                                   AbsoluteLayout.LayoutFlags="All"
+                                   />
 
                             <Label  Text="{Binding TableText}"
                                         TextColor="White" 
@@ -109,11 +80,19 @@
                                         FontAttributes="Bold" 
                                         BackgroundColor="Transparent"
                                         AbsoluteLayout.LayoutFlags="PositionProportional"
-                                        AbsoluteLayout.LayoutBounds="0.5,0.35"/>
-                                
-                                <!--Label VerticalOptions="Center" HorizontalOptions="Center"     TextColor="Black" Text="{Binding Opened}"/>
-                                    <Label VerticalOptions="Center" HorizontalOptions="Center"    TextColor="Black" Text="{Binding EmpName}"/-->
-                            </AbsoluteLayout>
+                                        AbsoluteLayout.LayoutBounds="0.5,0.36"/>
+
+                                  
+                                <Label  FontSize="Micro"
+                                        TextColor="White"
+                                        FontFamily="Verdana"
+                                        FontAttributes="Italic"
+                                        Text="{Binding EmpName}"
+                                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                                        AbsoluteLayout.LayoutBounds="0,0"
+                                        />
+   
+                        </AbsoluteLayout>
 
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

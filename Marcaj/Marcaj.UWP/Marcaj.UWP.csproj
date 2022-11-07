@@ -164,10 +164,14 @@
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="RestImg.jpg" />
     <Content Include="SecondaryBlankButton.png" />
+    <Content Include="Table2Occupied.png" />
     <Content Include="Table2Open.png" />
+    <Content Include="Table4Occupied.png" />
     <Content Include="Table4Open.png" />
     <Content Include="Table6Active.png" />
+    <Content Include="Table6Occupied.png" />
     <Content Include="Table6Open.png" />
+    <Content Include="Table8Occupied.png" />
     <Content Include="Table8Open.png" />
   </ItemGroup>
   <ItemGroup>
