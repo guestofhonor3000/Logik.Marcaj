@@ -12,7 +12,5 @@ namespace Marcaj.Models.CustomModels
         public bool Visible { get; set; }
         public string TableText { get; set; }
         public string EmpName { get; set; }
-        public string TablePos { get; set; }
-        public string TableTextPos { get; set; }
     }
 }

@@ -4,7 +4,7 @@
              x:Class="Marcaj.Pages.Settings.SettingsHomePage">
     <ContentPage.Content>
         
-        <Grid  Style="{StaticResource mainGrid}">
+        <Grid  Style="{DynamicResource mainGrid}">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

@@ -3,9 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Marcaj.Pages.Settings.Mese.ConfigurareGrupuriPage">
     <ContentPage.Content>
-        <Grid  RowSpacing="0" 
-               ColumnSpacing="0"  
-               BackgroundColor="#66717d">
+        <Grid  Style="{DynamicResource mainGrid}">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width=".5*"/>
@@ -14,7 +12,8 @@
                 <ColumnDefinition Width="1.5*"/>
 
             </Grid.ColumnDefinitions>
-
+            
+            
             <StackLayout Grid.Column="0"
                          Style="{DynamicResource mainStack}">
 
