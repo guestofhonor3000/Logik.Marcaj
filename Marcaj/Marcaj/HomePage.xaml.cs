@@ -35,9 +35,9 @@ namespace Marcaj
             string deviceName = DeviceInfo.Name;
 
             var a = await App.lDatabase.lGetStationSettings(deviceName);
-
-            StationName.Text = "Station: "+ a.ComputerName;
-            EmployeeName.Text = "Employee: " + EmplFl.FirstName;
+            SyncLocal();
+            //StationName.Text = "Station: "+ a.ComputerName;
+            //EmployeeName.Text = "Employee: " + EmplFl.FirstName;
         }
         async void SyncLocal()
         {

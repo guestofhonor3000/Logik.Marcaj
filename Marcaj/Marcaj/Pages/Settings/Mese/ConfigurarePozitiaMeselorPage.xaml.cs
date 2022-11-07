@@ -36,10 +36,10 @@ namespace Marcaj.Pages.Settings.Mese
             lstPckr.Add("8x9");
             lstPckr.Add("10x8");
             gridPicker.ItemsSource = lstPckr;
-            
+
 
             var index = lstPckr.IndexOf(dineInGroup.GridSize);
-            if(index != -1)
+            if (index != -1)
             {
                 gridPicker.SelectedIndex = index;
             }
@@ -113,7 +113,7 @@ namespace Marcaj.Pages.Settings.Mese
         private async void btnTbl2_Clicked(object sender, EventArgs e)
         {
             var dineIns2 = dineIns.Where(x => x.MaxGuests == 2).ToList();
-            foreach(var tbl in tblLayout)
+            foreach (var tbl in tblLayout)
             {
                 var toRemove = dineIns2.Where(x => x.DineInTableText == tbl.TableText).FirstOrDefault();
                 if (toRemove != null)
@@ -290,10 +290,10 @@ namespace Marcaj.Pages.Settings.Mese
         }
         private void btnFumatori_Clicked(object sender, EventArgs e)
         {
-            foreach(var a in tblLayoutColl.SelectedItems)
+            foreach (var a in tblLayoutColl.SelectedItems)
             {
                 var b = a as TableLayoutModel;
-                if(b.Visible!=false)
+                if (b.Visible != false)
                 {
                     b.Fumatori = true;
                 }
@@ -382,7 +382,7 @@ namespace Marcaj.Pages.Settings.Mese
             }
             await Navigation.PopModalAsync();
         }
-      
+
         private async void gridPicker_SelectedIndexChanged(object sender, EventArgs e)
         {
             tblLayout = new ObservableCollection<TableLayoutModel>();
@@ -442,7 +442,5 @@ namespace Marcaj.Pages.Settings.Mese
 
             tblLayoutColl.ItemsSource = tblLayout;
         }
-
-        
     }
 }

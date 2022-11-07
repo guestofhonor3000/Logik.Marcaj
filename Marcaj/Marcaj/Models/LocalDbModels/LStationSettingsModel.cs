@@ -19,6 +19,7 @@ namespace Marcaj.Models.LocalDbModels
         public string UserInterfaceLocale { get; set; }
         public string ReceiptPrinterName { get; set; }
         public Nullable<bool> PopUpBool { get; set; }
+        public string Theme { get; set; }
         public bool FastBar { get; set; }
         public bool BarTab { get; set; }
         public bool OrderRecallToBrowse { get; set; }
