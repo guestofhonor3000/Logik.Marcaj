@@ -33,9 +33,8 @@ namespace Marcaj
         public App()
         {
             InitializeComponent();
-            themeDictionary.MergedDictionaries.Clear();
-            themeDictionary.MergedDictionaries.Add(new DarkThemeStyle());
             manager = new ServiceManager(new RService());
+            GetTheme();
             MainPage = new NavigationPage(new StartPage());
             MessagingCenter.Subscribe<StartPage>(this, "NoCon", (sender) => {
                 var startTimeSpan = TimeSpan.Zero;
@@ -57,6 +56,36 @@ namespace Marcaj
             
         }
 
+        async void GetTheme()
+        {
+            string device = DeviceInfo.Name;
+            string deviceName = " ";
+            if (device.Contains("_"))
+            {
+                deviceName = device.Replace('_', ' ');
+            }
+            else
+            {
+                deviceName = device;
+            }
+            if (device.Length > 20)
+            {
+                deviceName = device.Remove(19);
+            }
+            var model = await App.manager.iGetStationSettings(deviceName);
+            if(model.Theme== "Light")
+            {
+                ICollection<ResourceDictionary> mergedDictionaries = Application.Current.Resources.MergedDictionaries;
+                mergedDictionaries.Clear();
+                mergedDictionaries.Add(new LightThemeStyle());
+            }
+            else
+            {
+                ICollection<ResourceDictionary> mergedDictionaries = Application.Current.Resources.MergedDictionaries;
+                mergedDictionaries.Clear();
+                mergedDictionaries.Add(new DarkThemeStyle());
+            }
+        }
 
         protected override void OnStart()
         {
