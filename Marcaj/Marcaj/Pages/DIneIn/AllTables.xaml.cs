@@ -31,8 +31,8 @@ namespace Marcaj.Pages.Tables
             InitializeComponent();
 
             EmplFl = emplFl;
-           
-            dineIn= new DineInTableModel();
+
+            dineIn = new DineInTableModel();
             ldineIn = new LDineInTablesModel();
             dineInGroups = new List<DineInTableGroupModel>();
             dineIns = new List<DineInTableModel>();
@@ -43,7 +43,7 @@ namespace Marcaj.Pages.Tables
             });
             MessagingCenter.Subscribe<App>(this, "ConOk", async (sender) =>
             {
-               // SyncPage();
+                // SyncPage();
             });
         }
 
@@ -153,7 +153,7 @@ namespace Marcaj.Pages.Tables
                 }
             }
 
-            Debug.WriteLine("LoHCountBefore: "+LOh.Count.ToString());
+            Debug.WriteLine("LoHCountBefore: " + LOh.Count.ToString());
 
             foreach (var i in idsIn)
             {
@@ -210,7 +210,7 @@ namespace Marcaj.Pages.Tables
                 ltable.MenuItemTextOT = orderTran.MenuItemTextOT;
 
                 lstOT.Add(ltable);
-               
+
             }
             await App.manager.iPostOrderTransactionSync(lstOT);
 
@@ -266,7 +266,7 @@ namespace Marcaj.Pages.Tables
 
                         };
 
-                        
+
 
                         foreach (var dine in dineInss)
                         {
@@ -284,16 +284,16 @@ namespace Marcaj.Pages.Tables
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
 
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Occupied.png";
-                                            
+
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
                                         }
                                         else
                                         {
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
-                                           
+
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
-                                            
+
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
                                         }
                                     }
@@ -302,9 +302,9 @@ namespace Marcaj.Pages.Tables
                                         if (dine.Opened)
                                         {
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
-                                           
+
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Occupied.png";
-                                            
+
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
                                         }
@@ -312,7 +312,7 @@ namespace Marcaj.Pages.Tables
                                         {
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
-                                        
+
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
                                         }
                                     }
@@ -322,7 +322,7 @@ namespace Marcaj.Pages.Tables
                                         {
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Occupied.png";
-                                          
+
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
                                         }
@@ -330,7 +330,7 @@ namespace Marcaj.Pages.Tables
                                         {
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
-                                          
+
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
                                         }
                                     }
@@ -340,7 +340,7 @@ namespace Marcaj.Pages.Tables
                                         {
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Occupied.png";
-                                          
+
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
                                         }
@@ -348,7 +348,7 @@ namespace Marcaj.Pages.Tables
                                         {
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
-                                         
+
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
                                         }
                                     }
@@ -358,17 +358,17 @@ namespace Marcaj.Pages.Tables
                         tblLayoutColl.ItemsSource = tblLayout;
                         IsFirstLoad = false;
                     }
-                    
-                    
+
+
                 }
                 else
                 {
-                    var a =  App.lDatabase.lGetDineInTablesEmpNameByGroupID(GroupID);
-                    if(a != null)
+                    var a = App.lDatabase.lGetDineInTablesEmpNameByGroupID(GroupID);
+                    if (a != null)
                     {
                         tblLayoutColl.ItemsSource = tblLayout;
                     }
-                    
+
                     var b = await App.lDatabase.lGetDineInTableGroups();
 
                     if (b != null)
@@ -376,7 +376,7 @@ namespace Marcaj.Pages.Tables
                         lstvwGrupMese.ItemsSource = b;
                     }
                 }
-                
+
             }
             else
             {
@@ -505,68 +505,70 @@ namespace Marcaj.Pages.Tables
                 }
                 else
                 {
-                    var a =  App.lDatabase.lGetDineInTablesEmpNameByGroupID(GroupID);
-                    if(a != null)
+                    var a = App.lDatabase.lGetDineInTablesEmpNameByGroupID(GroupID);
+                    if (a != null)
                     {
                         tblLayoutColl.ItemsSource = tblLayout;
                     }
                 }
-                
+
             }
 
 
         }
 
-        private async void lstvwMese_ItemSelected(object sender, SelectionChangedEventArgs e)
-        {
-            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
-            {
-                if (tblLayoutColl.SelectedItem != null)
-                {
-                    var a = e.CurrentSelection as DineInTableAndEmpModel;
-                    dineIn = a.DineIn;
-                    if (a.Opened == true)
-                    {
-                        await Navigation.PushAsync(new ActiveTable(dineIn, EmplFl));
-                    }
-                    else
-                    {
-                        await Navigation.PushAsync(new NotActiveTable(dineIn, EmplFl));
-                    }
-                }
-                tblLayoutColl.SelectedItem = null;
-            }
-            else
-            {
-                
-                if(tblLayoutColl.SelectedItem != null)
-                {
-                    var a = e.CurrentSelection as LDineInTableAndEmpModel;
 
-                    ldineIn = a.DineIn;
 
-                    dineIn.DineInTableID = ldineIn.DineInTableID;
-                    dineIn.DineInTableText = ldineIn.DineInTableText;
-                    dineIn.TableGroupID = ldineIn.TableGroupID;
-                    dineIn.DineInTableInActive = ldineIn.DineInTableInActive;
+        /* private async void lstvwMese_ItemSelected(object sender, SelectionChangedEventArgs e)
+         {
+             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+             {
+                 if (tblLayoutColl.SelectedItem != null)
+                 {
+                     var a = e.CurrentSelection as DineInTableAndEmpModel;
+                     dineIn = a.DineIn;
+                     if (a.Opened == true)
+                     {
+                         await Navigation.PushAsync(new ActiveTable(dineIn, EmplFl));
+                     }
+                     else
+                     {
+                         await Navigation.PushAsync(new NotActiveTable(dineIn, EmplFl));
+                     }
+                 }
+                 tblLayoutColl.SelectedItem = null;
+             }
+             else
+             {
 
-                    if (dineIn.DineInTableInActive == true)
-                    {
-                        await Navigation.PushAsync(new ActiveTable(dineIn, EmplFl));
-                    }
-                    else
-                    {
-                        await Navigation.PushAsync(new NotActiveTable(dineIn, EmplFl));
-                    }
-                    tblLayoutColl.SelectedItem = null;
-                }
-            }
+                 if(tblLayoutColl.SelectedItem != null)
+                 {
+                     var a = e.CurrentSelection as LDineInTableAndEmpModel;
 
-        }
+                     ldineIn = a.DineIn;
+
+                     dineIn.DineInTableID = ldineIn.DineInTableID;
+                     dineIn.DineInTableText = ldineIn.DineInTableText;
+                     dineIn.TableGroupID = ldineIn.TableGroupID;
+                     dineIn.DineInTableInActive = ldineIn.DineInTableInActive;
+
+                     if (dineIn.DineInTableInActive == true)
+                     {
+                         await Navigation.PushAsync(new ActiveTable(dineIn, EmplFl));
+                     }
+                     else
+                     {
+                         await Navigation.PushAsync(new NotActiveTable(dineIn, EmplFl));
+                     }
+                     tblLayoutColl.SelectedItem = null;
+                 }
+             }
+
+         }*/
 
         private void lstvwGrupMese_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            if(IsFirstLoad != true)
+            if (IsFirstLoad != true)
             {
                 if (Connectivity.NetworkAccess == NetworkAccess.Internet)
                 {
@@ -583,11 +585,11 @@ namespace Marcaj.Pages.Tables
                     PopList(GroupId);
                 }
             }
-            
+
         }
 
 
-    private async void btnMese_Clicked(object sender, EventArgs e)
+        private async void btnMese_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new AllTables(EmplFl));
         }
@@ -597,6 +599,12 @@ namespace Marcaj.Pages.Tables
             await Navigation.PushAsync(new AchitaPage(EmplFl));
         }
 
-
+        private void ImageButton_Clicked(object sender, EventArgs e)
+        {
+            var a = sender as ImageButton;
+            //var b = tblLayout.Where(x => x.TableText == a.AutomationId).FirstOrDefault();
+            var b = dineIns.Where(x => x.DineInTableText == a.AutomationId).FirstOrDefault();
+            Debug.WriteLine(a.AutomationId);
+        }
     }
 }

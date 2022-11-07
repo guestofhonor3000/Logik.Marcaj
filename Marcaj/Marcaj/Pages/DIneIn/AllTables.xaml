@@ -4,7 +4,7 @@
              x:Class="Marcaj.Pages.Tables.AllTables">
     <ContentPage.Content>
         <Grid Style="{DynamicResource mainGrid}">
-            
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -37,39 +37,42 @@
                           x:Name="lstvwGrupMese" 
                           ItemSelected="lstvwGrupMese_ItemSelected">
 
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                
-                                <Frame Style="{DynamicResource btnFrame}">
-                                    
-                                    <Label Text="{Binding TableGroupText}"
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+
+                            <Frame Style="{DynamicResource btnFrame}">
+
+                                <Label Text="{Binding TableGroupText}"
                                            Style="{DynamicResource btnLabel}"/>
-                                </Frame>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
 
-                </ListView>
-  
-
-           
+            </ListView>
 
 
-                <CollectionView  x:Name="tblLayoutColl" 
+
+
+
+            <CollectionView  x:Name="tblLayoutColl" 
                                  SelectedItem="lstvwMese_ItemSelected" 
                                  Grid.Column="2" 
-                                 Margin="10">
-                     
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
+                                 Margin="10"
+                                 SelectionMode="None">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
 
                         <AbsoluteLayout HeightRequest="106"
                                         WidthRequest="140">
-                            
-                            <Image IsVisible="{Binding Visible}"
+
+                            <ImageButton IsVisible="{Binding Visible}"
                                    Source="{Binding Text}"
-                                   AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                                        AutomationId="{Binding TableText}"
+                                    Clicked="ImageButton_Clicked"                                   
+                                         AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
                                    AbsoluteLayout.LayoutFlags="All"
                                    />
 
@@ -82,8 +85,8 @@
                                         AbsoluteLayout.LayoutFlags="PositionProportional"
                                         AbsoluteLayout.LayoutBounds="0.5,0.36"/>
 
-                                  
-                                <Label  FontSize="Micro"
+
+                            <Label  FontSize="Micro"
                                         TextColor="White"
                                         FontFamily="Verdana"
                                         FontAttributes="Italic"
@@ -91,15 +94,15 @@
                                         AbsoluteLayout.LayoutFlags="PositionProportional"
                                         AbsoluteLayout.LayoutBounds="0,0"
                                         />
-   
+
                         </AbsoluteLayout>
 
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-               
-     
-        
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+
         </Grid>
     </ContentPage.Content>
 </ContentPage>
