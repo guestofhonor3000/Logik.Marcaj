@@ -21,9 +21,8 @@ namespace Marcaj.Pages.Tables
         EmployeeFileModel EmplFl;
         int GroupId = 1;
         bool IsFirstLoad = true;
-        DineInTableModel dineIn;
-        LDineInTablesModel ldineIn;
         List<DineInTableModel> dineIns;
+        List<DineInTableAndEmpModel> dineInsAndEmp;
         List<DineInTableGroupModel> dineInGroups;
         ObservableCollection<TableLayoutModel> tblLayout;
         public AllTables(EmployeeFileModel emplFl)
@@ -32,10 +31,11 @@ namespace Marcaj.Pages.Tables
 
             EmplFl = emplFl;
 
-            dineIn = new DineInTableModel();
-            ldineIn = new LDineInTablesModel();
+           
+            
             dineInGroups = new List<DineInTableGroupModel>();
             dineIns = new List<DineInTableModel>();
+            dineInsAndEmp = new List<DineInTableAndEmpModel>();
             PopList(GroupId);
             MessagingCenter.Subscribe<NotActiveTable>(this, "Up", (sender) =>
             {
@@ -239,6 +239,7 @@ namespace Marcaj.Pages.Tables
                     }
 
                     var dineInss = await App.manager.iGetDineInTablesByTableGroup(GroupID);
+                    dineInsAndEmp = dineInss;
                     if (dineInss != null)
                     {
 
@@ -383,6 +384,7 @@ namespace Marcaj.Pages.Tables
                 if (Connectivity.NetworkAccess == NetworkAccess.Internet)
                 {
                     var dineInss = await App.manager.iGetDineInTablesByTableGroup(GroupID);
+                    dineInsAndEmp = dineInss;
                     if (dineInss != null)
                     {
 
@@ -518,54 +520,6 @@ namespace Marcaj.Pages.Tables
         }
 
 
-
-        /* private async void lstvwMese_ItemSelected(object sender, SelectionChangedEventArgs e)
-         {
-             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
-             {
-                 if (tblLayoutColl.SelectedItem != null)
-                 {
-                     var a = e.CurrentSelection as DineInTableAndEmpModel;
-                     dineIn = a.DineIn;
-                     if (a.Opened == true)
-                     {
-                         await Navigation.PushAsync(new ActiveTable(dineIn, EmplFl));
-                     }
-                     else
-                     {
-                         await Navigation.PushAsync(new NotActiveTable(dineIn, EmplFl));
-                     }
-                 }
-                 tblLayoutColl.SelectedItem = null;
-             }
-             else
-             {
-
-                 if(tblLayoutColl.SelectedItem != null)
-                 {
-                     var a = e.CurrentSelection as LDineInTableAndEmpModel;
-
-                     ldineIn = a.DineIn;
-
-                     dineIn.DineInTableID = ldineIn.DineInTableID;
-                     dineIn.DineInTableText = ldineIn.DineInTableText;
-                     dineIn.TableGroupID = ldineIn.TableGroupID;
-                     dineIn.DineInTableInActive = ldineIn.DineInTableInActive;
-
-                     if (dineIn.DineInTableInActive == true)
-                     {
-                         await Navigation.PushAsync(new ActiveTable(dineIn, EmplFl));
-                     }
-                     else
-                     {
-                         await Navigation.PushAsync(new NotActiveTable(dineIn, EmplFl));
-                     }
-                     tblLayoutColl.SelectedItem = null;
-                 }
-             }
-
-         }*/
-
         private void lstvwGrupMese_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (IsFirstLoad != true)
@@ -599,12 +553,21 @@ namespace Marcaj.Pages.Tables
             await Navigation.PushAsync(new AchitaPage(EmplFl));
         }
 
-        private void ImageButton_Clicked(object sender, EventArgs e)
+        private async void ImageButton_Clicked(object sender, EventArgs e)
         {
             var a = sender as ImageButton;
-            //var b = tblLayout.Where(x => x.TableText == a.AutomationId).FirstOrDefault();
-            var b = dineIns.Where(x => x.DineInTableText == a.AutomationId).FirstOrDefault();
-            Debug.WriteLine(a.AutomationId);
+
+            var b = dineInsAndEmp.Where(x => x.DineIn.DineInTableText == a.AutomationId).FirstOrDefault();
+           
+            if(b.Opened)
+            {
+                await Navigation.PushAsync(new ActiveTable(b.DineIn, EmplFl));
+            }
+            else
+            {
+                await Navigation.PushAsync(new NotActiveTable(b.DineIn, EmplFl));
+            }
+           
         }
     }
 }
