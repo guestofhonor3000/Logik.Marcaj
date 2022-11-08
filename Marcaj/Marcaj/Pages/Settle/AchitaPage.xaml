@@ -6,7 +6,7 @@
     <ContentPage.Content>
         <Grid  RowSpacing="0" 
                ColumnSpacing="0"  
-               BackgroundColor="#66717d">
+               Style="{DynamicResource mainGrid}">
             
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -15,110 +15,68 @@
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
-            <ScrollView Grid.Column="0"  
-                        VerticalScrollBarVisibility="Never">
-                
-                <Grid BackgroundColor="#171a1d" 
-                      HorizontalOptions="FillAndExpand" 
-                      VerticalOptions="FillAndExpand" 
-                      RowSpacing="10" 
-                      Margin="0" 
-                      Padding="10">
-                    
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    
-                        <ImageButton Source="MainMeseButton.png" Grid.Row="0"   x:Name="btnMese" Clicked="btnMese_Clicked"/>
-                        <ImageButton Source="MainBarButton.png" Grid.Row="1" />
-                        <ImageButton Source="MainPayButton.png" Grid.Row="2" x:Name="btnAchita" Clicked="btnAchita_Clicked"/>
-                        <ImageButton Source="MainVoidButton.png" Grid.Row="3" />
-                        <ImageButton Source="MainRecallButton.png" Grid.Row="4" />
-                        <ImageButton Source="MainNoSaleButton.png" Grid.Row="5" />
-                        <ImageButton Source="MainPayBackButton.png" Grid.Row="6" />
-                        <ImageButton Source="MainPlaceholderButton.png" Grid.Row="7" />
-                        <ImageButton Source="MainPlaceholderButton.png" Grid.Row="8" />
-                        <ImageButton Source="MainPlaceholderButton.png" Grid.Row="9" />
-                </Grid>
-            </ScrollView>
+            <ListView Grid.Column="0" 
+                      Style="{DynamicResource mainList}"
+                      x:Name="menuBtnLst" 
+                      ItemSelected="menuBtnLst_ItemSelected">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+
+                            <Frame Style="{DynamicResource mainBtnFrame}">
+                                <StackLayout>
+                                    <Image Source="{Binding Image}"/>
+                                    <Label Text="{Binding Text}"
+                                           Style="{DynamicResource mainBtnLabel}"/>
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
 
-            <ScrollView Grid.Column="1"  
-                        VerticalScrollBarVisibility="Never">
-                
-                <Grid BackgroundColor="#394046" 
-                      HorizontalOptions="FillAndExpand" 
-                      VerticalOptions="StartAndExpand" 
-                      RowSpacing="10" 
-                      Margin="0" 
-                      Padding="10">
-                    
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+            <StackLayout Grid.Column="1"
+                         Style="{DynamicResource secondStack}">
 
-                          
-                        <Button Grid.Row="0" 
-                                    BackgroundColor="#8f99a3"
-                                    CornerRadius="10"
+
+                <Button Grid.Row="0" 
+                                    Style="{DynamicResource secondBtn}"
                                     Text="Toate"
-                                    FontAttributes="Bold"
-                                    TextColor="White"
-                                    FontSize="Medium"
                                     x:Name="btnToate"
                                     Clicked="btnToate_Clicked"/>
                                                                 
                      
                         <Button Grid.Row="1"                              
-                                    BackgroundColor="#8f99a3"
                                     CornerRadius="10"
                                     Text="DineIn"
-                                    FontAttributes="Bold"
-                                    TextColor="White"
-                                    FontSize="Medium"
+                                    Style="{DynamicResource secondBtn}"
                                     x:Name="btnDineIn"
                                     Clicked="btnDineIn_Clicked"/>
                     
 
                         <Button Grid.Row="2"                              
-                                    BackgroundColor="#8f99a3"
                                     CornerRadius="10"
                                     Text="Bar"
-                                    FontAttributes="Bold"
-                                    TextColor="White"
-                                    FontSize="Medium"
+                                    Style="{DynamicResource secondBtn}"
                                     x:Name="btnBar"
                                     Clicked="btnBar_Clicked"/>
 
                         <Button Grid.Row="3"                              
-                                    BackgroundColor="#8f99a3"
                                     CornerRadius="10"
                                     Text="Server"
-                                    FontAttributes="Bold"
-                                    TextColor="White"
-                                    FontSize="Medium"
+                                    Style="{DynamicResource secondBtn}"
                                     x:Name="btnServer"
                                     Clicked="btnEmp_Clicked"/>
 
-                </Grid>
-            </ScrollView>
+            </StackLayout>
 
 
             <CollectionView Grid.Column="2" 
                             SelectionMode="None" 
                             x:Name="tabList" 
-                            Margin="10,0,10,0" 
-                            BackgroundColor="#66717d">
+                            Margin="10,0,10,0">
 
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Vertical" 

@@ -15,7 +15,8 @@
             
             
             <StackLayout Grid.Column="0"
-                         Style="{DynamicResource mainStack}">
+                         Style="{DynamicResource mainList}"
+                         Padding="10">
 
                 <ImageButton  Source="MainSettingsSelectedButton.png" 
                               VerticalOptions="Start"/>
@@ -31,14 +32,14 @@
             
                 <ListView Grid.Column="1"
                           x:Name="lstvwGrupMese" 
-                          BackgroundColor="#394046">
+                          Style="{DynamicResource secondList}">
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Frame Style="{DynamicResource btnFrame}">
+                                <Frame Style="{DynamicResource secondBtnFrame}">
                                     <Label Text="{Binding TableGroupText}"
-                                           Style="{DynamicResource btnLabel}"/>
+                                           Style="{DynamicResource secondBtnLabel}"/>
                                 </Frame>
                             </ViewCell>
                         </DataTemplate>
@@ -49,7 +50,7 @@
 
 
             <StackLayout Grid.Column="3"
-                         Style="{DynamicResource mainStack}">
+                         Style="{DynamicResource mainList}">
 
                     
                         <Button Text="Redenumeste"

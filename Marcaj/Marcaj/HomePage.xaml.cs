@@ -45,6 +45,7 @@ namespace Marcaj
             new OptionsModel { Text="Payback", Image="PaybackIcon.png"},
             new OptionsModel { Text="Setari", Image="PlaceholderIcon.png"},
             new OptionsModel { Text="Placeholder", Image="PlaceholderIcon.png"},
+            new OptionsModel { Text="Placeholder", Image="PlaceholderIcon.png"}
             };
             menuBtnColl.ItemsSource = menuBtnList;
         }
@@ -52,11 +53,11 @@ namespace Marcaj
         async void PopPage()
         {
             string deviceName = DeviceInfo.Name;
-            //menuBtns = await App.manager.iGetMenuButtonsText();
+           
             var a = await App.lDatabase.lGetStationSettings(deviceName);
             //SyncLocal();
-            //StationName.Text = "Station: "+ a.ComputerName;
-            //EmployeeName.Text = "Employee: " + EmplFl.FirstName;
+            StationName.Text = "Station: "+ a.ComputerName;
+            EmployeeName.Text = "Employee: " + EmplFl.FirstName;
         }
         async void SyncLocal()
         {
@@ -241,72 +242,7 @@ namespace Marcaj
                 }
 
         }
-        private async void btnMese_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new AllTables(EmplFl));
-        }
 
-        private async void btnAchita_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new AchitaPage(EmplFl));
-        }
-
-        private async void btnSettings_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new SettingsHomePage());
-        }
-        private async void btnGrid_Clicked(object sender, EventArgs e)
-        {
-           
-        }
-        /*private async void menuBtnColl_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-
-
-            var current = e.SelectedItem as OptionsModel;
-
-            if (((CollectionView)sender).SelectedItem == null)
-                return;
-
-
-            if (current.Text == "DineIn")
-            {
-                await Navigation.PushAsync(new AllTables(EmplFl));
-
-            }
-            else if (current.Text == "Bar")
-            {
-
-
-            }
-            else if (current.Text == "Achita")
-            {
-                await Navigation.PushAsync(new AchitaPage(EmplFl));
-
-            }
-            else if (current.Text == "Anulare")
-            {
-
-
-            }
-            else if (current.Text == "Rechemare")
-            {
-
-
-            }
-            else if (current.Text == "No Sale")
-            {
-
-
-            }
-            else if (current.Text == "Placeholder")
-            {
-
-
-            }
-
-                 ((CollectionView)sender).SelectedItem = null;
-        }*/
 
         private async void ImageButton_Clicked(object sender, EventArgs e)
         {
@@ -322,7 +258,11 @@ namespace Marcaj
             {
                 await Navigation.PushAsync(new AchitaPage(EmplFl));
             }
-
+            else if (b.Text == "Setari")
+            {
+                await Navigation.PushAsync(new SettingsHomePage());
+            }
+        
         }
     }
 }

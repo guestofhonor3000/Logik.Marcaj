@@ -10,7 +10,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" BackgroundColor="#171a1d" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" ColumnSpacing="5" Margin="0" Padding="0,0,0,10">
+            <Grid Grid.Row="0" Style="{DynamicResource homeTabGrid}" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
                
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width=".5*"/>
@@ -25,7 +25,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width=".5*"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <ImageButton Source="HomeTabButton.png" Grid.Column="1"  />
                 <ImageButton Source="HomeTabButton.png" Grid.Column="2"   />
                 <ImageButton Source="HomeTabButton.png" Grid.Column="3"   />
@@ -38,50 +38,46 @@
 
             </Grid>
 
-            <Grid Grid.Row="1" BackgroundColor="#66717d" Margin="0" Padding="0">
+            <Grid Grid.Row="1" Margin="0" Padding="0">
                
                 <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Image Source="RestImg.jpg" Grid.Row="0" Grid.ColumnSpan="2" Aspect="Fill" Margin="20,10,20,10"></Image>
+                <Image Source="RestImg.jpg" Grid.Row="0" 
+                       Grid.ColumnSpan="2" 
+                       Aspect="AspectFill" 
+                       Margin="20,10,20,0"/>
 
                 <CollectionView x:Name="menuBtnColl"
                                 Grid.Row="1" 
                                 Grid.ColumnSpan="2"
-                                Style="{DynamicResource mainList}"
-                     
-                             
-                                ItemsLayout="VerticalGrid, 5">
-
+                                Margin="10,0,10,0"
+                                VerticalScrollBarVisibility="Never">
+                    <CollectionView.ItemsLayout >
+                        <GridItemsLayout Orientation="Vertical"
+                                         Span="5"
+                                         VerticalItemSpacing="10"
+                                         HorizontalItemSpacing="10"/>
+                    </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame  Grid.Row="0" 
-                            Grid.Column="0"
-                            Style="{DynamicResource mainBtnFrame}">
+                            <Frame Style="{DynamicResource thirdBtnFrame}"
+                                   Padding="0"
+                                   Margin="0">
                                 <StackLayout>
                                     <ImageButton Source="{Binding Image}"
-                                                  AutomationId="{Binding Text}"
-                                                  Clicked="ImageButton_Clicked"/>
+                                                 AutomationId="{Binding Text}"
+                                                 Clicked="ImageButton_Clicked"
+                                                 Padding="0,10,0,0"/>
                                     <Label Text="{Binding Text}"
-                                   Style="{DynamicResource mainBtnLabel}"/>
+                                           Style="{DynamicResource thirdBtnLabel}"
+                                           Padding="0,0,0,10"/>
                                 </StackLayout>
                             </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
-
-                    <!--ImageButton Source="HomeMeseButton.png" Grid.Row="0" Grid.Column="0"  x:Name="btnMese" Clicked="btnMese_Clicked"/>
-                    <ImageButton Source="HomeBarButton.png" Grid.Row="0" Grid.Column="1"/>
-                    <ImageButton Source="HomePayButton.png" Grid.Row="0" Grid.Column="2" x:Name="btAchita" Clicked="btnAchita_Clicked"/>
-                    <ImageButton Source="HomeVoidButton.png" Grid.Row="0" Grid.Column="3" />
-                    <ImageButton Source="HomeRecallButton.png" Grid.Row="0" Grid.Column="4" />
-
-                    <ImageButton Source="HomeNoSaleButton.png" Grid.Row="1" Grid.Column="0" />
-                    <ImageButton Source="HomePayBackButton.png" Grid.Row="1" Grid.Column="1" />
-                    <ImageButton Source="HomeSettingsButton.png" Clicked="btnSettings_Clicked" x:Name="btnSettings" Grid.Row="1" Grid.Column="2" />
-                    <ImageButton Source="HomePlaceholderButton.png" Grid.Row="1" Grid.Column="3" Clicked="btnGrid_Clicked"/>
-                    <ImageButton Source="HomePlaceholderButton.png" Grid.Row="1" Grid.Column="4" /-->
                 </CollectionView>
                 
             </Grid>

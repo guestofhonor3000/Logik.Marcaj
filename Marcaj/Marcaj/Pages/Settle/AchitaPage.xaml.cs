@@ -1,8 +1,10 @@
-﻿using Marcaj.Models.DbModels;
+﻿using Marcaj.Models.CustomModels;
+using Marcaj.Models.DbModels;
 using Marcaj.Models.LocalDbModels;
 using Marcaj.Pages.Tables;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,11 +18,24 @@ namespace Marcaj.Pages
     public partial class AchitaPage : ContentPage
     {
         EmployeeFileModel EmplFl;
+        public ObservableCollection<OptionsModel> menuBtnList;
         public AchitaPage(EmployeeFileModel emplFl)
         {
             InitializeComponent();
             EmplFl = emplFl;
             PopList("Default");
+            menuBtnList = new ObservableCollection<OptionsModel>
+            {
+            new OptionsModel { Text="DineIn" , Image="DineInIcon.png"},
+            new OptionsModel { Text="Bar", Image="BarIcon.png" },
+            new OptionsModel { Text="Achita", Image="PaymentIcon.png"},
+            new OptionsModel { Text="Anulare", Image="VoidIcon.png"},
+            new OptionsModel { Text="Rechemare", Image="Recallicon.png"},
+            new OptionsModel { Text="No Sale", Image="NoSaleIcon.png"},
+            new OptionsModel { Text="Payback", Image="PaybackIcon.png"},
+            new OptionsModel { Text="Placeholder", Image="PlaceholderIcon.png"},
+            };
+            menuBtnLst.ItemsSource = menuBtnList;
         }
 
         async void PopList(string type)
@@ -140,10 +155,55 @@ namespace Marcaj.Pages
         {
 
         }
-        /*private void btnBar_Clicked(object sender, EventArgs e)
-{
-PopList("Bar");
-}*/
+
+        private async void menuBtnLst_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+
+
+            var current = e.SelectedItem as OptionsModel;
+
+            if (((ListView)sender).SelectedItem == null)
+                return;
+
+
+            if (current.Text == "DineIn")
+            {
+                await Navigation.PushAsync(new AllTables(EmplFl));
+
+            }
+            else if (current.Text == "Bar")
+            {
+
+
+            }
+            else if (current.Text == "Achita")
+            {
+                await Navigation.PushAsync(new AchitaPage(EmplFl));
+
+            }
+            else if (current.Text == "Anulare")
+            {
+
+
+            }
+            else if (current.Text == "Rechemare")
+            {
+
+
+            }
+            else if (current.Text == "No Sale")
+            {
+
+
+            }
+            else if (current.Text == "Placeholder")
+            {
+
+
+            }
+
+                  ((ListView)sender).SelectedItem = null;
+        }
 
     }
 
