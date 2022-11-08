@@ -282,12 +282,17 @@ namespace Marcaj.Pages.Tables
                                     {
                                         if (dine.Opened)
                                         {
+
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
 
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Occupied.png";
 
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
                                         }
                                         else
                                         {
@@ -296,6 +301,7 @@ namespace Marcaj.Pages.Tables
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
 
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
                                         }
                                     }
                                     else if (dine.DineIn.MaxGuests == 4)
@@ -308,6 +314,8 @@ namespace Marcaj.Pages.Tables
 
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
                                         }
                                         else
                                         {
@@ -315,6 +323,7 @@ namespace Marcaj.Pages.Tables
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
 
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
                                         }
                                     }
                                     else if (dine.DineIn.MaxGuests == 6)
@@ -326,6 +335,8 @@ namespace Marcaj.Pages.Tables
 
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened =  ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString()+":"+ DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
                                         }
                                         else
                                         {
@@ -333,6 +344,7 @@ namespace Marcaj.Pages.Tables
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
 
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
                                         }
                                     }
                                     else if (dine.DineIn.MaxGuests == 8)
@@ -344,6 +356,8 @@ namespace Marcaj.Pages.Tables
 
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
                                         }
                                         else
                                         {
@@ -351,6 +365,7 @@ namespace Marcaj.Pages.Tables
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
 
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
                                         }
                                     }
                                 }
@@ -427,12 +442,17 @@ namespace Marcaj.Pages.Tables
                                     {
                                         if (dine.Opened)
                                         {
+
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
 
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Occupied.png";
 
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
                                         }
                                         else
                                         {
@@ -441,6 +461,7 @@ namespace Marcaj.Pages.Tables
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
 
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
                                         }
                                     }
                                     else if (dine.DineIn.MaxGuests == 4)
@@ -453,6 +474,8 @@ namespace Marcaj.Pages.Tables
 
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
                                         }
                                         else
                                         {
@@ -460,6 +483,7 @@ namespace Marcaj.Pages.Tables
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
 
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
                                         }
                                     }
                                     else if (dine.DineIn.MaxGuests == 6)
@@ -471,6 +495,8 @@ namespace Marcaj.Pages.Tables
 
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
                                         }
                                         else
                                         {
@@ -478,6 +504,7 @@ namespace Marcaj.Pages.Tables
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
 
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
                                         }
                                     }
                                     else if (dine.DineIn.MaxGuests == 8)
@@ -489,6 +516,8 @@ namespace Marcaj.Pages.Tables
 
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
                                         }
                                         else
                                         {
@@ -496,6 +525,7 @@ namespace Marcaj.Pages.Tables
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
 
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
                                         }
                                     }
                                 }

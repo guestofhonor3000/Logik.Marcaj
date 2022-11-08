@@ -15,5 +15,7 @@ namespace Marcaj.Models.CustomModels
         public bool Fumatori { get; set; }
         public bool Cabina { get; set; }
         public bool Fereastra { get; set; }
+        public bool TimeOpenedVisible { get; set; }
+        public string TimeOpened { get; set; }
     }
 }
