@@ -11,40 +11,40 @@
                 <ColumnDefinition Width="8*"/>
             </Grid.ColumnDefinitions>
 
-            <ScrollView Grid.Column="0" VerticalScrollBarVisibility="Never">
-                <StackLayout Style="{DynamicResource mainStack}">
-                    <ImageButton Source="MainMeseButton.png"  
-                             x:Name="btnMese" 
-                             Clicked="btnMese_Clicked"/>
-                    <ImageButton Source="MainBarButton.png" />
-                    <ImageButton Source="MainPayButton.png"   
-                             x:Name="btnAchita" 
-                             Clicked="btnAchita_Clicked"/>
-                    <ImageButton Source="MainVoidButton.png"  />
-                    <ImageButton Source="MainRecallButton.png" />
-                    <ImageButton Source="MainNoSaleButton.png"  />
-                    <ImageButton Source="MainPayBackButton.png" />
-                    <ImageButton Source="MainPlaceholderButton.png" />
-                    <ImageButton Source="MainPlaceholderButton.png"  />
-                    <ImageButton Source="MainPlaceholderButton.png"  />
-                </StackLayout>
-            </ScrollView>
-
-
-
-            <ListView Grid.Column="1" 
-                          BackgroundColor="#394046"
-                          x:Name="lstvwGrupMese" 
-                          ItemSelected="lstvwGrupMese_ItemSelected">
+            <ListView Grid.Column="0" 
+                      Style="{DynamicResource mainList}"
+                      x:Name="menuBtnLst" 
+                      ItemSelected="menuBtnLst_ItemSelected">
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
 
-                            <Frame Style="{DynamicResource btnFrame}">
+                            <Frame Style="{DynamicResource mainBtnFrame}">
+                                <StackLayout>
+                                    <Image Source="{Binding Image}"/>
+                                    <Label Text="{Binding Text}"
+                                           Style="{DynamicResource mainBtnLabel}"/>
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+
+            <ListView Grid.Column="1" 
+                      Style="{DynamicResource secondList}"
+                      x:Name="lstvwGrupMese" 
+                      ItemSelected="lstvwGrupMese_ItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame Style="{DynamicResource secondBtnFrame}">
 
                                 <Label Text="{Binding TableGroupText}"
-                                           Style="{DynamicResource btnLabel}"/>
+                                       Style="{DynamicResource secondBtnLabel}"/>
                             </Frame>
                         </ViewCell>
                     </DataTemplate>
@@ -54,10 +54,8 @@
 
 
 
-
-
-            <CollectionView  x:Name="tblLayoutColl" 
-                                 SelectedItem="lstvwMese_ItemSelected" 
+            <CollectionView      x:Name="tblLayoutColl" 
+ 
                                  Grid.Column="2" 
                                  Margin="10"
                                  SelectionMode="None">
@@ -82,7 +80,8 @@
                                         FontAttributes="Bold" 
                                         BackgroundColor="Transparent"
                                         AbsoluteLayout.LayoutFlags="PositionProportional"
-                                        AbsoluteLayout.LayoutBounds="0.5,0.36"/>
+                                        AbsoluteLayout.LayoutBounds="0.5,0.36"
+                                        IsEnabled="False"/>
 
 
                             <Label  FontSize="Micro"

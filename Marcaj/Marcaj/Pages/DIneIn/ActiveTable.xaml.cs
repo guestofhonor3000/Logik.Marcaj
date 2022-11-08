@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Marcaj.Models.CustomModels;
 using Marcaj.Models.DbModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -18,7 +20,8 @@ namespace Marcaj.Pages.Tables
 		List<OrderHeadersModel> orderHeadersList;
 		List<OrderTransactionsModel> orderTransactionsList;
 		List<OrderTransactionsModel> orderTransactionsListByOrderID;
-		int NumberOfClicksNext = 0;
+        public ObservableCollection<OptionsModel> menuBtnList;
+        int NumberOfClicksNext = 0;
 		OrderHeadersModel orderHeader;
 		public ActiveTable(DineInTableModel dineIn, EmployeeFileModel empFile)
 		{
@@ -38,7 +41,8 @@ namespace Marcaj.Pages.Tables
 				NumberOfClicksNext = 0;
 				PopList();
 			});
-		}
+      
+        }
 
 		async void PopListNext(int skipIf)
         {

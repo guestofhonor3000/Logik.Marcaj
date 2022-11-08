@@ -4,14 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Marcaj.Models.DbModels;
+using Marcaj.Models.LocalDbModels;
+using Marcaj.Models.CustomModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Marcaj.Pages.Tables;
-using Marcaj.Models.LocalDbModels;
 using Xamarin.Essentials;
 using System.Diagnostics;
 using Marcaj.Pages.Settings;
 using Marcaj.Pages;
+using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 
 namespace Marcaj
 {
@@ -19,21 +22,37 @@ namespace Marcaj
     public partial class HomePage : ContentPage
     {
         EmployeeFileModel EmplFl;
+        public ObservableCollection<OptionsModel> menuBtnList;
+        List<OptionsModel> menuBtns;
         public HomePage(EmployeeFileModel emplFl)
         {
             InitializeComponent();
             EmplFl = emplFl;
+            menuBtns = new List<OptionsModel>();
             PopPage();
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
                 //SyncLocal();
             }
+            menuBtnList = new ObservableCollection<OptionsModel>
+            {
+            new OptionsModel { Text="DineIn" , Image="DineInIcon.png"},
+            new OptionsModel { Text="Bar", Image="BarIcon.png" },
+            new OptionsModel { Text="Achita", Image="PaymentIcon.png"},
+            new OptionsModel { Text="Anulare", Image="VoidIcon.png"},
+            new OptionsModel { Text="Rechemare", Image="Recallicon.png"},
+            new OptionsModel { Text="No Sale", Image="NoSaleIcon.png"},
+            new OptionsModel { Text="Payback", Image="PaybackIcon.png"},
+            new OptionsModel { Text="Setari", Image="PlaceholderIcon.png"},
+            new OptionsModel { Text="Placeholder", Image="PlaceholderIcon.png"},
+            };
+            menuBtnColl.ItemsSource = menuBtnList;
         }
 
         async void PopPage()
         {
             string deviceName = DeviceInfo.Name;
-
+            //menuBtns = await App.manager.iGetMenuButtonsText();
             var a = await App.lDatabase.lGetStationSettings(deviceName);
             //SyncLocal();
             //StationName.Text = "Station: "+ a.ComputerName;
@@ -239,6 +258,71 @@ namespace Marcaj
         private async void btnGrid_Clicked(object sender, EventArgs e)
         {
            
+        }
+        /*private async void menuBtnColl_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+
+
+            var current = e.SelectedItem as OptionsModel;
+
+            if (((CollectionView)sender).SelectedItem == null)
+                return;
+
+
+            if (current.Text == "DineIn")
+            {
+                await Navigation.PushAsync(new AllTables(EmplFl));
+
+            }
+            else if (current.Text == "Bar")
+            {
+
+
+            }
+            else if (current.Text == "Achita")
+            {
+                await Navigation.PushAsync(new AchitaPage(EmplFl));
+
+            }
+            else if (current.Text == "Anulare")
+            {
+
+
+            }
+            else if (current.Text == "Rechemare")
+            {
+
+
+            }
+            else if (current.Text == "No Sale")
+            {
+
+
+            }
+            else if (current.Text == "Placeholder")
+            {
+
+
+            }
+
+                 ((CollectionView)sender).SelectedItem = null;
+        }*/
+
+        private async void ImageButton_Clicked(object sender, EventArgs e)
+        {
+            var a = sender as ImageButton;
+
+            var b = menuBtnList.Where(x => x.Text == a.AutomationId).FirstOrDefault();
+
+            if (b.Text == "DineIn")
+            {
+                await Navigation.PushAsync(new AllTables(EmplFl));
+            }
+            else if(b.Text == "Achita")
+            {
+                await Navigation.PushAsync(new AchitaPage(EmplFl));
+            }
+
         }
     }
 }

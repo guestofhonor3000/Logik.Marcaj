@@ -12,6 +12,9 @@ using Xamarin.Essentials;
 using Marcaj.Models.LocalDbModels;
 using Marcaj.Models.CustomModels;
 using System.Collections.ObjectModel;
+using Marcaj.Pages.Settings.Mese;
+using Marcaj.Pages.Settings.Statie;
+using Marcaj.Pages.Settings;
 
 namespace Marcaj.Pages.Tables
 {
@@ -25,6 +28,7 @@ namespace Marcaj.Pages.Tables
         List<DineInTableAndEmpModel> dineInsAndEmp;
         List<DineInTableGroupModel> dineInGroups;
         ObservableCollection<TableLayoutModel> tblLayout;
+        public ObservableCollection<OptionsModel> menuBtnList;
         public AllTables(EmployeeFileModel emplFl)
         {
             InitializeComponent();
@@ -45,6 +49,18 @@ namespace Marcaj.Pages.Tables
             {
                 // SyncPage();
             });
+            menuBtnList = new ObservableCollection<OptionsModel>
+            {
+            new OptionsModel { Text="DineIn" , Image="DineInIcon.png"},
+            new OptionsModel { Text="Bar", Image="BarIcon.png" },
+            new OptionsModel { Text="Achita", Image="PaymentIcon.png"},
+            new OptionsModel { Text="Anulare", Image="VoidIcon.png"},
+            new OptionsModel { Text="Rechemare", Image="Recallicon.png"},
+            new OptionsModel { Text="No Sale", Image="NoSaleIcon.png"},
+            new OptionsModel { Text="Payback", Image="PaybackIcon.png"},
+            new OptionsModel { Text="Placeholder", Image="PlaceholderIcon.png"},
+            };
+            menuBtnLst.ItemsSource = menuBtnList;
         }
 
         async void SyncPage()
@@ -543,17 +559,59 @@ namespace Marcaj.Pages.Tables
         }
 
 
-        private async void btnMese_Clicked(object sender, EventArgs e)
+        private async void menuBtnLst_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            await Navigation.PushAsync(new AllTables(EmplFl));
+
+
+            var current = e.SelectedItem as OptionsModel;
+
+            if (((ListView)sender).SelectedItem == null)
+                return;
+
+
+            if (current.Text == "DineIn")
+            {
+                await Navigation.PushAsync(new AllTables(EmplFl));
+
+            }
+            else if (current.Text == "Bar")
+            {
+                
+
+            }
+            else if (current.Text == "Achita")
+            {
+                await Navigation.PushAsync(new AchitaPage(EmplFl));
+
+            }
+            else if (current.Text == "Anulare")
+            {
+                
+
+            }
+            else if (current.Text == "Rechemare")
+            {
+
+
+            }
+            else if (current.Text == "No Sale")
+            {
+
+
+            }
+            else if (current.Text == "Placeholder")
+            {
+
+
+            }
+
+                  ((ListView)sender).SelectedItem = null;
         }
 
-        private async void btnAchita_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new AchitaPage(EmplFl));
-        }
 
-        private async void ImageButton_Clicked(object sender, EventArgs e)
+    
+
+    private async void ImageButton_Clicked(object sender, EventArgs e)
         {
             var a = sender as ImageButton;
 

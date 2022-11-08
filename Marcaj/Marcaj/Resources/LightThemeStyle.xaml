@@ -9,29 +9,77 @@
         <Setter Property="BackgroundColor" Value="#f1f1f1"/>
     </Style>
 
+    <Style x:Key="mainList" TargetType="ListView">
+        <Setter Property="BackgroundColor" Value="#1e1e2d"/>
+        <Setter Property="VerticalScrollBarVisibility" Value="Never"/>
+    </Style>
+    
+    <Style x:Key="secondList" TargetType="ListView">
+        <Setter Property="BackgroundColor" Value="#3e485b"/>
+        <Setter Property="VerticalScrollBarVisibility" Value="Never"/>
+    </Style>
+
+
     <Style x:Key="mainStack" TargetType="StackLayout">
         <Setter Property="BackgroundColor" Value="#1e1e2d"/>
         <Setter Property="Spacing" Value="10"/>
         <Setter Property="Padding" Value="10"/>
     </Style>
+    
+    
 
-    <Style x:Key="btnFrame" TargetType="Frame">
+    <Style x:Key="mainBtnFrame" TargetType="Frame">
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="BackgroundColor" Value="#f1f1f1"/>
+        <Setter Property="Margin" Value="10,10,10,0"/>
+    </Style>
+
+    <Style x:Key="mainBtnLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="Verdana"/>
+        <Setter Property="FontSize" Value="Small"/>
+        <Setter Property="TextColor" Value="Black"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+    </Style>
+    
+    
+
+    <Style x:Key="secondBtnFrame" TargetType="Frame">
+        <Setter Property="CornerRadius" Value="10"/>
+        <Setter Property="BackgroundColor" Value="#f1f1f1"/>
+        <Setter Property="Margin" Value="10,10,10,0"/>
+    </Style>
+
+    <Style x:Key="secondBtnLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="Verdana"/>
+        <Setter Property="FontSize" Value="Small"/>
+        <Setter Property="TextColor" Value="Black"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="Padding" Value="10"/>
+    </Style>
+
+    
+    
+    <Style x:Key="thirdBtnFrame" TargetType="Frame">
         <Setter Property="CornerRadius" Value="10"/>
         <Setter Property="BackgroundColor" Value="#3e485b"/>
         <Setter Property="Margin" Value="10,10,10,0"/>
     </Style>
 
-    <Style x:Key="btnLabel" TargetType="Label">
+    <Style x:Key="thirdBtnLabel" TargetType="Label">
         <Setter Property="FontFamily" Value="Verdana"/>
         <Setter Property="FontSize" Value="Small"/>
         <Setter Property="TextColor" Value="White"/>
         <Setter Property="FontAttributes" Value="Bold"/>
         <Setter Property="HorizontalTextAlignment" Value="Center"/>
-        <Setter Property="VerticalTextAlignment" Value="Center"/>
         <Setter Property="HorizontalOptions" Value="Center"/>
-        <Setter Property="VerticalOptions" Value="Center"/>
         <Setter Property="Padding" Value="10"/>
     </Style>
+
+
 
     <Style x:Key="btn" TargetType="Button">
         <Setter Property="CornerRadius" Value="10"/>

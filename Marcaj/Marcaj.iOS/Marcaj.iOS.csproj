@@ -262,4 +262,28 @@
   <ItemGroup>
     <BundleResource Include="Resources\Table6Occupied.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\PaymentIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\PlaceholderIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\RecallIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\VoidIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\BarIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\DineInIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NoSaleIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\PaybackIcon.png" />
+  </ItemGroup>
 </Project>

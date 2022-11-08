@@ -132,7 +132,9 @@
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="BarIcon.png" />
     <Content Include="CheckBackButton.png" />
+    <Content Include="DineInIcon.png" />
     <Content Include="HomeBarButton.png" />
     <Content Include="HomeMeseButton.png" />
     <Content Include="HomeNoSaleButton.png" />
@@ -156,12 +158,17 @@
     <Content Include="MainRecallButton.png" />
     <Content Include="MainSettingsSelectedButton.png" />
     <Content Include="MainVoidButton.png" />
+    <Content Include="NoSaleIcon.png" />
+    <Content Include="PaybackIcon.png" />
     <Content Include="PayCardButton.png" />
     <Content Include="PayCashButton.png" />
     <Content Include="PayDoneButton.png" />
     <Content Include="PayGratuityButton.png" />
     <Content Include="PayHouseAccountButton.png" />
+    <Content Include="PaymentIcon.png" />
+    <Content Include="PlaceholderIcon.png" />
     <Content Include="Properties\Default.rd.xml" />
+    <Content Include="RecallIcon.png" />
     <Content Include="RestImg.jpg" />
     <Content Include="SecondaryBlankButton.png" />
     <Content Include="Table2Occupied.png" />
@@ -173,6 +180,7 @@
     <Content Include="Table6Open.png" />
     <Content Include="Table8Occupied.png" />
     <Content Include="Table8Open.png" />
+    <Content Include="VoidIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

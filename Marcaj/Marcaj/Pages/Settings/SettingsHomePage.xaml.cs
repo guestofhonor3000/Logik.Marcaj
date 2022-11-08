@@ -20,6 +20,7 @@ namespace Marcaj.Pages.Settings
     {
         public ObservableCollection<OptionsModel> meseOpt;
         public ObservableCollection<OptionsModel> stationOpt;
+        public ObservableCollection<OptionsModel> menuBtnList;
         public SettingsHomePage()
         {
             InitializeComponent();
@@ -34,14 +35,13 @@ namespace Marcaj.Pages.Settings
             new OptionsModel {Text ="Tema"}
             };
             optionsList.ItemsSource = meseOpt;
-        }
-        private async void btnMeseConf_Clicked(object sender, EventArgs e)
-        {
-            optionsList.ItemsSource = meseOpt;
-        }
-        private void btnStatationConf_Clicked(object sender, EventArgs e)
-        {
-            optionsList.ItemsSource = stationOpt;
+
+            menuBtnList = new ObservableCollection<OptionsModel>
+            {
+            new OptionsModel { Text="Setari Mese", Image="DineInIcon.png"},
+            new OptionsModel { Text="Setari Statie", Image="PlaceholderIcon.png" }
+            };
+            menuBtnLst.ItemsSource = menuBtnList;
         }
 
 
@@ -77,6 +77,30 @@ namespace Marcaj.Pages.Settings
             }
 
                    ((ListView)sender).SelectedItem = null;
+        }
+
+        private async void menuBtnLst_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+
+
+            var current = e.SelectedItem as OptionsModel;
+
+            if (((ListView)sender).SelectedItem == null)
+                return;
+
+
+            if (current.Text == "Setari Mese")
+            {
+                optionsList.ItemsSource = meseOpt;
+
+            }
+            else if (current.Text == "Setari Statie")
+            {
+                optionsList.ItemsSource = stationOpt;
+
+            }
+
+                  ((ListView)sender).SelectedItem = null;
         }
 
     

@@ -14,40 +14,42 @@
             </Grid.ColumnDefinitions>
 
 
-            <StackLayout Grid.Column="0"
-                      BackgroundColor="#171a1d" 
-                      VerticalOptions="Fill" 
-                      Margin="0" 
-                      Padding="10"
-                         Spacing="10">
+            <ListView Grid.Column="0"
+                      Style="{DynamicResource mainList}"
+                      x:Name="menuBtnLst" 
+                      ItemSelected="menuBtnLst_ItemSelected">
 
-                <ImageButton Grid.Row="0" 
-                                 Source="MainMeseButton.png" 
-                                 x:Name="btnMeseConf" 
-                                 Clicked="btnMeseConf_Clicked"/>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
 
-                <ImageButton Grid.Row="1" 
-                                 Source="MainPlaceholderButton.png" 
-                                 x:Name="btnStationConf" 
-                                 Clicked="btnStatationConf_Clicked"/>
-
-            </StackLayout> 
+                            <Frame Style="{DynamicResource mainBtnFrame}">
+                                <StackLayout>
+                                    <Image Source="{Binding Image}"/>
+                                    <Label Text="{Binding Text}"
+                                           Style="{DynamicResource mainBtnLabel}"/>
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                
+            </ListView> 
 
 
 
             <ListView x:Name="optionsList"
-                          Grid.Column="1"
-                          ItemSelected="optionsList_ItemSelected"
-                          Margin="40,5,40,5"
-                          HasUnevenRows="True">
+                      Grid.Column="1"
+                      ItemSelected="optionsList_ItemSelected"
+                      Margin="40,5,40,5">
            
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
 
-                                <Frame Style="{DynamicResource btnFrame}">
+                                <Frame Style="{DynamicResource thirdBtnFrame}">
                                     <Label Text="{Binding Text}" 
-                                           Style="{DynamicResource btnLabel}"/>
+                                           Style="{DynamicResource thirdBtnLabel}"/>
                                 </Frame>
                               
                             </ViewCell>
