@@ -33,7 +33,6 @@ namespace Marcaj.Pages.Tables
 
         async void PopList(bool isFirstLoad, int groupId)
         {
-
             if (isFirstLoad == true)
             {
 
@@ -73,9 +72,14 @@ namespace Marcaj.Pages.Tables
         
         private void lstvwMenuGroups_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var selIt = e.SelectedItem as MenuGroupsModel;
-            IsFirstLoad = false;
-            PopList(IsFirstLoad, selIt.MenuGroupID);
+            if (IsFirstLoad != true)
+            {
+                var selIt = e.SelectedItem as MenuGroupsModel;
+                IsFirstLoad = false;
+                PopList(IsFirstLoad, selIt.MenuGroupID);
+            }
+            
+           
         }
    
         private async void btnCancel_Clicked(object sender, EventArgs e)

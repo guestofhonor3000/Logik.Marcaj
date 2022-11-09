@@ -480,16 +480,21 @@ namespace Marcaj.Pages.Tables
         {
             await Navigation.PushAsync(new AllTables(EmpFile));
         }
-
+		int index;
         private async void ListView_Focused(object sender, FocusEventArgs e)
         {
-			var lstvw = sender as ListView;
-			var orderId = lstvw.ClassId;
-			var orderHeaderFocused =orderHeadersList.Find(x => x.OrderID == Convert.ToInt32(orderId));
-			orderHeader = orderHeaderFocused;
-			orderTransactionsListByOrderID = orderTransactionsList.FindAll(x => x.OrderID == Convert.ToInt32(orderId));
+			index++;
+			if(index==1)
+			{
+                var lstvw = sender as ListView;
+                var orderId = lstvw.ClassId;
+                var orderHeaderFocused = orderHeadersList.Find(x => x.OrderID == Convert.ToInt32(orderId));
+                orderHeader = orderHeaderFocused;
+                orderTransactionsListByOrderID = orderTransactionsList.FindAll(x => x.OrderID == Convert.ToInt32(orderId));
+
+                await Navigation.PushAsync(new ActiveTableEditPage(orderHeader, EmpFile, DineIn, orderTransactionsListByOrderID));
+            }
 			
-			await Navigation.PushAsync(new ActiveTableEditPage(orderHeader, EmpFile, DineIn, orderTransactionsListByOrderID));
 		}
     }
 }

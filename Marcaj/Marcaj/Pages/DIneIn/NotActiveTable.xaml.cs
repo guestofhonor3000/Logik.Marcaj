@@ -105,17 +105,21 @@ namespace Marcaj.Pages.Tables
         }
         private void lstvwMenuGroups_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+            if (IsFirstLoad != true)
             {
-                var selIt = e.SelectedItem as MenuGroupsModel;
-                IsFirstLoad = false;
-                PopList(IsFirstLoad, selIt.MenuGroupID);
-            }
-            else
-            {
-                var selIt = e.SelectedItem as LMenuGroupsModel;
-                IsFirstLoad = false;
-                PopList(IsFirstLoad, selIt.MenuGroupID);
+                if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+                {
+
+                    var selIt = e.SelectedItem as MenuGroupsModel;
+                    IsFirstLoad = false;
+                    PopList(IsFirstLoad, selIt.MenuGroupID);
+                }
+                else
+                {
+                    var selIt = e.SelectedItem as LMenuGroupsModel;
+                    IsFirstLoad = false;
+                    PopList(IsFirstLoad, selIt.MenuGroupID);
+                }
             }
         }
 
