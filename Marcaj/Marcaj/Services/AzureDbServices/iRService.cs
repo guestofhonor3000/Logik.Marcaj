@@ -22,6 +22,7 @@ namespace Marcaj.Services
         Task PutOrderHeaders(OrderHeadersModel item, int id);
         Task PostOrderHeader(OrderHeadersModel user);
         Task PostTableGroup(DineInTableGroupModel model);
+        Task PutSynchVerOrderHeaders(OrderHeadersModel item, int id);
         Task PutDineInTablesPosition(List<DineInTableModel> items);
         Task PutPopUpSetting(StationSettingsModel model, bool popUp);
         Task PutStationName(StationSettingsModel item);

@@ -37,7 +37,10 @@ namespace Marcaj.Services
         {
             return Service.DeleteTableGroup(id);
         }
-
+        public Task iPutSynchVerOrderHeaders(OrderHeadersModel item, int id)
+        {
+            return Service.PutSynchVerOrderHeaders(item, id);
+        }
         public Task<List<LGKMClientsModel>> iGetAllClients()
         {
             return Service.GetAllClients();

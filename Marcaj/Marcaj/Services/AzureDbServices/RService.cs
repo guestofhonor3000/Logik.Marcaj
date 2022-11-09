@@ -469,6 +469,28 @@ namespace Marcaj.Services
             }
         }
 
+        //Put SynchVer OH
+        public async Task PutSynchVerOrderHeaders(OrderHeadersModel item, int id)
+        {
+            Uri uri = new Uri(string.Format(Constants.PutUriOrderHeaders + id+"&type=synchver", string.Empty));
+            try
+            {
+
+                string json = System.Text.Json.JsonSerializer.Serialize<OrderHeadersModel>(item, serializerOptions);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = null;
+                response = await client.PutAsync(uri, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine(@"OrderHeader updated");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"ERROR {0}", ex.Message);
+            }
+        }
+
         //Post OrderHeader
         public async Task PostOrderHeader(OrderHeadersModel user)
         {

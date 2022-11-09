@@ -316,7 +316,19 @@ namespace Marcaj.Pages.Tables
                 
             }
 
-            await Navigation.PopAsync();
+            if (_Type == "opened")
+            {
+                int BackCount = 2;
+                for (var counter = 1; counter < BackCount; counter++)
+                {
+                    Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 2]);
+                }
+                await Navigation.PopAsync();
+            }
+            else
+            {
+                await Navigation.PopAsync();
+            }
         }
 
         private async void btnCancel_Clicked(object sender, EventArgs e)
