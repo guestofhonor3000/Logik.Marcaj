@@ -35,7 +35,8 @@ namespace Marcaj.Pages.Tables
         {
             if (isFirstLoad == true)
             {
-
+                OrderHeader.SynchVer = DateTime.Now;
+                await App.manager.iPutSynchVerOrderHeaders(OrderHeader, OrderHeader.OrderID);
                 txtServer.Text = "Server: " + OrderHeader.EmployeeName;
                 txtStation.Text = "Station: " + OrderHeader.StationID;
                 txtOrderName.Text = "Order: " + OrderHeader.OrderID.ToString();
@@ -130,6 +131,7 @@ namespace Marcaj.Pages.Tables
             var ordHd = new OrderHeadersModel();
             ordHd.AmountDue = Convert.ToSingle(txtAmountDue.Text.Split(' ')[2]);
             ordHd.SubTotal = ordHd.AmountDue;
+            ordHd.SynchVer = null;
             Debug.WriteLine(ordHd.SubTotal);
             await App.manager.iPutOrderHeaders(ordHd,OrderHeader.OrderID);
 

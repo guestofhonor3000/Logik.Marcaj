@@ -216,6 +216,7 @@ namespace Marcaj.Pages.Tables
                     ordHd.Kitchen2AlreadyPrinted = false;
                     ordHd.Kitchen3AlreadyPrinted = false;
                     ordHd.BarAlreadyPrinted = false;
+                    ordHd.EditTimestamp = DateTime.Now;
                     ordHd.PackagerAlreadyPrinted = false;
                     ordHd.SalesTaxAmountUsed = 0;
                     ordHd.GuestCheckPrinted = false;

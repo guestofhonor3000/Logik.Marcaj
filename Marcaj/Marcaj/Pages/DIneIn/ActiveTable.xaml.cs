@@ -498,8 +498,14 @@ namespace Marcaj.Pages.Tables
                 var orderHeaderFocused = orderHeadersList.Find(x => x.OrderID == Convert.ToInt32(orderId));
                 orderHeader = orderHeaderFocused;
                 orderTransactionsListByOrderID = orderTransactionsList.FindAll(x => x.OrderID == Convert.ToInt32(orderId));
-
-                await Navigation.PushAsync(new ActiveTableEditPage(orderHeader, EmpFile, DineIn, orderTransactionsListByOrderID));
+				if(orderHeader.SynchVer != null)
+				{
+					await DisplayAlert("Error", "Order is already opened on another station!", "Ok");
+				}
+				else
+				{
+                    await Navigation.PushAsync(new ActiveTableEditPage(orderHeader, EmpFile, DineIn, orderTransactionsListByOrderID));
+                }
             }
 			
 		}
