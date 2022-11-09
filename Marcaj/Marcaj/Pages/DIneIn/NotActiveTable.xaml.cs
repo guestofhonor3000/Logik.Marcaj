@@ -22,10 +22,11 @@ namespace Marcaj.Pages.Tables
         List<OrderTransactionsModel> orderTraList;
         List<LOrderTransactionsModel> lorderTraList;
         LStationSettingsModel StationModel;
-        public NotActiveTable(DineInTableModel dineIn, EmployeeFileModel empFile)
+        string _Type;
+        public NotActiveTable(DineInTableModel dineIn, EmployeeFileModel empFile, string type)
         {
             InitializeComponent();
-
+            _Type = type;
             lorderTraList = new List<LOrderTransactionsModel>();
             orderTraList = new List<OrderTransactionsModel>();
             EmpFile = empFile;
@@ -320,7 +321,19 @@ namespace Marcaj.Pages.Tables
 
         private async void btnCancel_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PopAsync();
+            if(_Type == "opened")
+            {
+                int BackCount = 2;
+                for (var counter = 1; counter < BackCount; counter++)
+                {
+                    Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 2]);
+                }
+                await Navigation.PopAsync();
+            }
+            else
+            {
+                await Navigation.PopAsync();
+            }
         }
     }
 }

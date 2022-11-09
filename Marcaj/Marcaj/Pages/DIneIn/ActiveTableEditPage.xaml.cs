@@ -155,9 +155,14 @@ namespace Marcaj.Pages.Tables
             await App.manager.iPostOrderTransactionActive(ordTraListToPost, DineIn.DineInTableID);
 
 
-            MessagingCenter.Send<ActiveTableEditPage>(this, "Up");
-
+            // MessagingCenter.Send<ActiveTableEditPage>(this, "Up");
+            int BackCount = 2;
+            for (var counter = 1; counter < BackCount; counter++)
+            {
+                Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 2]);
+            }
             await Navigation.PopAsync();
+
         }
 
     }

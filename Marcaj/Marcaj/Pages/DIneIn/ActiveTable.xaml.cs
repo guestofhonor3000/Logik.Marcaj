@@ -36,14 +36,21 @@ namespace Marcaj.Pages.Tables
 			MessagingCenter.Subscribe<NotActiveTable>(this, "Up", (sender) => {
 				NumberOfClicksNext = 0;
 				PopList();
-			});
+				GoBack();
+
+            });
 			MessagingCenter.Subscribe<ActiveTableEditPage>(this, "Up", (sender) => {
 				NumberOfClicksNext = 0;
 				PopList();
-			});
+				GoBack();
+            });
       
         }
 
+		async void GoBack()
+		{
+			await Navigation.PopAsync();
+		}
 		async void PopListNext(int skipIf)
         {
 			gridLists.Children.Clear();
@@ -461,7 +468,7 @@ namespace Marcaj.Pages.Tables
 
         private async void btnNewOrder_Clicked(object sender, EventArgs e)
         {
-			await Navigation.PushAsync(new NotActiveTable(DineIn, EmpFile));
+			await Navigation.PushAsync(new NotActiveTable(DineIn, EmpFile,"opened"));
         }
 
 		private void btnNextPage_Clicked(object sender, EventArgs e)

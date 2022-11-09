@@ -653,7 +653,7 @@ namespace Marcaj.Pages.Tables
             }
             else
             {
-                await Navigation.PushAsync(new NotActiveTable(b.DineIn, EmplFl));
+                await Navigation.PushAsync(new NotActiveTable(b.DineIn, EmplFl,"closed"));
             }
            
         }
