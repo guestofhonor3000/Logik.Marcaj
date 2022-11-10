@@ -16,16 +16,16 @@ namespace Marcaj.Pages.Tables
 	public partial class ActiveTable : ContentPage
 	{
 		EmployeeFileModel EmpFile;
-        DineInTableModel DineIn;
+		DineInTableModel DineIn;
 		List<OrderHeadersModel> orderHeadersList;
 		List<OrderTransactionsModel> orderTransactionsList;
 		List<OrderTransactionsModel> orderTransactionsListByOrderID;
-        public ObservableCollection<OptionsModel> menuBtnList;
-        int NumberOfClicksNext = 0;
+		public ObservableCollection<OptionsModel> menuBtnList;
+		int NumberOfClicksNext = 0;
 		OrderHeadersModel orderHeader;
 		public ActiveTable(DineInTableModel dineIn, EmployeeFileModel empFile)
 		{
-			InitializeComponent ();
+			InitializeComponent();
 			orderHeader = new OrderHeadersModel();
 			orderHeadersList = new List<OrderHeadersModel>();
 			orderTransactionsList = new List<OrderTransactionsModel>();
@@ -33,54 +33,56 @@ namespace Marcaj.Pages.Tables
 			EmpFile = empFile;
 			DineIn = dineIn;
 			PopList();
-			MessagingCenter.Subscribe<NotActiveTable>(this, "Up", (sender) => {
+			MessagingCenter.Subscribe<NotActiveTable>(this, "Up", (sender) =>
+			{
 				NumberOfClicksNext = 0;
 				PopList();
 				GoBack();
 
-            });
-			MessagingCenter.Subscribe<ActiveTableEditPage>(this, "Up", (sender) => {
+			});
+			MessagingCenter.Subscribe<ActiveTableEditPage>(this, "Up", (sender) =>
+			{
 				NumberOfClicksNext = 0;
 				PopList();
 				GoBack();
-            });
-      
-        }
+			});
+
+		}
 
 		async void GoBack()
 		{
 			await Navigation.PopAsync();
 		}
 		async void PopListNext(int skipIf)
-        {
+		{
 			gridLists.Children.Clear();
 			int index = 0;
 			int skip = 0;
 
-			if(orderHeadersList.Count<(skipIf+1)*3)
-            {
+			if (orderHeadersList.Count < (skipIf + 1) * 3)
+			{
 				btnNextPage.IsEnabled = false;
-            }
+			}
 			else
-            {
+			{
 				btnNextPage.IsEnabled = true;
-            }
-			if(skipIf*3==0)
-            {
+			}
+			if (skipIf * 3 == 0)
+			{
 				Debug.WriteLine(skipIf);
 				btnPrevPage.IsEnabled = false;
-            }
+			}
 			else
-            {
+			{
 				btnPrevPage.IsEnabled = true;
 			}
-			foreach(var orderHeader in orderHeadersList)
-            {
-				
+			foreach (var orderHeader in orderHeadersList)
+			{
+
 				skip = skip + 1;
-				if(skip>skipIf*3)
-                {
-					
+				if (skip > skipIf * 3)
+				{
+
 					index = index + 1;
 					if (index < 4)
 					{
@@ -249,7 +251,7 @@ namespace Marcaj.Pages.Tables
 							extPriceLabel.SetBinding(Label.TextProperty, "ExtendedPrice");
 							grid.Children.Add(extPriceLabel, 2, 0);
 
-							
+
 							cell.View = grid;
 							return cell;
 						});
@@ -265,16 +267,16 @@ namespace Marcaj.Pages.Tables
 
 						gridLists.Children.Add(lstvwOrderHeader, index - 1, 0);
 					}
-				}			
-            }
+				}
+			}
 		}
 		async void PopList()
 		{
 			orderHeadersList = await App.manager.iGetOrderHeadersByDineInTableID(DineIn.DineInTableID);
-			if (orderHeadersList.Count>3)
-            {
+			if (orderHeadersList.Count > 3)
+			{
 				btnNextPage.IsEnabled = true;
-            }
+			}
 			gridLists.Children.Clear();
 			int index = 0;
 			foreach (var orderHeader in orderHeadersList)
@@ -282,7 +284,8 @@ namespace Marcaj.Pages.Tables
 				index = index + 1;
 				if (index < 4)
 				{
-					ListView lstvwOrderHeader = new ListView {
+					ListView lstvwOrderHeader = new ListView
+					{
 						Header = new Grid
 						{
 
@@ -305,7 +308,7 @@ namespace Marcaj.Pages.Tables
 					lstvwOrderHeader.Focused += new EventHandler<FocusEventArgs>(ListView_Focused);
 					lstvwOrderHeader.SelectionMode = ListViewSelectionMode.None;
 
-					
+
 
 					Grid gridHeader = lstvwOrderHeader.Header as Grid;
 
@@ -314,7 +317,7 @@ namespace Marcaj.Pages.Tables
 						VerticalOptions = LayoutOptions.Center,
 						HorizontalOptions = LayoutOptions.Center,
 						TextColor = Color.Black,
-						Text = "Server: "+"Name"
+						Text = "Server: " + "Name"
 					};
 
 					gridHeader.Children.Add(txtServer, 0, 0);
@@ -324,7 +327,7 @@ namespace Marcaj.Pages.Tables
 						VerticalOptions = LayoutOptions.Center,
 						HorizontalOptions = LayoutOptions.Center,
 						TextColor = Color.Black,
-						Text = "Station: "+orderHeader.StationID.ToString()
+						Text = "Station: " + orderHeader.StationID.ToString()
 					};
 
 					gridHeader.Children.Add(txtStation, 1, 0);
@@ -334,7 +337,7 @@ namespace Marcaj.Pages.Tables
 						VerticalOptions = LayoutOptions.Center,
 						HorizontalOptions = LayoutOptions.Center,
 						TextColor = Color.Black,
-						Text = "Order: "+orderHeader.OrderID.ToString()
+						Text = "Order: " + orderHeader.OrderID.ToString()
 					};
 
 					gridHeader.Children.Add(txtOrderName, 0, 1);
@@ -344,7 +347,7 @@ namespace Marcaj.Pages.Tables
 						VerticalOptions = LayoutOptions.Center,
 						HorizontalOptions = LayoutOptions.Center,
 						TextColor = Color.Black,
-						Text = "Table: "+DineIn.DineInTableText
+						Text = "Table: " + DineIn.DineInTableText
 					};
 
 					gridHeader.Children.Add(txtTableName, 1, 1);
@@ -359,7 +362,7 @@ namespace Marcaj.Pages.Tables
 
 					gridHeader.Children.Add(txtDateTimeOpenedTable, 0, 2);
 					Grid.SetColumnSpan(txtDateTimeOpenedTable, 2);
-					
+
 					Grid itemListHeader = new Grid
 					{
 						ColumnDefinitions =
@@ -409,7 +412,7 @@ namespace Marcaj.Pages.Tables
 					lstvwOrderHeader.ItemTemplate = new DataTemplate(() =>
 					{
 						ViewCell cell = new ViewCell();
-						
+
 						Grid grid = new Grid();
 
 						grid.ColumnDefinitions = new ColumnDefinitionCollection
@@ -455,60 +458,59 @@ namespace Marcaj.Pages.Tables
 					});
 
 					var orderTraItems = await App.manager.iGetOrderTransactionsByOrderID(orderHeader.OrderID);
-					foreach(var orderTraItem in orderTraItems)
-                    {
+					foreach (var orderTraItem in orderTraItems)
+					{
 						orderTransactionsList.Add(orderTraItem);
-                    }
+					}
 					lstvwOrderHeader.ItemsSource = orderTraItems;
 
-					gridLists.Children.Add(lstvwOrderHeader, index-1, 0);
+					gridLists.Children.Add(lstvwOrderHeader, index - 1, 0);
 				}
 			}
 		}
 
-        private async void btnNewOrder_Clicked(object sender, EventArgs e)
-        {
-			await Navigation.PushAsync(new NotActiveTable(DineIn, EmpFile,"opened"));
-        }
+		private async void btnNewOrder_Clicked(object sender, EventArgs e)
+		{
+			await Navigation.PushAsync(new NotActiveTable(DineIn, EmpFile, "opened"));
+		}
 
 		private void btnNextPage_Clicked(object sender, EventArgs e)
-        {
-			NumberOfClicksNext = NumberOfClicksNext+1;
+		{
+			NumberOfClicksNext = NumberOfClicksNext + 1;
 			PopListNext(NumberOfClicksNext);
 		}
 
-        private void btnPrevPage_Clicked(object sender, EventArgs e)
-        {
+		private void btnPrevPage_Clicked(object sender, EventArgs e)
+		{
 			NumberOfClicksNext = NumberOfClicksNext - 1;
 			PopListNext(NumberOfClicksNext);
-        }
+		}
 
-        private async void btnBack_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new AllTables(EmpFile));
-        }
+		private async void btnBack_Clicked(object sender, EventArgs e)
+		{
+			await Navigation.PushAsync(new AllTables(EmpFile));
+		}
 		int index;
-        private async void ListView_Focused(object sender, FocusEventArgs e)
-        {
+		private async void ListView_Focused(object sender, FocusEventArgs e)
+		{
 			index++;
-			if(index==1)
+			if (index == 1)
 			{
-                var lstvw = sender as ListView;
-                var orderId = lstvw.ClassId;
-                var orderHeaderFocused = orderHeadersList.Find(x => x.OrderID == Convert.ToInt32(orderId));
-                orderHeader = orderHeaderFocused;
-                orderTransactionsListByOrderID = orderTransactionsList.FindAll(x => x.OrderID == Convert.ToInt32(orderId));
+				var lstvw = sender as ListView;
+				var orderId = lstvw.ClassId;
+				var orderHeaderFocused = orderHeadersList.Find(x => x.OrderID == Convert.ToInt32(orderId));
+				orderHeader = orderHeaderFocused;
+				orderTransactionsListByOrderID = orderTransactionsList.FindAll(x => x.OrderID == Convert.ToInt32(orderId));
 				Debug.WriteLine(orderHeader.SynchVer);
-				if(orderHeader.SynchVer != DateTime.MinValue)
+				if (orderHeader.SynchVer != DateTime.MinValue)
 				{
 					await DisplayAlert("Error", "Order is already opened on another station!", "Ok");
 				}
 				else
 				{
-                    await Navigation.PushAsync(new ActiveTableEditPage(orderHeader, EmpFile, DineIn, orderTransactionsListByOrderID));
-                }
-            }
-			
+					await Navigation.PushAsync(new ActiveTableEditPage(orderHeader, EmpFile, DineIn, orderTransactionsListByOrderID));
+				}
+			}
 		}
-    }
+	}
 }
