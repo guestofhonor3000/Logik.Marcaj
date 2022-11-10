@@ -498,7 +498,8 @@ namespace Marcaj.Pages.Tables
                 var orderHeaderFocused = orderHeadersList.Find(x => x.OrderID == Convert.ToInt32(orderId));
                 orderHeader = orderHeaderFocused;
                 orderTransactionsListByOrderID = orderTransactionsList.FindAll(x => x.OrderID == Convert.ToInt32(orderId));
-				if(orderHeader.SynchVer != null)
+				Debug.WriteLine(orderHeader.SynchVer);
+				if(orderHeader.SynchVer != DateTime.MinValue)
 				{
 					await DisplayAlert("Error", "Order is already opened on another station!", "Ok");
 				}

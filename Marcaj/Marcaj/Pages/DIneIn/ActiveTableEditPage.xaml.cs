@@ -78,13 +78,19 @@ namespace Marcaj.Pages.Tables
                 var selIt = e.SelectedItem as MenuGroupsModel;
                 IsFirstLoad = false;
                 PopList(IsFirstLoad, selIt.MenuGroupID);
-            }
-            
-           
+            }         
         }
    
         private async void btnCancel_Clicked(object sender, EventArgs e)
         {
+            OrderHeader.SynchVer = DateTime.MinValue;
+            Debug.WriteLine(OrderHeader.OrderID);
+            await App.manager.iPutSynchVerOrderHeaders(OrderHeader, OrderHeader.OrderID);
+            int BackCount = 2;
+            for (var counter = 1; counter < BackCount; counter++)
+            {
+                Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 2]);
+            }
             await Navigation.PopAsync();
         }
 
@@ -132,6 +138,7 @@ namespace Marcaj.Pages.Tables
             ordHd.AmountDue = Convert.ToSingle(txtAmountDue.Text.Split(' ')[2]);
             ordHd.SubTotal = ordHd.AmountDue;
             ordHd.SynchVer = null;
+            ordHd.SynchVer = DateTime.MinValue;
             Debug.WriteLine(ordHd.SubTotal);
             await App.manager.iPutOrderHeaders(ordHd,OrderHeader.OrderID);
 

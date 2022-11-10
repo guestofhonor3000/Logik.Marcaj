@@ -216,6 +216,7 @@ namespace Marcaj.Pages.Tables
                     ordHd.Kitchen2AlreadyPrinted = false;
                     ordHd.Kitchen3AlreadyPrinted = false;
                     ordHd.BarAlreadyPrinted = false;
+                    ordHd.SynchVer = DateTime.MinValue;
                     ordHd.EditTimestamp = DateTime.Now;
                     ordHd.PackagerAlreadyPrinted = false;
                     ordHd.SalesTaxAmountUsed = 0;
@@ -312,13 +313,14 @@ namespace Marcaj.Pages.Tables
                     //dineIn.DineInTableInActive = DineIn.DineInTableInActive;
                     //await App.lDatabase.lPutDineInTable(dineIn);
 
-                    MessagingCenter.Send<NotActiveTable>(this, "Up");
+                    // MessagingCenter.Send<NotActiveTable>(this, "Up");
                 }
                 
             }
 
             if (_Type == "opened")
             {
+               
                 int BackCount = 2;
                 for (var counter = 1; counter < BackCount; counter++)
                 {
