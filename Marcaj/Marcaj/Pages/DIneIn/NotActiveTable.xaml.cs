@@ -82,7 +82,7 @@ namespace Marcaj.Pages.Tables
                         }
                     }
                 }
-                
+                IsFirstLoad = false; 
             }
             else
             {

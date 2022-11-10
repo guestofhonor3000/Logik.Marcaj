@@ -59,6 +59,7 @@ namespace Marcaj.Pages.Tables
                         lstvwOrderTransactions.ItemsSource = orderTraList;
                     }
                 }
+                IsFirstLoad = false;
             }
             else
             {
