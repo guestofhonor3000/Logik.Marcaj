@@ -105,6 +105,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AddIcon.png" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-200.png" />
     <Content Include="Assets\LargeTile.scale-400.png" />
@@ -132,32 +133,13 @@
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="BackIcon.png" />
     <Content Include="BarIcon.png" />
     <Content Include="CheckBackButton.png" />
     <Content Include="DineInIcon.png" />
-    <Content Include="HomeBarButton.png" />
-    <Content Include="HomeMeseButton.png" />
-    <Content Include="HomeNoSaleButton.png" />
-    <Content Include="HomePayBackButton.png" />
-    <Content Include="HomePayButton.png" />
-    <Content Include="HomePlaceholderButton.png" />
-    <Content Include="HomeRecallButton.png" />
-    <Content Include="HomeSettingsButton.png" />
     <Content Include="HomeTabButton.png" />
-    <Content Include="HomeVoidButton.png" />
-    <Content Include="MainAddButtton.png" />
-    <Content Include="MainBackButtton.png" />
-    <Content Include="MainBarButton.png" />
-    <Content Include="MainDoneButton.png" />
-    <Content Include="MainMeseButton.png" />
-    <Content Include="MainMoreButtton.png" />
-    <Content Include="MainNoSaleButton.png" />
-    <Content Include="MainPayBackButton.png" />
-    <Content Include="MainPayButton.png" />
-    <Content Include="MainPlaceholderButton.png" />
-    <Content Include="MainRecallButton.png" />
     <Content Include="MainSettingsSelectedButton.png" />
-    <Content Include="MainVoidButton.png" />
+    <Content Include="MoreIcon.png" />
     <Content Include="NoSaleIcon.png" />
     <Content Include="PaybackIcon.png" />
     <Content Include="PayCardButton.png" />
@@ -166,6 +148,7 @@
     <Content Include="PayGratuityButton.png" />
     <Content Include="PayHouseAccountButton.png" />
     <Content Include="PaymentIcon.png" />
+    <Content Include="PersonIcon.png" />
     <Content Include="PlaceholderIcon.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="RecallIcon.png" />

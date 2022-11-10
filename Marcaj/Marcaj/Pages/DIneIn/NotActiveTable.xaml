@@ -4,55 +4,122 @@
              x:Class="Marcaj.Pages.Tables.NotActiveTable"
              BackgroundColor="White">
     <ContentPage.Content>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-
+        <Grid Style="{DynamicResource mainGrid}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="8*"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             
-            <ListView Grid.Row="0" Grid.Column="0" x:Name="lstvwMenuGroups" ItemSelected="lstvwMenuGroups_ItemSelected">
-                
-                <ListView.Header>
-                    <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" TextColor="Black" Text="Menu Groups"/>
-                </ListView.Header>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".5*"/>
+                <ColumnDefinition Width=".5*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackLayout Grid.Column="0" 
+                         Grid.RowSpan="2"
+                         Style="{DynamicResource mainStack}">
+
+                    <Frame Style="{DynamicResource sideBtnFrame}"
+                       VerticalOptions="Start">
+                        <Label Text="{Binding  tblText}"
+                               Style="{DynamicResource mainLabel}"/>
+                    </Frame>
+
+                    <Frame Style="{DynamicResource sideBtnFrame}"
+                       VerticalOptions="EndAndExpand">
+                        <ImageButton  Source="MoreIcon.png"
+                                  Aspect="AspectFill"
+                                  x:Name="btnMore"
+                                  Clicked="btnMore_Clicked"
+                                  Margin="-10"/>
+                    </Frame>
+
+                    <Frame Style="{DynamicResource sideBtnFrame}"
+                       VerticalOptions="End">
+                        <ImageButton  Source="BackIcon.png"
+                                  Aspect="AspectFill"
+                                  x:Name="backBtn"
+                                  Clicked="backBtn_Clicked"
+                                  Margin="-10"/>
+                    </Frame>
+
+
+            </StackLayout>
+
+            <StackLayout Grid.Column="1"
+                         Style="{DynamicResource secondStack}"
+                         Grid.RowSpan="2">
+               
+                <Frame Style="{DynamicResource sideBtnFrame}"
+                       VerticalOptions="Start">
+                    <ImageButton  Source="PersonIcon.png"
+                                  Aspect="AspectFill"
+                                  Margin="-10"/>
+                </Frame>
+
+                <Frame Style="{DynamicResource sideBtnFrame}"
+                       VerticalOptions="End">
+                    <ImageButton  Source="AddIcon.png"
+                                  Aspect="AspectFill"
+                                  Margin="-10"/>
+                </Frame>
+
+            </StackLayout>
+
+            <ListView Grid.Column="2"
+                      Grid.RowSpan="2"
+                      x:Name="lstvwMenuGroups" 
+                      ItemSelected="lstvwMenuGroups_ItemSelected" 
+                      Style="{DynamicResource thirdList}">
                 
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout>
-                                <Label VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black" Text="{Binding MenuGroupText}"/>
-                            </StackLayout>
+                            
+                            <Frame Style="{DynamicResource secondBtnFrame}">
+                                <Label Text="{Binding MenuGroupText}" 
+                                       Style="{DynamicResource mainBtnLabel}"/>
+                            </Frame>
+                            
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 
             </ListView>
 
-            <ListView Grid.Row="0"  Grid.Column="1" x:Name="lstvwMenuItems" ItemSelected="lstvwMenuItems_ItemSelected">
+            <CollectionView Grid.Column="3" 
+                            Grid.RowSpan="2"
+                            x:Name="lstvwMenuItems" 
+                            SelectionChanged="lstvwMenuItems_ItemSelected"
+                            Margin="10,0,10,0"
+                            VerticalScrollBarVisibility="Never"
+                            SelectionMode="Single">
                 
-                <ListView.Header>
-                    <Label VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" TextColor="Black" Text="Menu Items"/>
-                </ListView.Header>
-                
-                <ListView.ItemTemplate>
+                <CollectionView.ItemsLayout >
+                    <GridItemsLayout Orientation="Vertical"
+                                         Span="5"
+                                         VerticalItemSpacing="10"
+                                         HorizontalItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <StackLayout>
-                                <Label VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black" Text="{Binding MenuItemText}"/>
-                            </StackLayout>
-                        </ViewCell>
+                        <Frame Style="{DynamicResource thirdBtnFrame}">
+                            <Label Text="{Binding MenuItemText}"
+                                       Style="{DynamicResource secondBtnLabel}"/>
+                        </Frame>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-                
-            </ListView>
-
-            <ListView Grid.Row="0"  Grid.Column="2" x:Name="lstvwOrderTransactions">
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
+            
+            
+            <ListView  Style="{DynamicResource mainList}"
+                       Grid.Column="4" 
+                       Grid.RowSpan="2"
+                       x:Name="lstvwOrderTransactions">
                 <ListView.Header>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -67,11 +134,11 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                        <Label Grid.Row="0" Grid.Column="0" x:Name="txtServer" VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black"/>
-                        <Label Grid.Row="0" Grid.Column="1" x:Name="txtStation" VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black"/>
-                        <Label Grid.Row="1" Grid.Column="0" x:Name="txtOrderName" VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black"/>
-                        <Label Grid.Row="1" Grid.Column="1" x:Name="txtTableName" VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black"/>
-                        <Label Grid.Row="2" Grid.ColumnSpan="2"  x:Name="txtDateTimeOpenedTable" VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black"/>
+                        <Label Grid.Row="0" Grid.Column="0" x:Name="txtServer" Style="{DynamicResource mainBtnLabel}"/>
+                        <Label Grid.Row="0" Grid.Column="1" x:Name="txtStation" Style="{DynamicResource mainBtnLabel}"/>
+                        <Label Grid.Row="1" Grid.Column="0" x:Name="txtOrderName" Style="{DynamicResource mainBtnLabel}"/>
+                        <Label Grid.Row="1" Grid.Column="1" x:Name="txtTableName" Style="{DynamicResource mainBtnLabel}"/>
+                        <Label Grid.Row="2" Grid.ColumnSpan="2"  x:Name="txtDateTimeOpenedTable" Style="{DynamicResource mainBtnLabel}"/>
                         <Grid Grid.Row="3" Grid.ColumnSpan="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -79,9 +146,9 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Label Grid.Column="0" Text="Qty" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold" TextColor="Black"/>
-                            <Label Grid.Column="1" Text="Item" VerticalOptions="Center" HorizontalOptions="Center" FontAttributes="Bold"  TextColor="Black"/>
-                            <Label Grid.Column="2" Text="$" VerticalOptions="Center" HorizontalOptions="Center"  FontAttributes="Bold" TextColor="Black"/>
+                            <Label Grid.Column="0" Text="Qty" Style="{DynamicResource mainBtnLabel}"/>
+                            <Label Grid.Column="1" Text="Item" Style="{DynamicResource mainBtnLabel}"/>
+                            <Label Grid.Column="2" Text="$" Style="{DynamicResource mainBtnLabel}"/>
                         </Grid>
                     </Grid>
                 </ListView.Header>
@@ -106,24 +173,18 @@
                 </ListView.ItemTemplate>
 
                 <ListView.Footer>
-                    <Label x:Name="txtAmountDue" VerticalOptions="Center" HorizontalOptions="End" TextColor="Black" FontAttributes="Bold"/>
+                    <Label x:Name="txtAmountDue" Style="{DynamicResource mainBtnLabel}"/>
                 </ListView.Footer>
             </ListView>
 
-            <Grid Grid.Row="1" Grid.ColumnSpan="3">
+            <Grid Grid.Column="4" Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="7" Text="DONE" TextColor="Black" x:Name="btnDone" Clicked="btnDone_Clicked"/>
-                <Button Grid.Column="0" Text="CANCEL" TextColor="Black" x:Name="btnCancel" Clicked="btnCancel_Clicked"/>
+                <Button Grid.Column="0" Text="DONE" TextColor="Black" x:Name="btnDone" Clicked="btnDone_Clicked"/>
+                <Button Grid.Column="1" Text="CANCEL" TextColor="Black" x:Name="btnCancel" Clicked="btnCancel_Clicked"/>
                 
             </Grid>
         </Grid>

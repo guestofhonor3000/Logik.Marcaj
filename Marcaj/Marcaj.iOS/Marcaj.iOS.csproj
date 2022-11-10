@@ -143,73 +143,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\HomeMeseButton.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\HomeTabButton.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\HomeBarButton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\HomePayButton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\HomeVoidButton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\HomeNoSaleButton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\HomePayBackButton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\HomePlaceholderButton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\HomeRecallButton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\HomeSettingsButton.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\RestImg.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\MainVoidButton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\MainBarButton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\MainMeseButton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\MainNoSaleButton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\MainPayBackButton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\MainPayButton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\MainPlaceholderButton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\MainRecallButton.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Table6Open.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Table6Active.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\MainMoreButtton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\MainBackButtton.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\SecondaryBlankButton.png" />
@@ -243,9 +186,6 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\MainSettingsSelectedButton.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\MainAddButtton.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\MainDoneButton.png" />
@@ -285,5 +225,17 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\PaybackIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\MoreIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\BackIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\AddIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\PersonIcon.png" />
   </ItemGroup>
 </Project>

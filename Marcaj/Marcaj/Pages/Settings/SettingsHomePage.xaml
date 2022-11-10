@@ -49,7 +49,7 @@
 
                                 <Frame Style="{DynamicResource thirdBtnFrame}">
                                     <Label Text="{Binding Text}" 
-                                           Style="{DynamicResource thirdBtnLabel}"/>
+                                           Style="{DynamicResource secondBtnLabel}"/>
                                 </Frame>
                               
                             </ViewCell>

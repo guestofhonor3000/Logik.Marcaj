@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Marcaj.Models.DbModels;
+using Marcaj.Models.LocalDbModels;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Marcaj.Models.DbModels;
-using Marcaj.Models.LocalDbModels;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -49,7 +47,7 @@ namespace Marcaj.Pages.Tables
                 txtAmountDue.Text = "Amount Due: 0";
                 if (Connectivity.NetworkAccess == NetworkAccess.Internet)
                 {
-                   
+
                     var a = await App.manager.iGetMenuGroups();
                     if (a != null)
                     {
@@ -68,21 +66,21 @@ namespace Marcaj.Pages.Tables
                 else
                 {
                     var a = await App.lDatabase.lGetMenuGroups();
-                    if(a!= null)
+                    if (a != null)
                     {
-                        if(a.Count>0)
+                        if (a.Count > 0)
                         {
                             lstvwMenuGroups.ItemsSource = a;
                             lstvwMenuGroups.SelectedItem = a[0];
                             var b = await App.lDatabase.lGetMenuItemsByGroupID(a[0].MenuGroupID);
-                            if(b!= null)
+                            if (b != null)
                             {
                                 lstvwMenuItems.ItemsSource = b;
                             }
                         }
                     }
                 }
-                IsFirstLoad = false; 
+                IsFirstLoad = false;
             }
             else
             {
@@ -97,7 +95,7 @@ namespace Marcaj.Pages.Tables
                 else
                 {
                     var b = await App.lDatabase.lGetMenuItemsByGroupID(groupId);
-                    if(b!= null)
+                    if (b != null)
                     {
                         lstvwMenuItems.ItemsSource = b;
                     }
@@ -124,13 +122,13 @@ namespace Marcaj.Pages.Tables
             }
         }
 
-        private void lstvwMenuItems_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private void lstvwMenuItems_ItemSelected(object sender, SelectionChangedEventArgs    e)
         {
-            if (e.SelectedItem != null)
+            if (e.CurrentSelection.FirstOrDefault() != null)
             {
                 if (Connectivity.NetworkAccess == NetworkAccess.Internet)
                 {
-                    var selIt = e.SelectedItem as MenuItemsModel;
+                    var selIt = e.CurrentSelection.FirstOrDefault() as MenuItemsModel;
                     var orderTra = new OrderTransactionsModel();
 
                     var exOrderTra = orderTraList.FirstOrDefault(x => x.MenuItemID == selIt.MenuItemID);
@@ -161,7 +159,7 @@ namespace Marcaj.Pages.Tables
                 }
                 else
                 {
-                    var selIt = e.SelectedItem as LMenuItemsModel;
+                    var selIt = e.CurrentSelection.FirstOrDefault() as LMenuItemsModel;
                     var orderTra = new LOrderTransactionsModel();
 
                     var exOrderTra = lorderTraList.FirstOrDefault(x => x.MenuItemID == selIt.MenuItemID);
@@ -190,7 +188,7 @@ namespace Marcaj.Pages.Tables
                     }
                     txtAmountDue.Text = "Amount Due: " + extPrice.ToString();
                 }
-                    
+
             }
 
             lstvwMenuItems.SelectedItem = null;
@@ -198,11 +196,11 @@ namespace Marcaj.Pages.Tables
 
         private async void btnDone_Clicked(object sender, EventArgs e)
         {
-            if(Connectivity.NetworkAccess == NetworkAccess.Internet)
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-                if(orderTraList.Count>0)
+                if (orderTraList.Count > 0)
                 {
-                  
+
                     var ordHd = new OrderHeadersModel();
                     var stat = await App.manager.iGetStationSettings(DeviceInfo.Name);
                     ordHd.OrderDateTime = DateTime.Now;
@@ -257,11 +255,11 @@ namespace Marcaj.Pages.Tables
                     MessagingCenter.Send<NotActiveTable>(this, "Up");
                 }
 
-                
+
             }
-           else
+            else
             {
-                if(lorderTraList.Count>0)
+                if (lorderTraList.Count > 0)
                 {
                     var ordHd = new LOrderHeaderModel();
                     var id = await App.lDatabase.lGetLastIdOrderHeaders();
@@ -315,12 +313,12 @@ namespace Marcaj.Pages.Tables
 
                     // MessagingCenter.Send<NotActiveTable>(this, "Up");
                 }
-                
+
             }
 
             if (_Type == "opened")
             {
-               
+
                 int BackCount = 2;
                 for (var counter = 1; counter < BackCount; counter++)
                 {
@@ -336,7 +334,7 @@ namespace Marcaj.Pages.Tables
 
         private async void btnCancel_Clicked(object sender, EventArgs e)
         {
-            if(_Type == "opened")
+            if (_Type == "opened")
             {
                 int BackCount = 2;
                 for (var counter = 1; counter < BackCount; counter++)
@@ -349,6 +347,16 @@ namespace Marcaj.Pages.Tables
             {
                 await Navigation.PopAsync();
             }
+        }
+
+        private async void backBtn_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new AllTables(EmpFile));
+        }
+
+        private void btnMore_Clicked(object sender, EventArgs e)
+        {
+
         }
     }
 }

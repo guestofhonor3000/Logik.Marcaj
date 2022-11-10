@@ -113,6 +113,10 @@ namespace Marcaj.Pages.Settings.Mese
             }
         }
 
-  
+
+        private async void backBtn_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SettingsHomePage());
+        }
     }
 }

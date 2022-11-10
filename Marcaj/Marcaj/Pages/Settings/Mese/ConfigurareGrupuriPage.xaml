@@ -15,18 +15,32 @@
             
             
             <StackLayout Grid.Column="0"
-                         Style="{DynamicResource mainList}"
-                         Padding="10">
+                         Style="{DynamicResource mainStack}">
 
-                <ImageButton  Source="MainSettingsSelectedButton.png" 
-                              VerticalOptions="Start"/>
-                <ImageButton  Source="MainAddButtton.png" 
-                              VerticalOptions="StartAndExpand" 
-                              x:Name="btnAddTableGroup" 
-                              Clicked="btnAddTableGroup_Clicked"/>
-                <ImageButton  Source="MainBackButtton.png" 
-                              VerticalOptions="End"/>
+                <Frame Style="{DynamicResource sideBtnFrame}"
+                       VerticalOptions="Start">
+                    <ImageButton  Source="PlaceholderIcon.png"
+                                  Aspect="AspectFill"
+                                  Margin="-10"/>
+                </Frame>
 
+                <Frame Style="{DynamicResource sideBtnFrame}"
+                       VerticalOptions="StartAndExpand">
+                    <ImageButton  Source="AddIcon.png"
+                                  Aspect="AspectFill"
+                                  x:Name="btnAddTableGroup"
+                                  Clicked="btnAddTableGroup_Clicked"
+                                  Margin="-10"/>
+                </Frame>
+                
+                <Frame Style="{DynamicResource sideBtnFrame}"
+                       VerticalOptions="End">
+                    <ImageButton  Source="BackIcon.png"
+                                  Aspect="AspectFill"
+                                  x:Name="backBtn"
+                                  Clicked="backBtn_Clicked"
+                                  Margin="-10"/>
+                </Frame>
             </StackLayout>
 
             
@@ -39,7 +53,7 @@
                             <ViewCell>
                                 <Frame Style="{DynamicResource secondBtnFrame}">
                                     <Label Text="{Binding TableGroupText}"
-                                           Style="{DynamicResource secondBtnLabel}"/>
+                                           Style="{DynamicResource mainBtnLabel}"/>
                                 </Frame>
                             </ViewCell>
                         </DataTemplate>
@@ -54,19 +68,19 @@
 
                     
                         <Button Text="Redenumeste"
-                                Style="{DynamicResource btn}"
+                                Style="{DynamicResource secondBtn}"
                                 x:Name="btnGroupNameEdit" 
                                 Clicked="btnGroupNameEdit_Clicked"/>
 
 
                         <Button Text="Editeaza" 
-                                Style="{DynamicResource btn}"
+                                Style="{DynamicResource secondBtn}"
                                 x:Name="btnAssignTables" 
                                 Clicked="btnAssignTables_Clicked"/>
 
 
                         <Button Text="Sterge" 
-                                Style="{DynamicResource btn}"
+                                Style="{DynamicResource secondBtn}"
                                 x:Name="btnDeleteGroup" 
                                 Clicked="btnDeleteGroup_Clicked"/>
 

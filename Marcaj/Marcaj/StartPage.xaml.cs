@@ -309,7 +309,6 @@ namespace Marcaj
 
         private void btnDel_Clicked(object sender, EventArgs e)
         {
-            //string s = codEntry.Text.Substring(0, codEntry.Text.Length - 1);
             codEntry.Text = "";
         }
     }

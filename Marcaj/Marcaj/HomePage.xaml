@@ -45,7 +45,8 @@
                         <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Image Source="RestImg.jpg" Grid.Row="0" 
+                <Image Source="RestImg.jpg" 
+                       Grid.Row="0" 
                        Grid.ColumnSpan="2" 
                        Aspect="AspectFill" 
                        Margin="20,10,20,0"/>
@@ -72,7 +73,7 @@
                                                  Clicked="ImageButton_Clicked"
                                                  Padding="0,10,0,0"/>
                                     <Label Text="{Binding Text}"
-                                           Style="{DynamicResource thirdBtnLabel}"
+                                           Style="{DynamicResource secondBtnLabel}"
                                            Padding="0,0,0,10"/>
                                 </StackLayout>
                             </Frame>
