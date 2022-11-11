@@ -136,11 +136,14 @@
     <Content Include="BackIcon.png" />
     <Content Include="BarIcon.png" />
     <Content Include="CheckBackButton.png" />
+    <Content Include="CheckEditIcon.png" />
     <Content Include="DineInIcon.png" />
+    <Content Include="DoneIcon.png" />
     <Content Include="HomeTabButton.png" />
     <Content Include="MainSettingsSelectedButton.png" />
     <Content Include="MoreIcon.png" />
     <Content Include="NoSaleIcon.png" />
+    <Content Include="OptionsIcon.png" />
     <Content Include="PaybackIcon.png" />
     <Content Include="PayCardButton.png" />
     <Content Include="PayCashButton.png" />
@@ -151,9 +154,12 @@
     <Content Include="PersonIcon.png" />
     <Content Include="PlaceholderIcon.png" />
     <Content Include="Properties\Default.rd.xml" />
+    <Content Include="QtyIcon.png" />
     <Content Include="RecallIcon.png" />
     <Content Include="RestImg.jpg" />
+    <Content Include="ScaleIcon.png" />
     <Content Include="SecondaryBlankButton.png" />
+    <Content Include="SettleIcon.png" />
     <Content Include="Table2Occupied.png" />
     <Content Include="Table2Open.png" />
     <Content Include="Table4Occupied.png" />

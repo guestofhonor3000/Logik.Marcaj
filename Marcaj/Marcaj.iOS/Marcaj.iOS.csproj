@@ -238,4 +238,22 @@
   <ItemGroup>
     <BundleResource Include="Resources\PersonIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\OptionsIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\QtyIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ScaleIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\SettleIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\CheckEditIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\DoneIcon.png" />
+  </ItemGroup>
 </Project>

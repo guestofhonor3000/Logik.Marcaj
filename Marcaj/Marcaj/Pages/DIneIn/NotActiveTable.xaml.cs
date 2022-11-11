@@ -39,12 +39,12 @@ namespace Marcaj.Pages.Tables
                 string deviceName = DeviceInfo.Name;
                 var station = await App.lDatabase.lGetStationSettings(deviceName);
                 StationModel = station;
-                txtServer.Text = "Server: " + EmpFile.FirstName;
-                txtStation.Text = "Station: " + station.ComputerName;
-                txtOrderName.Text = "Order: NewOrder";
-                txtTableName.Text = "Table: " + DineIn.DineInTableText;
+                txtServer.Text = EmpFile.FirstName;
+                txtStation.Text =  station.ComputerName;
+                txtOrderName.Text = "NewOrder";
+                txtTableName.Text = "Masa: " + DineIn.DineInTableText;
                 txtDateTimeOpenedTable.Text = DateTime.Now.ToString();
-                txtAmountDue.Text = "Amount Due: 0";
+                txtAmountDue.Text = "Total: 0";
                 if (Connectivity.NetworkAccess == NetworkAccess.Internet)
                 {
 
@@ -155,7 +155,7 @@ namespace Marcaj.Pages.Tables
                     {
                         extPrice += orderTr.ExtendedPrice;
                     }
-                    txtAmountDue.Text = "Amount Due: " + extPrice.ToString();
+                    txtAmountDue.Text = "Total: " + extPrice.ToString();
                 }
                 else
                 {
@@ -186,7 +186,7 @@ namespace Marcaj.Pages.Tables
                     {
                         extPrice += orderTr.ExtendedPrice;
                     }
-                    txtAmountDue.Text = "Amount Due: " + extPrice.ToString();
+                    txtAmountDue.Text = "Total: " + extPrice.ToString();
                 }
 
             }
@@ -349,12 +349,33 @@ namespace Marcaj.Pages.Tables
             }
         }
 
-        private async void backBtn_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new AllTables(EmpFile));
-        }
 
         private void btnMore_Clicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnQty_Clicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnOpts_Clicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnScale_Clicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSettle_Clicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCheckEdit_Clicked(object sender, EventArgs e)
         {
 
         }
