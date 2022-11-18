@@ -43,7 +43,7 @@ namespace Marcaj.Pages.Tables
                 txtTableName.Text = "Table: " + DineIn.DineInTableText;
                 txtDateTimeOpenedTable.Text = OrderHeader.OrderDateTime.ToString();
                 txtAmountDue.Text = "Amount Due: " + OrderHeader.AmountDue.ToString();
-
+                tableName.Text = DineIn.DineInTableText;
                 var a = await App.manager.iGetMenuGroups();
                 if (a != null)
                 {
@@ -72,11 +72,11 @@ namespace Marcaj.Pages.Tables
 
         }
         
-        private void lstvwMenuGroups_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private void lstvwMenuGroups_ItemSelected(object sender, SelectionChangedEventArgs e)
         {
             if (IsFirstLoad != true)
             {
-                var selIt = e.SelectedItem as MenuGroupsModel;
+                var selIt = e.CurrentSelection.FirstOrDefault() as MenuGroupsModel;
                 IsFirstLoad = false;
                 PopList(IsFirstLoad, selIt.MenuGroupID);
             }         
@@ -95,11 +95,11 @@ namespace Marcaj.Pages.Tables
             await Navigation.PopAsync();
         }
 
-        private void lstvwMenuItems_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private void lstvwMenuItems_ItemSelected(object sender, SelectionChangedEventArgs e)
         {
-            if (e.SelectedItem != null)
+            if (e.CurrentSelection.FirstOrDefault() != null)
             {
-                var selIt = e.SelectedItem as MenuItemsModel;
+                var selIt = e.CurrentSelection.FirstOrDefault() as MenuItemsModel;
                 var orderTra = new OrderTransactionsModel();
 
                 var exOrderTra = orderTraList.FirstOrDefault(x => x.MenuItemID == selIt.MenuItemID);

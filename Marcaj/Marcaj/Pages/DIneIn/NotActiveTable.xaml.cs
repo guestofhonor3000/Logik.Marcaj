@@ -45,6 +45,7 @@ namespace Marcaj.Pages.Tables
                 txtTableName.Text = "Masa: " + DineIn.DineInTableText;
                 txtDateTimeOpenedTable.Text = DateTime.Now.ToString();
                 txtAmountDue.Text = "Total: 0";
+                tableName.Text = DineIn.DineInTableText;
                 if (Connectivity.NetworkAccess == NetworkAccess.Internet)
                 {
 
@@ -102,20 +103,20 @@ namespace Marcaj.Pages.Tables
                 }
             }
         }
-        private void lstvwMenuGroups_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private void lstvwMenuGroups_ItemSelected(object sender, SelectionChangedEventArgs e)
         {
             if (IsFirstLoad != true)
             {
                 if (Connectivity.NetworkAccess == NetworkAccess.Internet)
                 {
 
-                    var selIt = e.SelectedItem as MenuGroupsModel;
+                    var selIt = e.CurrentSelection.FirstOrDefault() as MenuGroupsModel;
                     IsFirstLoad = false;
                     PopList(IsFirstLoad, selIt.MenuGroupID);
                 }
                 else
                 {
-                    var selIt = e.SelectedItem as LMenuGroupsModel;
+                    var selIt = e.CurrentSelection.FirstOrDefault() as LMenuGroupsModel;
                     IsFirstLoad = false;
                     PopList(IsFirstLoad, selIt.MenuGroupID);
                 }
@@ -186,7 +187,7 @@ namespace Marcaj.Pages.Tables
                     {
                         extPrice += orderTr.ExtendedPrice;
                     }
-                    txtAmountDue.Text = "Total: " + extPrice.ToString();
+                    txtAmountDue.Text = "Amount Due:" + extPrice.ToString();
                 }
 
             }
@@ -209,7 +210,7 @@ namespace Marcaj.Pages.Tables
                     ordHd.OrderType = "1";
                     ordHd.DineInTableID = DineIn.DineInTableID;
                     ordHd.OrderStatus = "1";
-                    ordHd.AmountDue = Convert.ToSingle(txtAmountDue.Text.Split(' ')[2]);
+                    ordHd.AmountDue = Convert.ToSingle(txtAmountDue.Text.Split(' ')[1]);
                     ordHd.Kitchen1AlreadyPrinted = false;
                     ordHd.Kitchen2AlreadyPrinted = false;
                     ordHd.Kitchen3AlreadyPrinted = false;
@@ -271,7 +272,7 @@ namespace Marcaj.Pages.Tables
                     ordHd.OrderType = "1";
                     ordHd.DineInTableID = DineIn.DineInTableID;
                     ordHd.OrderStatus = "1";
-                    ordHd.AmountDue = Convert.ToSingle(txtAmountDue.Text.Split(' ')[2]);
+                    ordHd.AmountDue = Convert.ToSingle(txtAmountDue.Text.Split(' ')[1]);
                     ordHd.Kitchen1AlreadyPrinted = false;
                     ordHd.Kitchen2AlreadyPrinted = false;
                     ordHd.Kitchen3AlreadyPrinted = false;
@@ -319,16 +320,18 @@ namespace Marcaj.Pages.Tables
             if (_Type == "opened")
             {
 
-                int BackCount = 2;
+                /*int BackCount = 2;
                 for (var counter = 1; counter < BackCount; counter++)
                 {
                     Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 2]);
                 }
+                await Navigation.PopAsync();*/
                 await Navigation.PopAsync();
             }
             else
             {
                 await Navigation.PopAsync();
+                //await Navigation.PopAsync();
             }
         }
 

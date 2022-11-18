@@ -1,17 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Marcaj.Pages.Tables.NotActiveTable"
-             BackgroundColor="White">
+             x:Class="Marcaj.Pages.Tables.NotActiveTable">
     <ContentPage.Content>
         <Grid Style="{DynamicResource mainGrid}">
          
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width=".5*"/>
                 <ColumnDefinition Width=".5*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="5.6*"/>
-                <ColumnDefinition Width="2.4*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="4.5*"/>
+                <ColumnDefinition Width="2.5*"/>
             </Grid.ColumnDefinitions>
 
             
@@ -19,27 +18,27 @@
                          Style="{DynamicResource mainStack}">
 
                     <Frame Style="{DynamicResource sideBtnFrame}"
-                       VerticalOptions="Start">
-                        <Label Text="{Binding  tblText}"
-                               Style="{DynamicResource mainLabel}"/>
+                           VerticalOptions="Start">
+                        <Label x:Name="tableName"
+                               Style="{DynamicResource mainBtnLabel}"/>
                     </Frame>
 
                     <Frame Style="{DynamicResource sideBtnFrame}"
-                       VerticalOptions="EndAndExpand">
-                        <ImageButton  Source="MoreIcon.png"
-                                  Aspect="AspectFill"
-                                  x:Name="btnMore"
-                                  Clicked="btnMore_Clicked"
-                                  Margin="-10"/>
+                           VerticalOptions="EndAndExpand">
+                        <ImageButton Source="MoreIcon.png"
+                                     Aspect="AspectFill"
+                                     x:Name="btnMore"
+                                     Clicked="btnMore_Clicked"
+                                     Margin="-10"/>
                     </Frame>
 
                     <Frame Style="{DynamicResource sideBtnFrame}"
-                       VerticalOptions="End">
+                           VerticalOptions="End">
                         <ImageButton  Source="BackIcon.png"
-                                  Aspect="AspectFill"
-                                   x:Name="btnCancel" 
-                                   Clicked="btnCancel_Clicked"
-                                  Margin="-10"/>
+                                      Aspect="AspectFill"
+                                      x:Name="btnCancel" 
+                                      Clicked="btnCancel_Clicked"
+                                      Margin="-10"/>
                     </Frame>
 
 
@@ -65,50 +64,85 @@
 
             </StackLayout>
 
-            <ListView Grid.Column="2"
-                      x:Name="lstvwMenuGroups" 
-                      ItemSelected="lstvwMenuGroups_ItemSelected" 
-                      Style="{DynamicResource thirdList}">
-                
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            
-                            <Frame Style="{DynamicResource secondBtnFrame}">
-                                <Label Text="{Binding MenuGroupText}" 
-                                       Style="{DynamicResource mainBtnLabel}"/>
-                            </Frame>
-                            
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                
-            </ListView>
+            <CollectionView Grid.Column="2"
+                            x:Name="lstvwMenuGroups" 
+                            SelectionChanged="lstvwMenuGroups_ItemSelected" 
+                            Style="{DynamicResource thirdList}"
+                            SelectionMode="Single">
 
-            <CollectionView Grid.Column="3" 
+                <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Vertical"
+                                             Span="2"
+                                             VerticalItemSpacing="10"
+                                             HorizontalItemSpacing="10"/>
+                        </CollectionView.ItemsLayout>
+                        
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame Style="{DynamicResource secondBtnFrame}">
+                                    <Label Text="{Binding MenuGroupText}" 
+                                           Style="{DynamicResource mainBtnLabel}"/>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+            <Grid Grid.Column="3" >
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="15*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Frame Grid.Row="0"
+                       Grid.Column="1"
+                       CornerRadius="20"
+                       Background="#f1f1f1"
+                       Margin="0,10,0,10">
+                    
+                    <Entry Placeholder="Cautare" 
+                           FontFamily="Verdana" 
+                           FontSize="18"
+                           BackgroundColor="Transparent" 
+                           PlaceholderColor="Black" 
+                           TextColor="Black" 
+                           HorizontalTextAlignment="Center"
+                           Margin="-30"/>
+                </Frame>
+
+
+                <CollectionView Grid.Row="1"
+                                Grid.ColumnSpan="3"
                             x:Name="lstvwMenuItems" 
                             SelectionChanged="lstvwMenuItems_ItemSelected"
                             Margin="10,0,10,0"
                             VerticalScrollBarVisibility="Never"
                             SelectionMode="Single">
-                
-                <CollectionView.ItemsLayout >
-                    <GridItemsLayout Orientation="Vertical"
+
+                    <CollectionView.ItemsLayout >
+                        <GridItemsLayout Orientation="Vertical"
                                          Span="4"
                                          VerticalItemSpacing="10"
                                          HorizontalItemSpacing="10"/>
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame Style="{DynamicResource thirdBtnFrame}">
-                            <Label Text="{Binding MenuItemText}"
-                                       Style="{DynamicResource secondBtnLabel}"/>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Style="{DynamicResource thirdBtnFrame}">
+                                <Label Text="{Binding MenuItemText}"
+                                   Style="{DynamicResource secondBtnLabel}"/>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
-
+            </Grid>
 
 
             <Grid Grid.Column="4"

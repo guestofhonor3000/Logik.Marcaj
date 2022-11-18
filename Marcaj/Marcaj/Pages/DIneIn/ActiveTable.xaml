@@ -1,55 +1,60 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Marcaj.Pages.Tables.ActiveTable"
-             BackgroundColor="White">
+             x:Class="Marcaj.Pages.Tables.ActiveTable">
     <ContentPage.Content>
-        
-        <Grid RowSpacing="0" ColumnSpacing="0">
+
+        <Grid Style="{DynamicResource mainGrid}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="12*"/>
-                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width=".5*"/>
+                <ColumnDefinition Width="9.5*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0" BackgroundColor="#171a1d" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" ColumnSpacing="5" Margin="0" Padding="0,0,0,10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Label Grid.Row="0" Text="{Binding DineIn.DineInTableText}"/>
-                <ImageButton Grid.Row="1" Source="MainMoreButtton.png"/>
-                <ImageButton Grid.Row="2" Source="MainBackButtton.png" Clicked="btnBack_Clicked"/>
+            <StackLayout Grid.Column="0"
+                         Style="{DynamicResource mainStack}">
 
-
-            </Grid>
-            
-            <Grid x:Name="gridLists" Grid.Column="3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-            </Grid>
-
-
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <Button Grid.Row="0"  Text="NEW" x:Name="btnNewOrder" TextColor="Black" Clicked="btnNewOrder_Clicked"/>
-                <Button Grid.Row="2" Text="NEXT" x:Name="btnNextPage" TextColor="Black" Clicked="btnNextPage_Clicked" IsEnabled="False"/>
-                <Button Grid.Row="3" Text="BACK" x:Name="btnPrevPage" TextColor="Black" Clicked="btnPrevPage_Clicked" IsEnabled="False"/>
+                <Frame Style="{DynamicResource sideBtnFrame}"
+                       VerticalOptions="Start">
+                    <Label x:Name="tableName"
+                           Style="{DynamicResource mainBtnLabel}"/>
+                </Frame>
                 
+                <Frame Style="{DynamicResource sideBtnFrame}"
+                       VerticalOptions="StartAndExpand">
+                    <ImageButton  Source="AddIcon.png"
+                                  Aspect="AspectFill"
+                                  x:Name="btnNewOrder"
+                                  Clicked="btnNewOrder_Clicked" 
+                                  Margin="-10"/>
+                </Frame>
 
-            </Grid>
+                <Frame Style="{DynamicResource sideBtnFrame}"
+                       VerticalOptions="End">
+                    <ImageButton  Source="BackIcon.png"
+                                  Aspect="AspectFill"
+                                  x:Name="btnCancel" 
+                                  Margin="-10"/>
+                </Frame>
+            </StackLayout>
+
+            <ScrollView Grid.Row="0" Grid.Column="1">
+                <StackLayout x:Name="gridGridLists">
+                <Grid   x:Name="gridLists">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                </Grid>
+            </StackLayout>
+            </ScrollView>
+          
         </Grid>
     </ContentPage.Content>
 </ContentPage>

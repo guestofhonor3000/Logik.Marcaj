@@ -25,19 +25,22 @@
     <Compile Update="Pages\Settle\AchitaPage.xaml.cs">
       <DependentUpon>AchitaPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Pages\DIneIn\AllTables.xaml.cs">
+    <Compile Update="Pages\DineIn\AllTables.xaml.cs">
       <DependentUpon>AllTables.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Pages\DIneIn\NotActiveTable.xaml.cs">
+    <Compile Update="Pages\DineIn\NotActiveTable.xaml.cs">
       <DependentUpon>NotActiveTable.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Pages\DIneIn\ActiveTable.xaml.cs">
+    <Compile Update="Pages\DineIn\ActiveTable.xaml.cs">
       <DependentUpon>ActiveTable.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="HomePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\DineIn\PageActive.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\Settings\Statie\ThemePage.xaml">
@@ -64,16 +67,16 @@
     <EmbeddedResource Update="Pages\Settings\Statie\StationSettingsMainPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\DIneIn\ActiveTableEditPage.xaml">
+    <EmbeddedResource Update="Pages\DineIn\ActiveTableEditPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\DIneIn\NotActiveTable.xaml">
+    <EmbeddedResource Update="Pages\DineIn\NotActiveTable.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\DIneIn\ActiveTable.xaml">
+    <EmbeddedResource Update="Pages\DineIn\ActiveTable.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\DIneIn\AllTables.xaml">
+    <EmbeddedResource Update="Pages\DineIn\AllTables.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\DarkThemeStyle.xaml">

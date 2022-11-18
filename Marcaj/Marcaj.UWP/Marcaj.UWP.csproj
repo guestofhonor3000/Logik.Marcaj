@@ -156,6 +156,7 @@
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="QtyIcon.png" />
     <Content Include="RecallIcon.png" />
+    <Content Include="ReorderIcon.png" />
     <Content Include="RestImg.jpg" />
     <Content Include="ScaleIcon.png" />
     <Content Include="SecondaryBlankButton.png" />

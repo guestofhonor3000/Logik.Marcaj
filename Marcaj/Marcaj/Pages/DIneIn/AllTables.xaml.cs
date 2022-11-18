@@ -15,6 +15,7 @@ using System.Collections.ObjectModel;
 using Marcaj.Pages.Settings.Mese;
 using Marcaj.Pages.Settings.Statie;
 using Marcaj.Pages.Settings;
+using Marcaj.Pages.DIneIn;
 
 namespace Marcaj.Pages.Tables
 {

@@ -256,4 +256,7 @@
   <ItemGroup>
     <BundleResource Include="Resources\DoneIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ReorderIcon.png" />
+  </ItemGroup>
 </Project>
