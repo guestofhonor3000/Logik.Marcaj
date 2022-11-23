@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Threading;
+using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -20,6 +22,8 @@ namespace Marcaj.Pages.Tables
         bool IsFirstLoad = true;
         List<OrderTransactionsModel> orderTraList;
         List<LOrderTransactionsModel> lorderTraList;
+        List<MenuItemsModel> menuItems;
+        List<MenuItemsModel> allMenuItems;
         LStationSettingsModel StationModel;
         int Qty = 1;
         string sQty;
@@ -28,6 +32,8 @@ namespace Marcaj.Pages.Tables
         {
             InitializeComponent();
             _Type = type;
+            menuItems = new List<MenuItemsModel>();
+            allMenuItems = new List<MenuItemsModel>();
             lorderTraList = new List<LOrderTransactionsModel>();
             orderTraList = new List<OrderTransactionsModel>();
             EmpFile = empFile;
@@ -43,12 +49,13 @@ namespace Marcaj.Pages.Tables
                 var station = await App.lDatabase.lGetStationSettings(deviceName);
                 StationModel = station;
                 txtServer.Text = EmpFile.FirstName;
-                txtStation.Text =  station.ComputerName;
+                txtStation.Text = station.ComputerName;
                 txtOrderName.Text = "NewOrder";
                 txtTableName.Text = "Masa: " + DineIn.DineInTableText;
                 txtDateTimeOpenedTable.Text = DateTime.Now.ToString();
                 txtAmountDue.Text = "Total: 0";
                 tableName.Text = DineIn.DineInTableText;
+                allMenuItems = await App.manager.iGetMenuItems();
                 if (Connectivity.NetworkAccess == NetworkAccess.Internet)
                 {
 
@@ -59,10 +66,10 @@ namespace Marcaj.Pages.Tables
                         {
                             lstvwMenuGroups.ItemsSource = a;
                             lstvwMenuGroups.SelectedItem = a[0];
-                            var b = await App.manager.iGetMenuItemsByGroupID(a[0].MenuGroupID);
-                            if (b != null)
+                            menuItems = allMenuItems.Where(x => x.MenuGroupID == a[0].MenuGroupID).ToList();
+                            if (menuItems != null)
                             {
-                                lstvwMenuItems.ItemsSource = b;
+                                lstvwMenuItems.ItemsSource = menuItems;
                             }
                         }
                     }
@@ -126,7 +133,7 @@ namespace Marcaj.Pages.Tables
             }
         }
 
-        private void lstvwMenuItems_ItemSelected(object sender, SelectionChangedEventArgs    e)
+        private void lstvwMenuItems_ItemSelected(object sender, SelectionChangedEventArgs e)
         {
 
             if (e.CurrentSelection.FirstOrDefault() != null)
@@ -195,7 +202,7 @@ namespace Marcaj.Pages.Tables
                 }
 
             }
-            lstvwMenuItems.SelectedItem= null;
+            lstvwMenuItems.SelectedItem = null;
         }
 
         private async void btnDone_Clicked(object sender, EventArgs e)
@@ -364,7 +371,7 @@ namespace Marcaj.Pages.Tables
         private void btnQty_Clicked(object sender, EventArgs e)
         {
             basse.Children.Clear();
-  
+
             Grid numpad = new Grid
             {
                 ColumnDefinitions =
@@ -390,10 +397,10 @@ namespace Marcaj.Pages.Tables
 
             Button btn1 = new Button
             {
-                Text= "1",
+                Text = "1",
             };
             btn1.Clicked += Btn1_Clicked;
-            btn1.SetDynamicResource( StyleProperty, "secondBtn");
+            btn1.SetDynamicResource(StyleProperty, "secondBtn");
             numpad.Children.Add(btn1, 0, 1);
             Button btn2 = new Button
             {
@@ -451,7 +458,7 @@ namespace Marcaj.Pages.Tables
             btn9.SetDynamicResource(StyleProperty, "secondBtn");
             numpad.Children.Add(btn9, 2, 3);
             btn9.Clicked += Btn9_Clicked;
-           
+
             Button btn0 = new Button
             {
                 Text = "0",
@@ -473,6 +480,7 @@ namespace Marcaj.Pages.Tables
 
         }
 
+        #region Buttons
         private void BtnOk_Clicked(object sender, EventArgs e)
         {
             Qty = 1;
@@ -565,6 +573,45 @@ namespace Marcaj.Pages.Tables
         private void btnCheckEdit_Clicked(object sender, EventArgs e)
         {
 
+        }
+        #endregion
+
+        int entries_ = 0;
+        void Search(string text)
+        {
+            entries_++;
+            if(entries_==entries)
+            {
+                Debug.WriteLine("cauta");
+                if (entrySearch.Text != "")
+                {
+                    var a = allMenuItems.Where(x => x.MenuItemText.ToLower().Contains(text.ToLower()) == true).ToList();
+                    if (a.Count > 0)
+                    {
+                        lstvwMenuItems.ItemsSource = a;
+                    }
+                }
+                else
+                {
+                    lstvwMenuItems.ItemsSource = menuItems;
+                }
+            }
+            
+        }
+
+        private CancellationTokenSource _tokenSource;
+        int entries = 0;
+        private async void Entry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            entries++;
+            if (_tokenSource != null)
+            {
+                _tokenSource.Cancel();
+            }
+            _tokenSource = new CancellationTokenSource();
+
+            await Task.Delay(1000);
+            Search(entrySearch.Text);
         }
     }
 }

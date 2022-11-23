@@ -111,6 +111,8 @@
                     <Entry Placeholder="Cautare" 
                            FontFamily="Verdana" 
                            FontSize="18"
+                           x:Name="entrySearch"
+                           TextChanged="Entry_TextChanged"
                            BackgroundColor="Transparent" 
                            PlaceholderColor="Black" 
                            TextColor="Black" 

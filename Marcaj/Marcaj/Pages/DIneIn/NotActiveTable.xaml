@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Marcaj.Pages.Tables.NotActiveTable">
+             x:Class="Marcaj.Pages.Tables.NotActiveTable"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit">
     <ContentPage.Content>
         <Grid Style="{DynamicResource mainGrid}">
          
@@ -106,15 +107,20 @@
                        CornerRadius="20"
                        Background="#d9d9d9"
                        Margin="0,10,0,10">
-                    
+
                     <Entry Placeholder="Cautare" 
                            FontFamily="Verdana" 
                            FontSize="18"
+                           x:Name="entrySearch"
+                           
+                           TextChanged="Entry_TextChanged"
                            BackgroundColor="Transparent" 
                            PlaceholderColor="Black" 
                            TextColor="Black" 
                            HorizontalTextAlignment="Center"
-                           Margin="-30"/>
+                           Margin="-30">
+                        
+                    </Entry>
                 </Frame>
 
 

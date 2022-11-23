@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Marcaj.Models.DbModels;
 using Xamarin.Forms;
@@ -16,6 +17,8 @@ namespace Marcaj.Pages.Tables
 		OrderHeadersModel OrderHeader;
 		EmployeeFileModel EmpFile;
 		DineInTableModel DineIn;
+        List<MenuItemsModel> menuItems;
+        List<MenuItemsModel> allMenuItems;
         List<OrderTransactionsModel> orderTraList;
 
         bool IsFirstLoad = true;
@@ -44,6 +47,7 @@ namespace Marcaj.Pages.Tables
                 txtDateTimeOpenedTable.Text = OrderHeader.OrderDateTime.ToString();
                 txtAmountDue.Text = "Amount Due: " + OrderHeader.AmountDue.ToString();
                 tableName.Text = DineIn.DineInTableText;
+                allMenuItems = await App.manager.iGetMenuItems();
                 var a = await App.manager.iGetMenuGroups();
                 if (a != null)
                 {
@@ -51,10 +55,10 @@ namespace Marcaj.Pages.Tables
                     {
                         lstvwMenuGroups.ItemsSource = a;
                         lstvwMenuGroups.SelectedItem = a[0];
-                        var b = await App.manager.iGetMenuItemsByGroupID(a[0].MenuGroupID);
-                        if (b != null)
+                        menuItems = allMenuItems.Where(x => x.MenuGroupID == a[0].MenuGroupID).ToList();
+                        if (menuItems != null)
                         {
-                            lstvwMenuItems.ItemsSource = b;
+                            lstvwMenuItems.ItemsSource = menuItems;
                         }
                         lstvwOrderTransactions.ItemsSource = orderTraList;
                     }
@@ -138,7 +142,6 @@ namespace Marcaj.Pages.Tables
             var ordHd = new OrderHeadersModel();
             ordHd.AmountDue = Convert.ToSingle(txtAmountDue.Text.Split(' ')[2]);
             ordHd.SubTotal = ordHd.AmountDue;
-            ordHd.SynchVer = null;
             ordHd.SynchVer = DateTime.MinValue;
             Debug.WriteLine(ordHd.SubTotal);
             await App.manager.iPutOrderHeaders(ordHd,OrderHeader.OrderID);
@@ -174,6 +177,42 @@ namespace Marcaj.Pages.Tables
             await Navigation.PopAsync();
 
         }
+        int entries_ = 0;
+        void Search(string text)
+        {
+            entries_++;
+            if (entries_ == entries)
+            {
+                Debug.WriteLine("cauta");
+                if (entrySearch.Text != "")
+                {
+                    var a = allMenuItems.Where(x => x.MenuItemText.ToLower().Contains(text.ToLower()) == true).ToList();
+                    if (a.Count > 0)
+                    {
+                        lstvwMenuItems.ItemsSource = a;
+                    }
+                }
+                else
+                {
+                    lstvwMenuItems.ItemsSource = menuItems;
+                }
+            }
 
+        }
+
+        private CancellationTokenSource _tokenSource;
+        int entries = 0;
+        private async void Entry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            entries++;
+            if (_tokenSource != null)
+            {
+                _tokenSource.Cancel();
+            }
+            _tokenSource = new CancellationTokenSource();
+
+            await Task.Delay(1000);
+            Search(entrySearch.Text);
+        }
     }
 }
