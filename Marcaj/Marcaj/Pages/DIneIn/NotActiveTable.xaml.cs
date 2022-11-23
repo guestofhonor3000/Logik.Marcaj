@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -20,6 +21,8 @@ namespace Marcaj.Pages.Tables
         List<OrderTransactionsModel> orderTraList;
         List<LOrderTransactionsModel> lorderTraList;
         LStationSettingsModel StationModel;
+        int Qty = 1;
+        string sQty;
         string _Type;
         public NotActiveTable(DineInTableModel dineIn, EmployeeFileModel empFile, string type)
         {
@@ -125,6 +128,7 @@ namespace Marcaj.Pages.Tables
 
         private void lstvwMenuItems_ItemSelected(object sender, SelectionChangedEventArgs    e)
         {
+
             if (e.CurrentSelection.FirstOrDefault() != null)
             {
                 if (Connectivity.NetworkAccess == NetworkAccess.Internet)
@@ -138,9 +142,9 @@ namespace Marcaj.Pages.Tables
                         orderTra = new OrderTransactionsModel();
                         orderTra.MenuItemID = selIt.MenuItemID;
                         orderTra.MenuItemTextOT = selIt.MenuItemText;
-                        orderTra.Quantity = 1;
+                        orderTra.Quantity = Qty;
                         orderTra.MenuItemUnitPrice = selIt.DefaultUnitPrice;
-                        orderTra.ExtendedPrice = selIt.DefaultUnitPrice;
+                        orderTra.ExtendedPrice = selIt.DefaultUnitPrice * Qty;
                         orderTraList.Add(orderTra);
                     }
                     else
@@ -169,9 +173,9 @@ namespace Marcaj.Pages.Tables
                         orderTra = new LOrderTransactionsModel();
                         orderTra.MenuItemID = selIt.MenuItemID;
                         orderTra.MenuItemTextOT = selIt.MenuItemText;
-                        orderTra.Quantity = 1;
+                        orderTra.Quantity = Qty;
                         orderTra.MenuItemUnitPrice = selIt.DefaultUnitPrice;
-                        orderTra.ExtendedPrice = selIt.DefaultUnitPrice;
+                        orderTra.ExtendedPrice = selIt.DefaultUnitPrice * Qty;
                         lorderTraList.Add(orderTra);
                     }
                     else
@@ -191,8 +195,7 @@ namespace Marcaj.Pages.Tables
                 }
 
             }
-
-            lstvwMenuItems.SelectedItem = null;
+            lstvwMenuItems.SelectedItem= null;
         }
 
         private async void btnDone_Clicked(object sender, EventArgs e)
@@ -360,7 +363,188 @@ namespace Marcaj.Pages.Tables
 
         private void btnQty_Clicked(object sender, EventArgs e)
         {
+            basse.Children.Clear();
+  
+            Grid numpad = new Grid
+            {
+                ColumnDefinitions =
+                {
+                    new ColumnDefinition { Width = GridLength.Star },
+                    new ColumnDefinition { Width = GridLength.Star },
+                    new ColumnDefinition { Width = GridLength.Star },
+                    new ColumnDefinition { Width = GridLength.Star }
+                },
+                RowDefinitions =
+                {
+                    new RowDefinition { Height = GridLength.Star },
+                    new RowDefinition { Height = GridLength.Star },
+                    new RowDefinition { Height = GridLength.Star },
+                    new RowDefinition { Height = GridLength.Star },
+                },
 
+            };
+            qtyFrame.IsVisible = true;
+            qty.IsVisible = true;
+            numpad.Children.Add(qtyFrame, 0, 0);
+            Grid.SetColumnSpan(qtyFrame, 4);
+
+            Button btn1 = new Button
+            {
+                Text= "1",
+            };
+            btn1.Clicked += Btn1_Clicked;
+            btn1.SetDynamicResource( StyleProperty, "secondBtn");
+            numpad.Children.Add(btn1, 0, 1);
+            Button btn2 = new Button
+            {
+                Text = "2",
+            };
+            btn2.Clicked += Btn2_Clicked;
+            btn2.SetDynamicResource(StyleProperty, "secondBtn");
+            numpad.Children.Add(btn2, 1, 1);
+            Button btn3 = new Button
+            {
+                Text = "3",
+            };
+            btn3.SetDynamicResource(StyleProperty, "secondBtn");
+            numpad.Children.Add(btn3, 2, 1);
+            btn3.Clicked += Btn3_Clicked;
+            Button btn4 = new Button
+            {
+                Text = "4",
+            };
+            btn4.SetDynamicResource(StyleProperty, "secondBtn");
+            numpad.Children.Add(btn4, 0, 2);
+            btn4.Clicked += Btn4_Clicked;
+            Button btn5 = new Button
+            {
+                Text = "5",
+            };
+            btn5.SetDynamicResource(StyleProperty, "secondBtn");
+            numpad.Children.Add(btn5, 1, 2);
+            btn5.Clicked += Btn5_Clicked;
+            Button btn6 = new Button
+            {
+                Text = "6",
+            };
+            btn6.SetDynamicResource(StyleProperty, "secondBtn");
+            numpad.Children.Add(btn6, 2, 2);
+            btn6.Clicked += Btn6_Clicked;
+            Button btn7 = new Button
+            {
+                Text = "7",
+            };
+            btn7.SetDynamicResource(StyleProperty, "secondBtn");
+            numpad.Children.Add(btn7, 0, 3);
+            btn7.Clicked += Btn7_Clicked;
+            Button btn8 = new Button
+            {
+                Text = "8",
+            };
+            btn8.SetDynamicResource(StyleProperty, "secondBtn");
+            numpad.Children.Add(btn8, 1, 3);
+            btn8.Clicked += Btn8_Clicked;
+            Button btn9 = new Button
+            {
+                Text = "9",
+            };
+            btn9.SetDynamicResource(StyleProperty, "secondBtn");
+            numpad.Children.Add(btn9, 2, 3);
+            btn9.Clicked += Btn9_Clicked;
+           
+            Button btn0 = new Button
+            {
+                Text = "0",
+            };
+            btn0.SetDynamicResource(StyleProperty, "secondBtn");
+            numpad.Children.Add(btn0, 3, 1);
+            Grid.SetRowSpan(btn0, 2);
+            btn0.Clicked += Btn0_Clicked;
+            Button btnOk = new Button
+            {
+                Text = "Ok",
+                BackgroundColor = Color.FromHex("#478547")
+            };
+            btnOk.SetDynamicResource(StyleProperty, "secondBtn");
+            btnOk.Clicked += BtnOk_Clicked;
+            numpad.Children.Add(btnOk, 3, 3);
+
+            basse.Children.Add(numpad);
+
+        }
+
+        private void BtnOk_Clicked(object sender, EventArgs e)
+        {
+            Qty = 1;
+            sQty = "";
+            qty.Text = "";
+        }
+        private void BtnDel_Clicked(object sender, EventArgs e)
+        {
+            sQty = "";
+            qty.Text = "";
+            Qty = 1;
+        }
+
+        private void Btn0_Clicked(object sender, EventArgs e)
+        {
+            sQty += "0";
+            qty.Text += "0";
+            Qty = Convert.ToInt32(sQty);
+        }
+        private void Btn9_Clicked(object sender, EventArgs e)
+        {
+            sQty += "9";
+            qty.Text += "9";
+            Qty = Convert.ToInt32(sQty);
+        }
+        private void Btn8_Clicked(object sender, EventArgs e)
+        {
+            sQty += "8";
+            qty.Text += "8";
+            Qty = Convert.ToInt32(sQty);
+        }
+        private void Btn7_Clicked(object sender, EventArgs e)
+        {
+            sQty += "7";
+            qty.Text += "7";
+            Qty = Convert.ToInt32(sQty);
+        }
+        private void Btn6_Clicked(object sender, EventArgs e)
+        {
+            sQty += "6";
+            qty.Text += "6";
+            Qty = Convert.ToInt32(sQty);
+        }
+        private void Btn5_Clicked(object sender, EventArgs e)
+        {
+            sQty += "5";
+            qty.Text += "5";
+            Qty = Convert.ToInt32(sQty);
+        }
+        private void Btn4_Clicked(object sender, EventArgs e)
+        {
+            sQty += "4";
+            qty.Text += "4";
+            Qty = Convert.ToInt32(sQty);
+        }
+        private void Btn3_Clicked(object sender, EventArgs e)
+        {
+            sQty += "3";
+            qty.Text += "3";
+            Qty = Convert.ToInt32(sQty);
+        }
+        private void Btn2_Clicked(object sender, EventArgs e)
+        {
+            sQty += "2";
+            qty.Text += "2";
+            Qty = Convert.ToInt32(sQty);
+        }
+        private void Btn1_Clicked(object sender, EventArgs e)
+        {
+            sQty += "1";
+            qty.Text += "1";
+            Qty = Convert.ToInt32(sQty);
         }
 
         private void btnOpts_Clicked(object sender, EventArgs e)

@@ -36,16 +36,19 @@ namespace Marcaj
             }
             menuBtnList = new ObservableCollection<OptionsModel>
             {
-            new OptionsModel { Text="DineIn" , Image="DineInIcon.png"},
-            new OptionsModel { Text="Bar", Image="BarIcon.png" },
+            new OptionsModel { Text="Mese" , Image="DineInIcon.png"},
+            new OptionsModel { Text="Fast Service", Image="PlaceholderIcon.png" },
+            new OptionsModel { Text="Livrare", Image="PlaceholderIcon.png"},
+            new OptionsModel { Text="Retail", Image="PlaceholderIcon.png"},
+            new OptionsModel { Text="Rezervari", Image="PlaceholderIcon.png"},
             new OptionsModel { Text="Achita", Image="PaymentIcon.png"},
-            new OptionsModel { Text="Anulare", Image="VoidIcon.png"},
             new OptionsModel { Text="Rechemare", Image="Recallicon.png"},
-            new OptionsModel { Text="No Sale", Image="NoSaleIcon.png"},
-            new OptionsModel { Text="Payback", Image="PaybackIcon.png"},
-            new OptionsModel { Text="Setari", Image="PlaceholderIcon.png"},
-            new OptionsModel { Text="Placeholder", Image="PlaceholderIcon.png"},
-            new OptionsModel { Text="Placeholder", Image="PlaceholderIcon.png"}
+            new OptionsModel { Text="Pontaj", Image="PlaceholderIcon.png"},
+            new OptionsModel { Text="Facturare", Image="PlaceholderIcon.png"},
+            new OptionsModel { Text="Rapoarte", Image="PlaceholderIcon.png"},
+            new OptionsModel { Text="Operatii", Image="PlaceholderIcon.png"},
+            new OptionsModel { Text="Configurari", Image="PlaceholderIcon.png"},
+            
             };
             menuBtnColl.ItemsSource = menuBtnList;
         }
@@ -250,7 +253,7 @@ namespace Marcaj
 
             var b = menuBtnList.Where(x => x.Text == a.AutomationId).FirstOrDefault();
 
-            if (b.Text == "DineIn")
+            if (b.Text == "Mese")
             {
                 await Navigation.PushAsync(new AllTables(EmplFl));
             }
@@ -258,7 +261,7 @@ namespace Marcaj
             {
                 await Navigation.PushAsync(new AchitaPage(EmplFl));
             }
-            else if (b.Text == "Setari")
+            else if (b.Text == "Configurari")
             {
                 await Navigation.PushAsync(new SettingsHomePage());
             }

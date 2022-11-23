@@ -133,7 +133,6 @@
                 <Setter Property="CornerRadius" Value="10"/>
                 <Setter Property="BackgroundColor" Value="#394046"/>
                 <Setter Property="Margin" Value="10,10,10,0"/>
-                <Setter Property="Padding" Value="30"/>
                 <Setter Property="FontFamily" Value="Verdana"/>
                 <Setter Property="FontSize" Value="Small"/>
                 <Setter Property="TextColor" Value="White"/>
@@ -143,8 +142,7 @@
             <Style x:Key="secondBtn" TargetType="Button">
                 <Setter Property="CornerRadius" Value="10"/>
                 <Setter Property="BackgroundColor" Value="#8f99a3"/>
-                <Setter Property="Margin" Value="10,10,10,0"/>
-                <Setter Property="Padding" Value="30"/>
+                <Setter Property="Margin" Value="5"/>
                 <Setter Property="FontFamily" Value="Verdana"/>
                 <Setter Property="FontSize" Value="Small"/>
                 <Setter Property="TextColor" Value="White"/>

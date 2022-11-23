@@ -58,7 +58,7 @@
                                 VerticalScrollBarVisibility="Never">
                     <CollectionView.ItemsLayout >
                         <GridItemsLayout Orientation="Vertical"
-                                         Span="5"
+                                         Span="6"
                                          VerticalItemSpacing="10"
                                          HorizontalItemSpacing="10"/>
                     </CollectionView.ItemsLayout>

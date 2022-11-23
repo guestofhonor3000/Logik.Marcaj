@@ -32,7 +32,8 @@
                        VerticalOptions="End">
                     <ImageButton  Source="BackIcon.png"
                                   Aspect="AspectFill"
-                                  x:Name="btnCancel" 
+                                  x:Name="btnBack" 
+                                  Clicked= "btnBack_Clicked"
                                   Margin="-10"/>
                 </Frame>
             </StackLayout>
