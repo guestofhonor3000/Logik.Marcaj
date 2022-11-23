@@ -97,26 +97,26 @@
             
             <Style x:Key="mainBtnLabel" TargetType="Label">
                 <Setter Property="FontFamily" Value="Verdana"/>
-                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="FontSize" Value="16"/>
                 <Setter Property="TextColor" Value="White"/>
                 <Setter Property="FontAttributes" Value="Bold"/>
                 <Setter Property="HorizontalTextAlignment" Value="Center"/>
                 <Setter Property="VerticalTextAlignment" Value="Center"/>
                 <Setter Property="HorizontalOptions" Value="Center"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
-                <Setter Property="MaxLines" Value="1"/>
+                <Setter Property="MaxLines" Value="2"/>
             </Style>
             
             <Style x:Key="secondBtnLabel" TargetType="Label">
                 <Setter Property="FontFamily" Value="Verdana"/>
-                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="FontSize" Value="16"/>
                 <Setter Property="TextColor" Value="White"/>
                 <Setter Property="FontAttributes" Value="Bold"/>
                 <Setter Property="HorizontalTextAlignment" Value="Center"/>
                 <Setter Property="VerticalTextAlignment" Value="Center"/>
                 <Setter Property="HorizontalOptions" Value="Center"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
-                <Setter Property="MaxLines" Value="1"/>
+                <Setter Property="MaxLines" Value="2"/>
             </Style>
             
              <Style x:Key="checkLabel" TargetType="Label">
@@ -134,7 +134,7 @@
                 <Setter Property="BackgroundColor" Value="#394046"/>
                 <Setter Property="Margin" Value="10,10,10,0"/>
                 <Setter Property="FontFamily" Value="Verdana"/>
-                <Setter Property="FontSize" Value="Small"/>
+                <Setter Property="FontSize" Value="16"/>
                 <Setter Property="TextColor" Value="White"/>
                 <Setter Property="FontAttributes" Value="Bold"/>
             </Style>
@@ -144,7 +144,7 @@
                 <Setter Property="BackgroundColor" Value="#8f99a3"/>
                 <Setter Property="Margin" Value="5"/>
                 <Setter Property="FontFamily" Value="Verdana"/>
-                <Setter Property="FontSize" Value="Small"/>
+                <Setter Property="FontSize" Value="16"/>
                 <Setter Property="TextColor" Value="White"/>
                 <Setter Property="FontAttributes" Value="Bold"/>
             </Style>
