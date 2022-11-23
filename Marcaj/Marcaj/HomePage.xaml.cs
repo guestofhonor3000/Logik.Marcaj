@@ -37,10 +37,10 @@ namespace Marcaj
             menuBtnList = new ObservableCollection<OptionsModel>
             {
             new OptionsModel { Text="Mese" , Image="DineInIcon.png"},
-            new OptionsModel { Text="Fast Service", Image="PlaceholderIcon.png" },
-            new OptionsModel { Text="Livrare", Image="PlaceholderIcon.png"},
+            new OptionsModel { Text="Fast Service", Image="FastServiceIcon.png" },
+            new OptionsModel { Text="Livrare", Image="DeliveryIcon.png"},
             new OptionsModel { Text="Retail", Image="PlaceholderIcon.png"},
-            new OptionsModel { Text="Rezervari", Image="PlaceholderIcon.png"},
+            new OptionsModel { Text="Rezervari", Image="ReservationIcon.png"},
             new OptionsModel { Text="Achita", Image="PaymentIcon.png"},
             new OptionsModel { Text="Rechemare", Image="Recallicon.png"},
             new OptionsModel { Text="Pontaj", Image="PlaceholderIcon.png"},

@@ -259,4 +259,13 @@
   <ItemGroup>
     <BundleResource Include="Resources\ReorderIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\FastServiceIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ReservationIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\DeliveryIcon.png" />
+  </ItemGroup>
 </Project>
