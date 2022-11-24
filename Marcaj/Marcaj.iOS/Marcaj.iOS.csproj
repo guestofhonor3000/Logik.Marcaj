@@ -268,4 +268,10 @@
   <ItemGroup>
     <BundleResource Include="Resources\DeliveryIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ClockInIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\BillingIcon.png" />
+  </ItemGroup>
 </Project>

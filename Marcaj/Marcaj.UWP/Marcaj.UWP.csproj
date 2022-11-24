@@ -135,8 +135,10 @@
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <Content Include="BackIcon.png" />
     <Content Include="BarIcon.png" />
+    <Content Include="BillingIcon.png" />
     <Content Include="CheckBackButton.png" />
     <Content Include="CheckEditIcon.png" />
+    <Content Include="ClockInIcon.png" />
     <Content Include="DeliveryIcon.png" />
     <Content Include="DineInIcon.png" />
     <Content Include="DoneIcon.png" />
