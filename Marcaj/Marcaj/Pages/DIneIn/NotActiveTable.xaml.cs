@@ -365,7 +365,7 @@ namespace Marcaj.Pages.Tables
 
         private void btnMore_Clicked(object sender, EventArgs e)
         {
-
+            
         }
 
         private void btnQty_Clicked(object sender, EventArgs e)

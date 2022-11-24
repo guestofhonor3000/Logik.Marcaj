@@ -224,12 +224,13 @@ namespace Marcaj.Pages.Tables
             ordHd.SynchVer = DateTime.MinValue;
             Debug.WriteLine(ordHd.SubTotal);
             await App.manager.iPutOrderHeaders(ordHd, OrderHeader.OrderID);
-            MessagingCenter.Send<ActiveTableEditPage>(this, "Up");
+            
             int BackCount = 2;
             for (var counter = 1; counter < BackCount; counter++)
             {
                 Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 2]);
             }
+            MessagingCenter.Send<ActiveTableEditPage>(this, "Up");
             await Navigation.PopAsync();
 
         }
