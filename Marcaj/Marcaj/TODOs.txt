@@ -1,5 +1,22 @@
 ﻿Puscasu:
--
+-get local data 1st, after async sql db
+-pop up modal page cod
+
+SETARI GENERALE
+- INFORMATII PT NOTA DE PLATA: DENUMIRE LOCATIE, ADRESA, NR. TELEFON ETC
+- SERVICII: MESE ETC
+- MODALITATI PLATA: NUMERAR, CARD ETC
+SETARI STATIE
+SETARI FISCALE
+SETARI PERIFERICE
+
+
+-syncvh ver not working aFTER DONE//done
+-cauatre em pe order//done
+-update orderheader orderstatus// done
+-bug -> ordertran populates twice//not anymore baby
+
+
 
 
 Dragos:
