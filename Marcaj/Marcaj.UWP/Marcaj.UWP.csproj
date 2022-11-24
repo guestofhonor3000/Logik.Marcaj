@@ -137,8 +137,10 @@
     <Content Include="BarIcon.png" />
     <Content Include="CheckBackButton.png" />
     <Content Include="CheckEditIcon.png" />
+    <Content Include="DeliveryIcon.png" />
     <Content Include="DineInIcon.png" />
     <Content Include="DoneIcon.png" />
+    <Content Include="FastServiceIcon.png" />
     <Content Include="HomeTabButton.png" />
     <Content Include="MainSettingsSelectedButton.png" />
     <Content Include="MoreIcon.png" />
@@ -157,6 +159,7 @@
     <Content Include="QtyIcon.png" />
     <Content Include="RecallIcon.png" />
     <Content Include="ReorderIcon.png" />
+    <Content Include="ReservationIcon.png" />
     <Content Include="RestImg.jpg" />
     <Content Include="ScaleIcon.png" />
     <Content Include="SecondaryBlankButton.png" />
