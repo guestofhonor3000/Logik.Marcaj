@@ -333,8 +333,8 @@
                        Padding="0"
                        Margin="10,0,0,10">
 
-                    <ImageButton x:Name="btnCheckEdit" 
-                        
+                    <ImageButton x:Name="btnAnuleazaOrder" 
+                                Clicked="btnAnuleazaOrder_Clicked"
                                  Source="CheckEditIcon.png"
                                  Margin="-10"/>
                 </Frame>

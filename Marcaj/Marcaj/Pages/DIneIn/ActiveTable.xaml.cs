@@ -346,12 +346,24 @@ namespace Marcaj.Pages.Tables
 				orderHeader = orderHeaderFocused;
 
 				orderTransactionsListByOrderID = orderTransactionsList.FindAll(x => x.OrderID == Convert.ToInt32(orderId));
-				
-				
 
 				if (orderHeader.SynchVer != DateTime.MinValue)
 				{
-					await DisplayAlert("Error", "Order is already opened on another station!", "Ok");
+					if(orderHeader.SynchVer.Value.Date == DateTime.Now.Date)
+					{
+						if((DateTime.Now.TimeOfDay.TotalMinutes - orderHeader.SynchVer.Value.TimeOfDay.TotalMinutes)>5)
+						{
+                            await Navigation.PushAsync(new ActiveTableEditPage(orderHeader, EmpFile, DineIn, orderTransactionsListByOrderID));
+                        }
+						else
+						{
+                            await DisplayAlert("Error", "Order is already opened on another station!", "Ok");
+                        }
+					}
+					else
+					{
+                        await DisplayAlert("Error", "Order is already opened on another station!", "Ok");
+                    }
 				}
 				else
 				{
