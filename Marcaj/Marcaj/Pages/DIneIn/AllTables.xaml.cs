@@ -35,8 +35,8 @@ namespace Marcaj.Pages.Tables
 
             EmplFl = emplFl;
 
-           
-            
+
+
             dineInGroups = new List<DineInTableGroupModel>();
             dineIns = new List<DineInTableModel>();
             dineInsAndEmp = new List<DineInTableAndEmpModel>();
@@ -356,7 +356,7 @@ namespace Marcaj.Pages.Tables
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
                                             tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened =  ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString()+":"+ DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
                                         }
                                         else
                                         {
@@ -610,7 +610,7 @@ namespace Marcaj.Pages.Tables
             }
             else if (current.Text == "Bar")
             {
-                
+
 
             }
             else if (current.Text == "Achita")
@@ -620,7 +620,7 @@ namespace Marcaj.Pages.Tables
             }
             else if (current.Text == "Anulare")
             {
-                
+
 
             }
             else if (current.Text == "Rechemare")
@@ -643,23 +643,23 @@ namespace Marcaj.Pages.Tables
         }
 
 
-    
 
-    private async void ImageButton_Clicked(object sender, EventArgs e)
+
+        private async void ImageButton_Clicked(object sender, EventArgs e)
         {
             var a = sender as ImageButton;
 
             var b = dineInsAndEmp.Where(x => x.DineIn.DineInTableText == a.AutomationId).FirstOrDefault();
-           
-            if(b.Opened)
+
+            if (b.Opened)
             {
                 await Navigation.PushAsync(new ActiveTable(b.DineIn, EmplFl));
             }
             else
             {
-                await Navigation.PushAsync(new NotActiveTable(b.DineIn, EmplFl,"closed"));
+                await Navigation.PushAsync(new NotActiveTable(b.DineIn, EmplFl, "closed"));
             }
-           
+
         }
     }
 }
