@@ -346,7 +346,7 @@
                        Margin="10,0,0,10">
 
                     <ImageButton x:Name="btnSettle" 
-                             
+                                 Clicked="btnSettle_Clicked"
                                  Source="SettleIcon.png"
                                  Margin="-10"/>
                 </Frame>

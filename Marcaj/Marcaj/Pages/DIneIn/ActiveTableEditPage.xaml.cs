@@ -214,5 +214,24 @@ namespace Marcaj.Pages.Tables
             await Task.Delay(1000);
             Search(entrySearch.Text);
         }
+
+        private async void btnSettle_Clicked(object sender, EventArgs e)
+        {
+            var ordHd = new OrderHeadersModel();
+            ordHd.AmountDue = Convert.ToSingle(txtAmountDue.Text.Split(' ')[2]);
+            ordHd.SubTotal = ordHd.AmountDue;
+            ordHd.OrderStatus = "2";
+            ordHd.SynchVer = DateTime.MinValue;
+            Debug.WriteLine(ordHd.SubTotal);
+            await App.manager.iPutOrderHeaders(ordHd, OrderHeader.OrderID);
+            MessagingCenter.Send<ActiveTableEditPage>(this, "Up");
+            int BackCount = 2;
+            for (var counter = 1; counter < BackCount; counter++)
+            {
+                Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 2]);
+            }
+            await Navigation.PopAsync();
+
+        }
     }
 }

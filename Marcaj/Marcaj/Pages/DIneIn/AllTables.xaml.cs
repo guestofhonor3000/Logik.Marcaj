@@ -49,6 +49,10 @@ namespace Marcaj.Pages.Tables
             {
                 // SyncPage();
             });
+            MessagingCenter.Subscribe<ActiveTableEditPage>(this, "Up", (sender) =>
+            {
+                PopList(GroupId);
+            });
             menuBtnList = new ObservableCollection<OptionsModel>
             {
             new OptionsModel { Text="DineIn" , Image="DineInIcon.png"},
