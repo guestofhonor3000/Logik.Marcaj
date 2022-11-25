@@ -161,8 +161,10 @@
     <Content Include="QtyIcon.png" />
     <Content Include="RecallIcon.png" />
     <Content Include="ReorderIcon.png" />
+    <Content Include="ReportsIcon.png" />
     <Content Include="ReservationIcon.png" />
     <Content Include="RestImg.jpg" />
+    <Content Include="RetailIcon.png" />
     <Content Include="ScaleIcon.png" />
     <Content Include="SecondaryBlankButton.png" />
     <Content Include="SettleIcon.png" />

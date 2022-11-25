@@ -274,4 +274,10 @@
   <ItemGroup>
     <BundleResource Include="Resources\BillingIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ReportsIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\RetailIcon.png" />
+  </ItemGroup>
 </Project>
