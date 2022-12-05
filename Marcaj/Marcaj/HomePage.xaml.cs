@@ -41,13 +41,13 @@ namespace Marcaj
             new OptionsModel { Text="Livrare", Image="DeliveryIcon.png"},
             new OptionsModel { Text="Retail", Image="RetailIcon.png"},
             new OptionsModel { Text="Rezervari", Image="ReservationIcon.png"},
-            new OptionsModel { Text="Achita", Image="PaymentIcon.png"},
+            new OptionsModel { Text="Achita", Image="PlaceholderIcon.png"},
             new OptionsModel { Text="Rechemare", Image="Recallicon.png"},
             new OptionsModel { Text="Pontaj", Image="ClockInIcon.png"},
             new OptionsModel { Text="Facturare", Image="BillingIcon.png"},
             new OptionsModel { Text="Rapoarte", Image="ReportsIcon.png"},
-            new OptionsModel { Text="Operatii", Image="PlaceholderIcon.png"},
-            new OptionsModel { Text="Configurari", Image="PlaceholderIcon.png"},
+            new OptionsModel { Text="Operatii", Image="OperationsIcon.png"},
+            new OptionsModel { Text="Configurari", Image="SettingsIcon.png"},
             
             };
             menuBtnColl.ItemsSource = menuBtnList;

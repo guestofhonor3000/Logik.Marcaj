@@ -13,6 +13,7 @@ namespace Marcaj.Services
         Task<EmployeeFileModel> GetEmployeeFiles(string securityCode);
         Task<List<DineInTableModel>> GetDineInTables();
         Task PutDineInTable(DineInTableModel item, int id);
+        Task PutOrderHeadersDineInTableId(OrderHeadersModel item, int id);
         Task<List<DineInTableGroupModel>> GetDineInTableGroups();
         Task<List<DineInTableAndEmpModel>> GetDineInTablesByTableGroup(int groupID);
         Task<List<MenuGroupsModel>> GetMenuGroups();

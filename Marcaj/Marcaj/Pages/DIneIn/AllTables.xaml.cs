@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Marcaj.Models.CustomModels;
 using Marcaj.Models.DbModels;
+using Marcaj.Models.LocalDbModels;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System.Diagnostics;
-using Marcaj.Pages.Tables;
-using Xamarin.Essentials;
-using Marcaj.Models.LocalDbModels;
-using Marcaj.Models.CustomModels;
-using System.Collections.ObjectModel;
-using Marcaj.Pages.Settings.Mese;
-using Marcaj.Pages.Settings.Statie;
-using Marcaj.Pages.Settings;
 
 namespace Marcaj.Pages.Tables
 {
@@ -28,18 +22,38 @@ namespace Marcaj.Pages.Tables
         List<DineInTableAndEmpModel> dineInsAndEmp;
         List<DineInTableGroupModel> dineInGroups;
         ObservableCollection<TableLayoutModel> tblLayout;
+
+        //
+        DineInTableModel DineIn;
+        OrderHeadersModel orderHeader;
+        List<OrderHeadersModel> orderHeadersList;
+        List<OrderTransactionsModel> orderTransactionsList;
+        List<OrderTransactionsModel> orderTransactionsListByOrderID;
+        //
+
         public ObservableCollection<OptionsModel> menuBtnList;
         public AllTables(EmployeeFileModel emplFl)
         {
             InitializeComponent();
 
+            orderHeader = new OrderHeadersModel();
+            orderHeadersList = new List<OrderHeadersModel>();
+            orderTransactionsList = new List<OrderTransactionsModel>();
+            orderTransactionsListByOrderID = new List<OrderTransactionsModel>();
+
             EmplFl = emplFl;
-
-
 
             dineInGroups = new List<DineInTableGroupModel>();
             dineIns = new List<DineInTableModel>();
             dineInsAndEmp = new List<DineInTableAndEmpModel>();
+            var flagList = new List<string>();
+            flagList.Add("Fumatori");
+            flagList.Add("Fereastra");
+            flagList.Add("Cabina");
+
+            Clock.Text = DateTime.Now.ToString();
+            flags.ItemsSource = flagList;
+
             PopList(GroupId);
             MessagingCenter.Subscribe<NotActiveTable>(this, "Up", (sender) =>
             {
@@ -53,31 +67,19 @@ namespace Marcaj.Pages.Tables
             {
                 PopList(GroupId);
             });
-            menuBtnList = new ObservableCollection<OptionsModel>
-            {
-            new OptionsModel { Text="DineIn" , Image="DineInIcon.png"},
-            new OptionsModel { Text="Bar", Image="BarIcon.png" },
-            new OptionsModel { Text="Achita", Image="PaymentIcon.png"},
-            new OptionsModel { Text="Anulare", Image="VoidIcon.png"},
-            new OptionsModel { Text="Rechemare", Image="Recallicon.png"},
-            new OptionsModel { Text="No Sale", Image="NoSaleIcon.png"},
-            new OptionsModel { Text="Payback", Image="PaybackIcon.png"},
-            new OptionsModel { Text="Placeholder", Image="PlaceholderIcon.png"},
-            };
-            menuBtnLst.ItemsSource = menuBtnList;
         }
-
         async void SyncPage()
         {
+
             //Employee Sync
             var AzEmpLastId = await App.manager.iGetLastIdEmployeeFiles();
             var LEmp = await App.lDatabase.lGetLastIdEmployeeFiles();
             var LEmplLastId = LEmp.EmployeeID;
+            
             if (AzEmpLastId < LEmplLastId)
             {
                 var LEmpList = await App.lDatabase.lGetAllEmployeeFiles();
                 var PostList = LEmpList.Where(x => x.EmployeeID > AzEmpLastId);
-
                 var AzPostList = new List<EmployeeFileModel>();
 
                 foreach (var postItem in PostList)
@@ -233,13 +235,14 @@ namespace Marcaj.Pages.Tables
 
             }
             await App.manager.iPostOrderTransactionSync(lstOT);
-
             MainThread.BeginInvokeOnMainThread(async () =>
             {
                 PopList(GroupId);
                 await DisplayAlert("Sync", "Database synced!", "Ok");
             });
         }
+
+
         async void PopList(int GroupID)
         {
             tblLayout = new ObservableCollection<TableLayoutModel>();
@@ -262,7 +265,6 @@ namespace Marcaj.Pages.Tables
                     dineInsAndEmp = dineInss;
                     if (dineInss != null)
                     {
-
                         var dineInGroup = dineInGroups.Where(x => x.TableGroupID == GroupID).FirstOrDefault();
 
                         int col = Convert.ToInt32(dineInGroup.GridSize.ToString().Split('x')[0]);
@@ -286,8 +288,6 @@ namespace Marcaj.Pages.Tables
                             HorizontalItemSpacing = 5
 
                         };
-
-
 
                         foreach (var dine in dineInss)
                         {
@@ -570,6 +570,156 @@ namespace Marcaj.Pages.Tables
         }
 
 
+
+        async void ShowOrders(string TableID)
+        {
+            int index = 0;
+            gridLists.Children.Clear();
+            var b = dineInsAndEmp.Where(x => x.DineIn.DineInTableText == TableID).FirstOrDefault();
+            orderHeadersList = await App.manager.iGetOrderHeadersByDineInTableID(b.DineIn.DineInTableID);
+
+            Button toActive = new Button
+            {
+                Text = "Toate",
+                VerticalOptions = LayoutOptions.Start,
+                HorizontalOptions = LayoutOptions.Fill,
+                Padding = new Thickness(20),
+            };
+            toActive.SetDynamicResource(StyleProperty, "btn");
+            toActive.Clicked += async (sender, args) => await Navigation.PushAsync(new ActiveTable(b.DineIn, EmplFl));
+
+            ImageButton addOrder = new ImageButton
+            {
+                Source = "AddIcon.png",
+                VerticalOptions = LayoutOptions.Fill,
+                HorizontalOptions = LayoutOptions.Fill,
+
+            };
+            addOrder.Clicked += async (sender, args) => await Navigation.PushAsync(new NotActiveTable(b.DineIn, EmplFl, "opened"));
+
+            Frame addFrame = new Frame
+            {
+                CornerRadius = 4,
+                Margin = new Thickness(10, 10, 10, 0),
+                BackgroundColor = Color.FromHex("#d9d9d9"),
+            };
+            addFrame.Content = addOrder;
+
+            gridLists.Children.Add(toActive);
+            gridLists.Children.Add(addFrame);
+
+            foreach (var orderHeader in orderHeadersList)
+            {
+                index++;
+                StackLayout OrderHeader = new StackLayout();
+
+                Label Header = new Label
+                {
+                    Text = "Order: " + orderHeader.OrderID.ToString(),
+                    HorizontalTextAlignment = TextAlignment.Center,
+                    HorizontalOptions = LayoutOptions.Center,
+                };
+
+                Frame headerFrame = new Frame
+                {
+                    BackgroundColor = Color.White,
+                    BorderColor = Color.Gray,
+                    VerticalOptions = LayoutOptions.Start,
+                    HorizontalOptions = LayoutOptions.Center,
+                    Padding = new Thickness(5),
+
+                };
+                headerFrame.Content = Header;
+
+                Label txtServer = new Label
+                {
+                    Text = "Server: " + orderHeader.EmployeeName,
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.Start,
+                    HorizontalTextAlignment = TextAlignment.Center
+                };
+
+
+                Label txtDateTimeOpenedTable = new Label
+                {
+                    Text = orderHeader.OrderDateTime.ToString(),
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.Start,
+                    HorizontalTextAlignment = TextAlignment.Center
+                };
+
+                Label Footer = new Label
+                {
+                    Text = "Total: " + orderHeader.AmountDue.ToString(),
+                    HorizontalTextAlignment = TextAlignment.Center,
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.End,
+                };
+
+                Footer.SetDynamicResource(StyleProperty, "checkLabel");
+                txtDateTimeOpenedTable.SetDynamicResource(StyleProperty, "checkLabel");
+                txtServer.SetDynamicResource(StyleProperty, "checkLabel");
+                Header.SetDynamicResource(StyleProperty, "checkLabel");
+
+                OrderHeader.Children.Add(headerFrame);
+                OrderHeader.Children.Add(txtServer);
+                OrderHeader.Children.Add(txtDateTimeOpenedTable);
+                OrderHeader.Children.Add(Footer);
+
+                Grid controls = new Grid
+                {
+                    ColumnDefinitions =
+                    {
+                    new ColumnDefinition { Width = GridLength.Star },
+                    new ColumnDefinition { Width = GridLength.Star },
+                    }
+                };
+
+                Button moveOrder = new Button
+                {
+                    Text = "Muta",
+                    Padding = new Thickness(8),
+                };
+                moveOrder.SetDynamicResource(StyleProperty, "secondBtn");
+                moveOrder.Clicked += MoveOrder_Clicked;
+
+                void MoveOrder_Clicked(object sender, EventArgs e)
+                {
+
+                }
+
+                Button toOrder = new Button
+                {
+                    Text = "Edit",
+                    Padding = new Thickness(8),
+                };
+                toOrder.SetDynamicResource(StyleProperty, "secondBtn");
+
+                orderTransactionsListByOrderID = orderTransactionsList.FindAll(x => x.OrderID == Convert.ToInt32(TableID));
+
+                // ! No Time Sync !
+                toOrder.Clicked += async (sender, args) => await Navigation.PushAsync(new ActiveTableEditPage(orderHeader, EmplFl, b.DineIn, orderTransactionsListByOrderID));
+                controls.Children.Add(moveOrder,0 ,0);
+                controls.Children.Add(toOrder,1 ,0);
+                OrderHeader.Children.Add(controls);
+
+                Frame checkFrame = new Frame
+                {
+                    CornerRadius = 4,
+                    Margin = new Thickness(10, 10, 10, 0),
+                    BackgroundColor = Color.FromHex("#d9d9d9"),
+                };
+
+                checkFrame.AutomationId = OrderHeader.ClassId;
+                checkFrame.Content = OrderHeader;
+                OrderHeader.ClassId = orderHeader.OrderID.ToString();
+
+                gridLists.Children.Add(checkFrame);
+            }
+
+        }
+
+
         private void lstvwGrupMese_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (IsFirstLoad != true)
@@ -593,59 +743,7 @@ namespace Marcaj.Pages.Tables
         }
 
 
-        private async void menuBtnLst_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-
-
-            var current = e.SelectedItem as OptionsModel;
-
-            if (((ListView)sender).SelectedItem == null)
-                return;
-
-
-            if (current.Text == "DineIn")
-            {
-                await Navigation.PushAsync(new AllTables(EmplFl));
-
-            }
-            else if (current.Text == "Bar")
-            {
-
-
-            }
-            else if (current.Text == "Achita")
-            {
-                await Navigation.PushAsync(new AchitaPage(EmplFl));
-
-            }
-            else if (current.Text == "Anulare")
-            {
-
-
-            }
-            else if (current.Text == "Rechemare")
-            {
-
-
-            }
-            else if (current.Text == "No Sale")
-            {
-
-
-            }
-            else if (current.Text == "Placeholder")
-            {
-
-
-            }
-
-                  ((ListView)sender).SelectedItem = null;
-        }
-
-
-
-
-        private async void ImageButton_Clicked(object sender, EventArgs e)
+        async void ImageButton_Clicked(object sender, EventArgs e)
         {
             var a = sender as ImageButton;
 
@@ -653,13 +751,26 @@ namespace Marcaj.Pages.Tables
 
             if (b.Opened)
             {
-                await Navigation.PushAsync(new ActiveTable(b.DineIn, EmplFl));
+                ShowOrders(a.AutomationId);
             }
             else
             {
                 await Navigation.PushAsync(new NotActiveTable(b.DineIn, EmplFl, "closed"));
             }
+        }
+
+
+
+        private async void btnBack_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new HomePage(EmplFl));
+        }
+
+        private void muta_Clicked(object sender, EventArgs e)
+        {
 
         }
     }
+
 }
+

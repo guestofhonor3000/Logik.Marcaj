@@ -133,7 +133,10 @@ namespace Marcaj.Services
         {
             return Service.GetMenuItemsByGroupID(id);
         }
-
+        public Task iPutOrderHeadersDineInTableId(OrderHeadersModel item, int id)
+        {
+            return Service.PutOrderHeadersDineInTableId(item, id);
+        }
         public Task iPostOrderTransactionNotActive(List<OrderTransactionsModel> user, int tableId)
         {
             return Service.PostOrderTransactionNotActive(user, tableId);

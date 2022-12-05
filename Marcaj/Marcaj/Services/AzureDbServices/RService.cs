@@ -447,6 +447,28 @@ namespace Marcaj.Services
 
         #region OrderHeaders
 
+        //Put Order DineInTableId
+        public async Task PutOrderHeadersDineInTableId(OrderHeadersModel item, int id)
+        {
+            Uri uri = new Uri(string.Format(Constants.PutUriOrderHeadersDineInTableMove + id, string.Empty));
+            try
+            {
+
+                string json = System.Text.Json.JsonSerializer.Serialize<OrderHeadersModel>(item, serializerOptions);
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = null;
+                response = await client.PutAsync(uri, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine(@"OrderHeader updated");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"ERROR {0}", ex.Message);
+            }
+        }
+
         //Put OrderHeaders
         public async Task PutOrderHeaders(OrderHeadersModel item, int id)
         {
@@ -468,7 +490,6 @@ namespace Marcaj.Services
                 Debug.WriteLine(@"ERROR {0}", ex.Message);
             }
         }
-
         //Put SynchVer OH
         public async Task PutSynchVerOrderHeaders(OrderHeadersModel item, int id)
         {

@@ -5,69 +5,93 @@
     <ContentPage.Content>
         <Grid Style="{DynamicResource mainGrid}">
 
+            <Grid.RowDefinitions>
+                
+                <RowDefinition Height="9.2*"/>
+                <RowDefinition Height=".8*"/>
+            </Grid.RowDefinitions>
+
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
-            <ListView Grid.Column="0" 
-                      Style="{DynamicResource mainList}"
-                      x:Name="menuBtnLst" 
-                      ItemSelected="menuBtnLst_ItemSelected">
+            <StackLayout Grid.Row="1"
+                         Grid.Column="0"
+                         Grid.ColumnSpan="3"
+                         Orientation="Horizontal"
+                         Style="{DynamicResource mainStack}"
+                         HorizontalOptions="Fill">
 
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Frame Style="{DynamicResource mainBtnFrame}">
-                                <StackLayout>
-                                    <Image Source="{Binding Image}"/>
-                                    <Label Text="{Binding Text}"
+                <Frame Style="{DynamicResource mainBtnFrame}"
+                       HorizontalOptions="Start">
+                    <ImageButton  Source="BackIcon.png"
+                                  Aspect="AspectFill"
+                                  x:Name="btnBack" 
+                                  Clicked= "btnBack_Clicked"
+                                  Margin="-10"/>
+                </Frame>
+
+                <Label x:Name="Clock"
+                       Style="{DynamicResource mainBtnLabel}"
+                       HorizontalOptions="CenterAndExpand"   
+                       VerticalOptions="Center"/>
+
+            </StackLayout>
+            
+            
+            <StackLayout Grid.Row="0"
+                         Grid.Column="0"
+                         Orientation="Vertical"
+>
+                <Picker x:Name="flags"
+                        TabIndex="1"
+                        TitleColor="White"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Fill"    
+                        Margin="10">
+                </Picker>
+
+                <ListView  x:Name="lstvwGrupMese" 
+                           ItemSelected="lstvwGrupMese_ItemSelected"
+                           SelectionMode="Single"
+                           HorizontalOptions="Start">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+
+                                <Frame Style="{DynamicResource thirdBtnFrame}">
+                                    <Label Text="{Binding TableGroupText}"
                                            Style="{DynamicResource mainBtnLabel}"/>
-                                </StackLayout>
-                            </Frame>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
 
+                </ListView>
 
-
-            <ListView Grid.Column="1" 
-                      Style="{DynamicResource secondList}"
-                      x:Name="lstvwGrupMese" 
-                      ItemSelected="lstvwGrupMese_ItemSelected">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Frame Style="{DynamicResource secondBtnFrame}">
-
-                                <Label Text="{Binding TableGroupText}"
-                                       Style="{DynamicResource mainBtnLabel}"/>
-                            </Frame>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-
-            </ListView>
-
-
-
-            <CollectionView  x:Name="tblLayoutColl" 
-                             Grid.Column="2" 
-                             Margin="10"
-                             SelectionMode="None">
+                
+            </StackLayout>
+            
+            
+            <CollectionView  x:Name="tblLayoutColl"
+                             Grid.Column="1"
+                             Grid.Row="0"
+                             SelectionMode="None"
+                             VerticalScrollBarVisibility="Never">
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
 
-                        <AbsoluteLayout HeightRequest="106"
-                                        WidthRequest="140">
+                        <AbsoluteLayout HeightRequest="95"
+                                        WidthRequest="100">
 
                             <ImageButton IsVisible="{Binding Visible}"
                                         Source="{Binding Text}"
                                         AutomationId="{Binding TableText}"
-                                        Clicked="ImageButton_Clicked"                                   
+                                        Clicked="ImageButton_Clicked"                                  
                                         AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
                                         AbsoluteLayout.LayoutFlags="All"/>
 
@@ -81,8 +105,8 @@
                                         AbsoluteLayout.LayoutBounds="0.5,0.36"
                                         IsEnabled="False"/>
 
-                                       
-                            
+
+
                             <Label      Text="{Binding TimeOpened}"
                                         TextColor="White" 
                                         FontSize="10"
@@ -109,6 +133,19 @@
             </CollectionView>
 
 
+            <Grid Grid.Column="2"
+                  Grid.Row="0">
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <ScrollView Grid.Row="0">
+                    <StackLayout x:Name="gridLists">
+                    </StackLayout>
+                </ScrollView>
+
+            </Grid>
 
         </Grid>
     </ContentPage.Content>

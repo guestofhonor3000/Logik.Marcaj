@@ -334,6 +334,7 @@ namespace Marcaj.Pages.Tables
 			await Navigation.PushAsync(new AllTables(EmpFile));
 		}
 		int index;
+
 		private async void ListView_Focused(object sender, EventArgs e)
 		{
 			index++;

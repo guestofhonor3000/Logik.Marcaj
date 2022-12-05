@@ -280,4 +280,43 @@
   <ItemGroup>
     <BundleResource Include="Resources\RetailIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\SettingsIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\OperationsIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\BillingIconSml.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\DeliveryIconSml.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\DineInIconSml.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\FastServiceIconSml.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\OperationsIconSml.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\RecallIconSml.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ReportsIconSml.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ReservationIconSml.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\RetailIconSml.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\SettingsIconSml.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ClockInIconSml.png" />
+  </ItemGroup>
 </Project>
