@@ -453,7 +453,6 @@ namespace Marcaj.Services
             Uri uri = new Uri(string.Format(Constants.PutUriOrderHeadersDineInTableMove + id, string.Empty));
             try
             {
-
                 string json = System.Text.Json.JsonSerializer.Serialize<OrderHeadersModel>(item, serializerOptions);
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = null;

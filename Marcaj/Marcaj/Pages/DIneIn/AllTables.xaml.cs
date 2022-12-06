@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms.Xaml;
 
 namespace Marcaj.Pages.Tables
@@ -17,14 +19,18 @@ namespace Marcaj.Pages.Tables
     {
         EmployeeFileModel EmplFl;
         int GroupId = 1;
+        bool isMoving = false;
+        int OrderId = 0;
         bool IsFirstLoad = true;
+        View itemsToShow;
+        DineInTableModel DineIn;
         List<DineInTableModel> dineIns;
         List<DineInTableAndEmpModel> dineInsAndEmp;
         List<DineInTableGroupModel> dineInGroups;
         ObservableCollection<TableLayoutModel> tblLayout;
 
         //
-        DineInTableModel DineIn;
+        
         OrderHeadersModel orderHeader;
         List<OrderHeadersModel> orderHeadersList;
         List<OrderTransactionsModel> orderTransactionsList;
@@ -42,7 +48,6 @@ namespace Marcaj.Pages.Tables
             orderTransactionsListByOrderID = new List<OrderTransactionsModel>();
 
             EmplFl = emplFl;
-
             dineInGroups = new List<DineInTableGroupModel>();
             dineIns = new List<DineInTableModel>();
             dineInsAndEmp = new List<DineInTableAndEmpModel>();
@@ -570,10 +575,8 @@ namespace Marcaj.Pages.Tables
         }
 
 
-
         async void ShowOrders(string TableID)
         {
-            int index = 0;
             gridLists.Children.Clear();
             var b = dineInsAndEmp.Where(x => x.DineIn.DineInTableText == TableID).FirstOrDefault();
             orderHeadersList = await App.manager.iGetOrderHeadersByDineInTableID(b.DineIn.DineInTableID);
@@ -610,7 +613,6 @@ namespace Marcaj.Pages.Tables
 
             foreach (var orderHeader in orderHeadersList)
             {
-                index++;
                 StackLayout OrderHeader = new StackLayout();
 
                 Label Header = new Label
@@ -648,6 +650,23 @@ namespace Marcaj.Pages.Tables
                     HorizontalTextAlignment = TextAlignment.Center
                 };
 
+                Button showItems = new Button
+                {
+                    Text = "Arata",
+                    Padding = new Thickness(8),
+                };
+
+                StackLayout itemsStack = new StackLayout();
+
+                showItems.Clicked += ShowItems_Clicked;
+
+                async void ShowItems_Clicked(object sender, EventArgs e)
+                {
+                    await ShowItemsInOrder(orderHeader.OrderID);
+                    OrderHeader.Children.Remove(showItems);
+                    itemsStack.Children.Add(itemsToShow);
+                };
+
                 Label Footer = new Label
                 {
                     Text = "Total: " + orderHeader.AmountDue.ToString(),
@@ -664,6 +683,8 @@ namespace Marcaj.Pages.Tables
                 OrderHeader.Children.Add(headerFrame);
                 OrderHeader.Children.Add(txtServer);
                 OrderHeader.Children.Add(txtDateTimeOpenedTable);
+                OrderHeader.Children.Add(showItems);
+                OrderHeader.Children.Add(itemsStack);
                 OrderHeader.Children.Add(Footer);
 
                 Grid controls = new Grid
@@ -681,12 +702,9 @@ namespace Marcaj.Pages.Tables
                     Padding = new Thickness(8),
                 };
                 moveOrder.SetDynamicResource(StyleProperty, "secondBtn");
-                moveOrder.Clicked += MoveOrder_Clicked;
 
-                void MoveOrder_Clicked(object sender, EventArgs e)
-                {
 
-                }
+                moveOrder.Clicked += (sender, args) => moveOrder_Clicked(sender, orderHeader.OrderID);
 
                 Button toOrder = new Button
                 {
@@ -701,6 +719,7 @@ namespace Marcaj.Pages.Tables
                 toOrder.Clicked += async (sender, args) => await Navigation.PushAsync(new ActiveTableEditPage(orderHeader, EmplFl, b.DineIn, orderTransactionsListByOrderID));
                 controls.Children.Add(moveOrder,0 ,0);
                 controls.Children.Add(toOrder,1 ,0);
+
                 OrderHeader.Children.Add(controls);
 
                 Frame checkFrame = new Frame
@@ -716,9 +735,63 @@ namespace Marcaj.Pages.Tables
 
                 gridLists.Children.Add(checkFrame);
             }
-
         }
 
+        async Task<View> ShowItemsInOrder(int OrderId)
+        {
+            var orderTraItems = await App.manager.iGetOrderTransactionsByOrderID(OrderId);
+
+            Xamarin.Forms.ListView itemsList = new Xamarin.Forms.ListView();
+            itemsList.ItemsSource = orderTraItems;
+            itemsList.VerticalScrollBarVisibility = ScrollBarVisibility.Never;
+
+            itemsList.ItemTemplate = new DataTemplate(() =>
+            {
+                ViewCell view = new ViewCell();
+
+                Grid grid = new Grid();
+
+                    grid.ColumnDefinitions = new ColumnDefinitionCollection
+                    {
+                        new ColumnDefinition{Width=GridLength.Star},
+                        new ColumnDefinition{Width=GridLength.Star},
+                        new ColumnDefinition{Width=GridLength.Star}
+                    };
+
+                Label qtyLabel = new Label
+                {
+                    HorizontalTextAlignment = TextAlignment.Start,
+                };
+                qtyLabel.SetDynamicResource(StyleProperty, "checkLabel");
+                qtyLabel.SetBinding(Label.TextProperty, "Quantity");
+                grid.Children.Add(qtyLabel, 0, 0);
+
+
+                Label itemLabel = new Label
+                {
+                    HorizontalTextAlignment = TextAlignment.Center,
+                };
+                itemLabel.SetDynamicResource(StyleProperty, "checkLabel");
+                itemLabel.SetBinding(Label.TextProperty, "MenuItemTextOT");
+                grid.Children.Add(itemLabel, 1, 0);
+
+
+                Label extPriceLabel = new Label
+                {
+                    HorizontalTextAlignment = TextAlignment.End,
+                };
+                extPriceLabel.SetDynamicResource(StyleProperty, "checkLabel");
+                extPriceLabel.SetBinding(Label.TextProperty, "ExtendedPrice");
+                grid.Children.Add(extPriceLabel, 2, 0);
+
+
+                view.View = grid;
+                return view;
+            });
+
+            itemsToShow = itemsList;
+            return itemsList;
+        }
 
         private void lstvwGrupMese_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
@@ -748,28 +821,49 @@ namespace Marcaj.Pages.Tables
             var a = sender as ImageButton;
 
             var b = dineInsAndEmp.Where(x => x.DineIn.DineInTableText == a.AutomationId).FirstOrDefault();
-
-            if (b.Opened)
+            var c = await App.manager.iGetDineInTables();
+            dineIns = c;
+            var table = dineIns.Where(x => x.DineInTableID == b.DineIn.DineInTableID).FirstOrDefault();
+            Debug.WriteLine(table.DineInTableID);
+            if (isMoving)
             {
+                Debug.WriteLine("aici");
+                Debug.WriteLine(table.DineInTableText);
+                var headerToMove = orderHeadersList.Where(x => x.OrderID == OrderId).FirstOrDefault();
+                headerToMove.DineInTableID = table.DineInTableID;
+                await App.manager.iPutOrderHeadersDineInTableId( headerToMove,headerToMove.OrderID);
+                isMoving = false;
                 ShowOrders(a.AutomationId);
             }
             else
             {
-                await Navigation.PushAsync(new NotActiveTable(b.DineIn, EmplFl, "closed"));
-            }
+                if (b.Opened)
+                {
+                    ShowOrders(a.AutomationId);
+                }
+                else
+                {
+                    await Navigation.PushAsync(new NotActiveTable(b.DineIn, EmplFl, "closed"));
+                }
+            }    
         }
 
-
+        private void moveOrder_Clicked(object sender, int id)
+        {
+            isMoving = true;
+            OrderId = id;
+            Debug.WriteLine(isMoving);
+            Debug.WriteLine(OrderId);
+        }
 
         private async void btnBack_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new HomePage(EmplFl));
         }
 
-        private void muta_Clicked(object sender, EventArgs e)
-        {
-
-        }
+        
+    
+     
     }
 
 }

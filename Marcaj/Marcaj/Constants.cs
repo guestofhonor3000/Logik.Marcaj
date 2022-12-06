@@ -55,7 +55,7 @@ namespace Marcaj
         public static string GetUriOrderHeadersByID = "https://elogik.azurewebsites.net/api/OrderHeaders?type=OrderHeader&getID=";
         public static string PutUriOrderHeaders = "https://elogik.azurewebsites.net/api/OrderHeaders?id=";
         public static string PostUriOrderHeaders = "https://elogik.azurewebsites.net/api/OrderHeaders";
-        public static string PutUriOrderHeadersDineInTableMove = "https://elogik.azurewebsites.net/api/OrderHeaders?type=moveorder?id=";
+        public static string PutUriOrderHeadersDineInTableMove = "https://elogik.azurewebsites.net/api/OrderHeaders?type=moveorder&id=";
 
         //StationSettings
         public static string GetUriAllStationSettings = "https://elogik.azurewebsites.net/api/StationSettings";
