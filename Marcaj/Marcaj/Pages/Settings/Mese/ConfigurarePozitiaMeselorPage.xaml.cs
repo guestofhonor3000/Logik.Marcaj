@@ -293,6 +293,8 @@ namespace Marcaj.Pages.Settings.Mese
             foreach (var a in tblLayoutColl.SelectedItems)
             {
                 var b = a as TableLayoutModel;
+                var c = tblLayout.Where(x => x.Position == b.Position).FirstOrDefault();
+                c.Fumatori = true;
                 if (b.Visible != false)
                 {
                     b.Fumatori = true;
@@ -306,6 +308,8 @@ namespace Marcaj.Pages.Settings.Mese
             foreach (var a in tblLayoutColl.SelectedItems)
             {
                 var b = a as TableLayoutModel;
+                var c = tblLayout.Where(x => x.Position == b.Position).FirstOrDefault();
+                c.Fereastra = true;
                 if (b.Visible != false)
                 {
                     b.Fereastra = true;
@@ -319,6 +323,8 @@ namespace Marcaj.Pages.Settings.Mese
             foreach (var a in tblLayoutColl.SelectedItems)
             {
                 var b = a as TableLayoutModel;
+                var c = tblLayout.Where(x => x.Position == b.Position).FirstOrDefault();
+                c.Cabina = true;
                 if (b.Visible != false)
                 {
                     b.Cabina = true;

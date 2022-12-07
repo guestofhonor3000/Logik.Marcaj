@@ -60,7 +60,6 @@
 
     <Style x:Key="secondStack" TargetType="StackLayout">
         <Setter Property="BackgroundColor" Value="#3e485b"/>
-
     </Style>
 
 
@@ -70,26 +69,26 @@
     <Style x:Key="mainBtnFrame" TargetType="Frame">
         <Setter Property="CornerRadius" Value="4"/>
         <Setter Property="BackgroundColor" Value="#f1f1f1"/>
-        <Setter Property="Margin" Value="10"/>
+        <Setter Property="Margin" Value="5"/>
     </Style>
 
     <Style x:Key="secondBtnFrame" TargetType="Frame">
         <Setter Property="CornerRadius" Value="4"/>
         <Setter Property="BackgroundColor" Value="#f1f1f1"/>
-        <Setter Property="Margin" Value="10"/>
+        <Setter Property="Margin" Value="5"/>
 
     </Style>
 
     <Style x:Key="thirdBtnFrame" TargetType="Frame">
         <Setter Property="CornerRadius" Value="4"/>
         <Setter Property="BackgroundColor" Value="#3e485b"/>
-        <Setter Property="Margin" Value="10"/>
+        <Setter Property="Margin" Value="5"/>
     </Style>
 
     <Style x:Key="sideBtnFrame" TargetType="Frame">
         <Setter Property="CornerRadius" Value="4"/>
         <Setter Property="BackgroundColor" Value="#f1f1f1"/>
-        <Setter Property="Margin" Value="10"/>
+        <Setter Property="Margin" Value="5"/>
     </Style>
 
     <!--Labels-->
@@ -131,7 +130,7 @@
     <Style x:Key="btn" TargetType="Button">
         <Setter Property="CornerRadius" Value="4"/>
         <Setter Property="BackgroundColor" Value="#3e485b"/>
-        <Setter Property="Margin" Value="10,10,10,0"/>
+        <Setter Property="Margin" Value="5"/>
         <Setter Property="FontFamily" Value="Verdana"/>
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="TextColor" Value="White"/>

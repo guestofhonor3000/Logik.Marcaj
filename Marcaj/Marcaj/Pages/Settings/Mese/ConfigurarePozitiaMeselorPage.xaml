@@ -103,7 +103,7 @@
                 <ImageButton Source="Table6Open.png" Grid.Row="2"  x:Name="btnTbl6" Clicked="btnTbl6_Clicked"/>
                 <ImageButton Source="Table8Open.png" Grid.Row="3" x:Name="btnTbl8" Clicked="btnTbl8_Clicked"/>
                 <Button Text="Clear" Grid.Row="4" x:Name="btnClear" Clicked="btnClear_Clicked"/>
-                <ImageButton Source="MainDoneButton.png" x:Name="btnDone" Grid.Row="5" Clicked="btnDone_Clicked" VerticalOptions="End"/>
+                <Button Text="Done" x:Name="btnDone" Grid.Row="5" Clicked="btnDone_Clicked" VerticalOptions="End"/>
             </Grid>
 
         </Grid>

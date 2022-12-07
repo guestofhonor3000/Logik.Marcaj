@@ -69,27 +69,25 @@
             <Style x:Key="mainBtnFrame" TargetType="Frame">
                 <Setter Property="CornerRadius" Value="4"/>
                 <Setter Property="BackgroundColor" Value="#515a63"/>
-                <Setter Property="Margin" Value="10"/>
+                <Setter Property="Margin" Value="5"/>
             </Style>
             
             <Style x:Key="secondBtnFrame" TargetType="Frame">
                 <Setter Property="CornerRadius" Value="4"/>
                 <Setter Property="BackgroundColor" Value="#8f99a3"/>
-                <Setter Property="Margin" Value="10"/>
+                <Setter Property="Margin" Value="5"/>
             </Style>
             
             <Style x:Key="thirdBtnFrame" TargetType="Frame">
                 <Setter Property="CornerRadius" Value="4"/>
                 <Setter Property="BackgroundColor" Value="#394046"/> 
-                <Setter Property="Margin" Value="10"/>
-                <Setter Property="VerticalOptions" Value="Fill"/>
-                <Setter Property="HorizontalOptions" Value="Fill"/>
+                <Setter Property="Margin" Value="5"/>
             </Style>
             
             <Style x:Key="sideBtnFrame" TargetType="Frame">
                 <Setter Property="CornerRadius" Value="4"/>
                 <Setter Property="BackgroundColor" Value="#8f99a3"/>
-                <Setter Property="Margin" Value="10"/>
+                <Setter Property="Margin" Value="5"/>
             </Style>
 
             
@@ -134,7 +132,7 @@
             <Style x:Key="btn" TargetType="Button">
                 <Setter Property="CornerRadius" Value="4"/>
                 <Setter Property="BackgroundColor" Value="#394046"/>
-                <Setter Property="Margin" Value="10,10,10,0"/>
+                <Setter Property="Margin" Value="5"/>
                 <Setter Property="FontFamily" Value="Verdana"/>
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="TextColor" Value="White"/>
@@ -143,8 +141,8 @@
             
             <Style x:Key="secondBtn" TargetType="Button">
                 <Setter Property="CornerRadius" Value="4"/>
+                <Setter Property="Margin" Value="5"/>
                 <Setter Property="BackgroundColor" Value="#8f99a3"/>
-                <Setter Property="Margin" Value="10,10,10,0"/>
                 <Setter Property="FontFamily" Value="Verdana"/>
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="TextColor" Value="White"/>

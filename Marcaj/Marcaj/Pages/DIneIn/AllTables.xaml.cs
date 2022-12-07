@@ -9,7 +9,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms.Xaml;
 
 namespace Marcaj.Pages.Tables
@@ -21,21 +20,18 @@ namespace Marcaj.Pages.Tables
         int GroupId = 1;
         bool isMoving = false;
         int OrderId = 0;
+        int Flag = 0;
         bool IsFirstLoad = true;
         View itemsToShow;
-        DineInTableModel DineIn;
         List<DineInTableModel> dineIns;
         List<DineInTableAndEmpModel> dineInsAndEmp;
         List<DineInTableGroupModel> dineInGroups;
         ObservableCollection<TableLayoutModel> tblLayout;
-
-        //
-        
         OrderHeadersModel orderHeader;
         List<OrderHeadersModel> orderHeadersList;
         List<OrderTransactionsModel> orderTransactionsList;
         List<OrderTransactionsModel> orderTransactionsListByOrderID;
-        //
+
 
         public ObservableCollection<OptionsModel> menuBtnList;
         public AllTables(EmployeeFileModel emplFl)
@@ -52,17 +48,18 @@ namespace Marcaj.Pages.Tables
             dineIns = new List<DineInTableModel>();
             dineInsAndEmp = new List<DineInTableAndEmpModel>();
             var flagList = new List<string>();
+            flagList.Add("Toate");
             flagList.Add("Fumatori");
             flagList.Add("Fereastra");
             flagList.Add("Cabina");
-
+            flags.SelectedIndex = 0;
             Clock.Text = DateTime.Now.ToString();
             flags.ItemsSource = flagList;
 
-            PopList(GroupId);
+            PopList(GroupId, Flag);
             MessagingCenter.Subscribe<NotActiveTable>(this, "Up", (sender) =>
             {
-                PopList(GroupId);
+                PopList(GroupId, Flag);
             });
             MessagingCenter.Subscribe<App>(this, "ConOk", async (sender) =>
             {
@@ -70,7 +67,7 @@ namespace Marcaj.Pages.Tables
             });
             MessagingCenter.Subscribe<ActiveTableEditPage>(this, "Up", (sender) =>
             {
-                PopList(GroupId);
+                PopList(GroupId, Flag);
             });
         }
         async void SyncPage()
@@ -80,7 +77,7 @@ namespace Marcaj.Pages.Tables
             var AzEmpLastId = await App.manager.iGetLastIdEmployeeFiles();
             var LEmp = await App.lDatabase.lGetLastIdEmployeeFiles();
             var LEmplLastId = LEmp.EmployeeID;
-            
+
             if (AzEmpLastId < LEmplLastId)
             {
                 var LEmpList = await App.lDatabase.lGetAllEmployeeFiles();
@@ -242,13 +239,13 @@ namespace Marcaj.Pages.Tables
             await App.manager.iPostOrderTransactionSync(lstOT);
             MainThread.BeginInvokeOnMainThread(async () =>
             {
-                PopList(GroupId);
+                PopList(GroupId, Flag);
                 await DisplayAlert("Sync", "Database synced!", "Ok");
             });
         }
 
 
-        async void PopList(int GroupID)
+        async void PopList(int GroupID, int flag)
         {
             tblLayout = new ObservableCollection<TableLayoutModel>();
 
@@ -284,6 +281,10 @@ namespace Marcaj.Pages.Tables
                             model.Text = "";
                             model.Visible = false;
                             model.EmpName = "";
+                            model.Fumatori = false;
+                            model.Fereastra = false;
+                            model.Cabina = false;
+
 
                             tblLayout.Add(model);
                         }
@@ -307,93 +308,320 @@ namespace Marcaj.Pages.Tables
                                     {
                                         if (dine.Opened)
                                         {
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Occupied.png";
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                            if ((bool)dine.DineIn.Smoking && flag == 1)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fumatori = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Occupied.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Window && flag == 2)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fereastra = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Occupied.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Booth && flag == 3)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Cabina = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Occupied.png";
+                                            }
+                                            else if (flag == 0)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Occupied.png";
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                            }
                                         }
                                         else
                                         {
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                            if ((bool)dine.DineIn.Smoking && flag == 1)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fumatori = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Window && flag == 2)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fereastra = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Booth && flag == 3)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Cabina = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
+                                            }
+                                            else if (flag == 0)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                            }
                                         }
                                     }
                                     else if (dine.DineIn.MaxGuests == 4)
                                     {
                                         if (dine.Opened)
                                         {
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Occupied.png";
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                            if ((bool)dine.DineIn.Smoking && flag == 1)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fumatori = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Occupied.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Window && flag == 2)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fereastra = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Occupied.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Booth && flag == 3)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Cabina = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Occupied.png";
+                                            }
+                                            else if (flag == 0)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Occupied.png";
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                            }
                                         }
                                         else
                                         {
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                            if ((bool)dine.DineIn.Smoking && flag == 1)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fumatori = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Window && flag == 2)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fereastra = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Booth && flag == 3)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Cabina = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
+                                            }
+                                            else if (flag == 0)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                            }
                                         }
                                     }
                                     else if (dine.DineIn.MaxGuests == 6)
                                     {
                                         if (dine.Opened)
                                         {
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Occupied.png";
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                            if ((bool)dine.DineIn.Smoking && flag == 1)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fumatori = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Occupied.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Window && flag == 2)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fereastra = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Occupied.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Booth && flag == 3)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Cabina = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Occupied.png";
+                                            }
+                                            else if (flag == 0)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Occupied.png";
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                            }
                                         }
                                         else
                                         {
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                            if ((bool)dine.DineIn.Smoking && flag == 1)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fumatori = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Window && flag == 2)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fereastra = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Booth && flag == 3)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Cabina = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
+                                            }
+                                            else if (flag == 0)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                            }
                                         }
                                     }
                                     else if (dine.DineIn.MaxGuests == 8)
                                     {
                                         if (dine.Opened)
                                         {
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Occupied.png";
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                            if ((bool)dine.DineIn.Smoking && flag == 1)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fumatori = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Occupied.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Window && flag == 2)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fereastra = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Occupied.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Booth && flag == 3)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Cabina = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Occupied.png";
+                                            }
+                                            else if (flag == 0)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Occupied.png";
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                            }
                                         }
                                         else
                                         {
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                            if ((bool)dine.DineIn.Smoking && flag == 1)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fumatori = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Window && flag == 2)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fereastra = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Booth && flag == 3)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Cabina = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
+                                            }
+                                            else if (flag == 0)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                            }
                                         }
                                     }
                                 }
+
                             }
                         }
                         tblLayoutColl.ItemsSource = tblLayout;
@@ -442,6 +670,9 @@ namespace Marcaj.Pages.Tables
                             model.Text = "";
                             model.Visible = false;
                             model.EmpName = "";
+                            model.Fumatori = false;
+                            model.Fereastra = false;
+                            model.Cabina = false;
 
                             tblLayout.Add(model);
                         }
@@ -451,8 +682,6 @@ namespace Marcaj.Pages.Tables
                             HorizontalItemSpacing = 5
 
                         };
-
-
 
                         foreach (var dine in dineInss)
                         {
@@ -467,90 +696,316 @@ namespace Marcaj.Pages.Tables
                                     {
                                         if (dine.Opened)
                                         {
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Occupied.png";
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                            if ((bool)dine.DineIn.Smoking && flag == 1)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fumatori = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Occupied.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Window && flag == 2)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fereastra = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Occupied.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Booth && flag == 3)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Cabina = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Occupied.png";
+                                            }
+                                            else if (flag == 0)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Occupied.png";
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                            }
                                         }
                                         else
                                         {
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                            if ((bool)dine.DineIn.Smoking && flag == 1)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fumatori = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Window && flag == 2)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fereastra = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Booth && flag == 3)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Cabina = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
+                                            }
+                                            else if (flag == 0)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table2Open.png";
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                            }
                                         }
                                     }
                                     else if (dine.DineIn.MaxGuests == 4)
                                     {
                                         if (dine.Opened)
                                         {
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Occupied.png";
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                            if ((bool)dine.DineIn.Smoking && flag == 1)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fumatori = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Occupied.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Window && flag == 2)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fereastra = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Occupied.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Booth && flag == 3)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Cabina = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Occupied.png";
+                                            }
+                                            else if (flag == 0)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Occupied.png";
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                            }
                                         }
                                         else
                                         {
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                            if ((bool)dine.DineIn.Smoking && flag == 1)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fumatori = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Window && flag == 2)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fereastra = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Booth && flag == 3)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Cabina = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
+                                            }
+                                            else if (flag == 0)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table4Open.png";
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                            }
                                         }
                                     }
                                     else if (dine.DineIn.MaxGuests == 6)
                                     {
                                         if (dine.Opened)
                                         {
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Occupied.png";
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                            if ((bool)dine.DineIn.Smoking && flag == 1)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fumatori = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Occupied.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Window && flag == 2)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fereastra = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Occupied.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Booth && flag == 3)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Cabina = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Occupied.png";
+                                            }
+                                            else if (flag == 0)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Occupied.png";
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                            }
                                         }
                                         else
                                         {
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                            if ((bool)dine.DineIn.Smoking && flag == 1)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fumatori = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Window && flag == 2)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fereastra = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Booth && flag == 3)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Cabina = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
+                                            }
+                                            else if (flag == 0)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table6Open.png";
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                            }
                                         }
                                     }
                                     else if (dine.DineIn.MaxGuests == 8)
                                     {
                                         if (dine.Opened)
                                         {
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Occupied.png";
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                            if ((bool)dine.DineIn.Smoking && flag == 1)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fumatori = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Occupied.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Window && flag == 2)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fereastra = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Occupied.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Booth && flag == 3)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Cabina = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Occupied.png";
+                                            }
+                                            else if (flag == 0)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Occupied.png";
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().EmpName = dine.EmpName;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpened = ((int)DateTime.Now.Subtract(dine.TimeOpened).TotalHours).ToString() + ":" + DateTime.Now.Subtract(dine.TimeOpened).Minutes.ToString();
+                                            }
                                         }
                                         else
                                         {
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
-
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
-                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                            if ((bool)dine.DineIn.Smoking && flag == 1)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fumatori = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Window && flag == 2)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fereastra = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
+                                            }
+                                            else if ((bool)dine.DineIn.Booth && flag == 3)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Cabina = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
+                                            }
+                                            else if (flag == 0)
+                                            {
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Visible = true;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Text = "Table8Open.png";
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TableText = dine.DineIn.DineInTableText;
+                                                tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().TimeOpenedVisible = false;
+                                            }
                                         }
                                     }
                                 }
@@ -568,25 +1023,23 @@ namespace Marcaj.Pages.Tables
                         tblLayoutColl.ItemsSource = tblLayout;
                     }
                 }
-
             }
-
 
         }
 
-
-        async void ShowOrders(string TableID)
+        async void ShowOrders(int TableID)
         {
             gridLists.Children.Clear();
-            var b = dineInsAndEmp.Where(x => x.DineIn.DineInTableText == TableID).FirstOrDefault();
-            orderHeadersList = await App.manager.iGetOrderHeadersByDineInTableID(b.DineIn.DineInTableID);
+            var b = dineInsAndEmp.Where(x => x.DineIn.DineInTableID == TableID).FirstOrDefault();
+            orderHeadersList = await App.manager.iGetOrderHeadersByDineInTableID(TableID);
 
             Button toActive = new Button
             {
                 Text = "Toate",
                 VerticalOptions = LayoutOptions.Start,
                 HorizontalOptions = LayoutOptions.Fill,
-                Padding = new Thickness(20),
+                Padding = new Thickness(0, 20, 0, 20),
+                Margin = new Thickness(2.5, 10, 2.5, 0),
             };
             toActive.SetDynamicResource(StyleProperty, "btn");
             toActive.Clicked += async (sender, args) => await Navigation.PushAsync(new ActiveTable(b.DineIn, EmplFl));
@@ -603,7 +1056,7 @@ namespace Marcaj.Pages.Tables
             Frame addFrame = new Frame
             {
                 CornerRadius = 4,
-                Margin = new Thickness(10, 10, 10, 0),
+                Margin = new Thickness(5),
                 BackgroundColor = Color.FromHex("#d9d9d9"),
             };
             addFrame.Content = addOrder;
@@ -655,6 +1108,7 @@ namespace Marcaj.Pages.Tables
                     Text = "Arata",
                     Padding = new Thickness(8),
                 };
+                showItems.SetDynamicResource(StyleProperty, "secondBtn");
 
                 StackLayout itemsStack = new StackLayout();
 
@@ -717,15 +1171,15 @@ namespace Marcaj.Pages.Tables
 
                 // ! No Time Sync !
                 toOrder.Clicked += async (sender, args) => await Navigation.PushAsync(new ActiveTableEditPage(orderHeader, EmplFl, b.DineIn, orderTransactionsListByOrderID));
-                controls.Children.Add(moveOrder,0 ,0);
-                controls.Children.Add(toOrder,1 ,0);
+                controls.Children.Add(moveOrder, 0, 0);
+                controls.Children.Add(toOrder, 1, 0);
 
                 OrderHeader.Children.Add(controls);
 
                 Frame checkFrame = new Frame
                 {
                     CornerRadius = 4,
-                    Margin = new Thickness(10, 10, 10, 0),
+                    Margin = new Thickness(5),
                     BackgroundColor = Color.FromHex("#d9d9d9"),
                 };
 
@@ -751,7 +1205,7 @@ namespace Marcaj.Pages.Tables
 
                 Grid grid = new Grid();
 
-                    grid.ColumnDefinitions = new ColumnDefinitionCollection
+                grid.ColumnDefinitions = new ColumnDefinitionCollection
                     {
                         new ColumnDefinition{Width=GridLength.Star},
                         new ColumnDefinition{Width=GridLength.Star},
@@ -761,6 +1215,7 @@ namespace Marcaj.Pages.Tables
                 Label qtyLabel = new Label
                 {
                     HorizontalTextAlignment = TextAlignment.Start,
+                    VerticalTextAlignment = TextAlignment.Start,
                 };
                 qtyLabel.SetDynamicResource(StyleProperty, "checkLabel");
                 qtyLabel.SetBinding(Label.TextProperty, "Quantity");
@@ -770,6 +1225,7 @@ namespace Marcaj.Pages.Tables
                 Label itemLabel = new Label
                 {
                     HorizontalTextAlignment = TextAlignment.Center,
+                    VerticalTextAlignment = TextAlignment.Start,
                 };
                 itemLabel.SetDynamicResource(StyleProperty, "checkLabel");
                 itemLabel.SetBinding(Label.TextProperty, "MenuItemTextOT");
@@ -779,6 +1235,7 @@ namespace Marcaj.Pages.Tables
                 Label extPriceLabel = new Label
                 {
                     HorizontalTextAlignment = TextAlignment.End,
+                    VerticalTextAlignment = TextAlignment.Start,
                 };
                 extPriceLabel.SetDynamicResource(StyleProperty, "checkLabel");
                 extPriceLabel.SetBinding(Label.TextProperty, "ExtendedPrice");
@@ -802,14 +1259,14 @@ namespace Marcaj.Pages.Tables
                     var selIt = e.SelectedItem as DineInTableGroupModel;
                     GroupId = selIt.TableGroupID;
                     IsFirstLoad = false;
-                    PopList(GroupId);
+                    PopList(GroupId, Flag);
                 }
                 else
                 {
                     var selIt = e.SelectedItem as LDineInTableGroupsModel;
                     GroupId = selIt.TableGroupID;
                     IsFirstLoad = false;
-                    PopList(GroupId);
+                    PopList(GroupId, Flag);
                 }
             }
 
@@ -821,39 +1278,37 @@ namespace Marcaj.Pages.Tables
             var a = sender as ImageButton;
 
             var b = dineInsAndEmp.Where(x => x.DineIn.DineInTableText == a.AutomationId).FirstOrDefault();
-            var c = await App.manager.iGetDineInTables();
-            dineIns = c;
-            var table = dineIns.Where(x => x.DineInTableID == b.DineIn.DineInTableID).FirstOrDefault();
-            Debug.WriteLine(table.DineInTableID);
+
             if (isMoving)
             {
-                Debug.WriteLine("aici");
-                Debug.WriteLine(table.DineInTableText);
+                var c = await App.manager.iGetDineInTables();
+                dineIns = c;
+                var table = dineIns.Where(x => x.DineInTableID == b.DineIn.DineInTableID).FirstOrDefault();
                 var headerToMove = orderHeadersList.Where(x => x.OrderID == OrderId).FirstOrDefault();
                 headerToMove.DineInTableID = table.DineInTableID;
-                await App.manager.iPutOrderHeadersDineInTableId( headerToMove,headerToMove.OrderID);
+                await App.manager.iPutOrderHeadersDineInTableId(headerToMove, headerToMove.OrderID);
                 isMoving = false;
-                ShowOrders(a.AutomationId);
+
+                ShowOrders(table.DineInTableID);
             }
             else
             {
                 if (b.Opened)
                 {
-                    ShowOrders(a.AutomationId);
+                    var Id = b.DineIn.DineInTableID;
+                    ShowOrders(Id);
                 }
                 else
                 {
                     await Navigation.PushAsync(new NotActiveTable(b.DineIn, EmplFl, "closed"));
                 }
-            }    
+            }
         }
 
         private void moveOrder_Clicked(object sender, int id)
         {
             isMoving = true;
             OrderId = id;
-            Debug.WriteLine(isMoving);
-            Debug.WriteLine(OrderId);
         }
 
         private async void btnBack_Clicked(object sender, EventArgs e)
@@ -861,9 +1316,17 @@ namespace Marcaj.Pages.Tables
             await Navigation.PushAsync(new HomePage(EmplFl));
         }
 
-        
-    
-     
+        private void flags_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var picker = (Xamarin.Forms.Picker)sender;
+            int selectedIndex = picker.SelectedIndex;
+
+            if (selectedIndex != -1)
+            {
+                Flag = selectedIndex;
+                PopList(GroupId, Flag);
+            }
+        }
     }
 
 }

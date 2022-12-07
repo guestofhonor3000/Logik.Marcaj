@@ -31,7 +31,7 @@
             <Frame Grid.Row="1" 
                    Grid.Column="1" 
                    Grid.ColumnSpan="3" 
-                   CornerRadius="10" 
+                   CornerRadius="4" 
                    Margin="10"
                    BackgroundColor="#d9d9d9">
                 <Entry x:Name="codEntry" 
@@ -43,7 +43,7 @@
                        HorizontalTextAlignment="Center" 
                        IsPassword="True" 
                        IsReadOnly="False" 
-                       Margin="-30"/>
+                       Margin="-25"/>
             </Frame>
             <Button Grid.Row="2" Grid.Column="1" Text="1" x:Name="btn1" Clicked="btn1_Clicked" Style="{DynamicResource btn}"/>
             <Button Grid.Row="2" Grid.Column="2" Text="2" x:Name="btn2" Clicked="btn2_Clicked" Style="{DynamicResource btn}"/>
@@ -59,7 +59,7 @@
 
             <Button Grid.Row="5" Grid.Column="1" Text="DEL"  x:Name="btnDel" Clicked="btnDel_Clicked" Style="{DynamicResource btn}"/>
             <Button Grid.Row="5" Grid.Column="2" Text="0" x:Name="btn0" Clicked="btn0_Clicked" Style="{DynamicResource btn}"/>
-            <Button Grid.Row="5" Grid.Column="3"  Text="OK" x:Name="btnSignIn" Clicked="btnSignIn_Clicked" BackgroundColor="#478547" CornerRadius="10" FontFamily="Verdana" FontSize="Small" Margin="10,10,10,0" />
+            <Button Grid.Row="5" Grid.Column="3"  Text="OK" x:Name="btnSignIn" Clicked="btnSignIn_Clicked" BackgroundColor="#478547" CornerRadius="4" FontFamily="Verdana" FontSize="Small" Margin="5" />
 
 
         </Grid>

@@ -45,8 +45,9 @@
                          Grid.Column="0"
                          Orientation="Vertical"
 >
-                <Picker x:Name="flags"
-                        TabIndex="1"
+                <Picker Title="Filtre"
+                        x:Name="flags"
+                        SelectedIndexChanged="flags_SelectedIndexChanged"
                         TitleColor="White"
                         VerticalOptions="Start"
                         HorizontalOptions="Fill"    

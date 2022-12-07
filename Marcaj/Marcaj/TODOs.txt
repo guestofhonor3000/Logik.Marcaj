@@ -20,4 +20,4 @@ SETARI PERIFERICE
 
 
 Dragos:
--
+- Time sync la Edit Order in AllTables ca in ActiveTable
