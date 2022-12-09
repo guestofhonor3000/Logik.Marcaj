@@ -39,22 +39,18 @@
                        VerticalOptions="Center"/>
 
             </StackLayout>
-            
-            
-            <StackLayout Grid.Row="0"
-                         Grid.Column="0"
-                         Orientation="Vertical"
->
-                <Picker Title="Filtre"
-                        x:Name="flags"
-                        SelectedIndexChanged="flags_SelectedIndexChanged"
-                        TitleColor="White"
-                        VerticalOptions="Start"
-                        HorizontalOptions="Fill"    
-                        Margin="10">
-                </Picker>
 
-                <ListView  x:Name="lstvwGrupMese" 
+
+            <Grid Grid.Row="0"
+                  Grid.Column="0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="8*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <ListView  Grid.Row="0"
+                           x:Name="lstvwGrupMese" 
                            ItemSelected="lstvwGrupMese_ItemSelected"
                            SelectionMode="Single"
                            HorizontalOptions="Start">
@@ -73,8 +69,59 @@
 
                 </ListView>
 
-                
-            </StackLayout>
+                <Grid Grid.Row="1"
+                      HorizontalOptions="FillAndExpand" 
+                      VerticalOptions="FillAndExpand"
+                      Margin="0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Switch Grid.Column="0"
+                            Grid.Row="0"
+                            x:Name="smokingSwitch"
+                            IsToggled="False"
+                            Toggled="smokingSwitch_Toggled"
+                            OnColor="#478547"/>
+                    <Label Text="Fumatori"
+                           Grid.Column="0"
+                           Grid.Row="1"
+                           MaxLines="1"
+                           Style="{DynamicResource checkLabel}"/>
+
+                    <Switch Grid.Column="1"
+                            Grid.Row="0"
+                            x:Name="windowSwitch"
+                            IsToggled="False"
+                            Toggled="windowSwitch_Toggled"
+                            OnColor="#478547"/>
+                    <Label Text="Fereastra"
+                           Grid.Column="1"
+                           Grid.Row="1"
+                           MaxLines="1"
+                           Style="{DynamicResource checkLabel}"/>
+
+                    <Switch Grid.Column="2"
+                            Grid.Row="0"
+                            x:Name="boothSwitch"
+                            IsToggled="False"
+                            Toggled="boothSwitch_Toggled"
+                            OnColor="#478547"/>
+                    <Label Text="Cabina"
+                           Grid.Column="2"
+                           Grid.Row="1"
+                           MaxLines="1"
+                           Style="{DynamicResource checkLabel}"/>
+                </Grid>
+            </Grid>
             
             
             <CollectionView  x:Name="tblLayoutColl"
