@@ -20,4 +20,5 @@ SETARI PERIFERICE
 
 
 Dragos:
-- Time sync la Edit Order in AllTables ca in ActiveTable
+- AllTables: Time sync la Edit Order ca in ActiveTable
+- AllTabels: TableGroup ListView o mai da nasol la ItemSelected

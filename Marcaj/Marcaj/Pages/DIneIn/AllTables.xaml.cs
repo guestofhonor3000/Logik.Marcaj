@@ -299,8 +299,8 @@ namespace Marcaj.Pages.Tables
                                         tblFlags += "b";
                                         tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Cabina = true;
                                     }
-                                    if ((bool)dine.DineIn.Smoking) 
-                                    {   
+                                    if ((bool)dine.DineIn.Smoking)
+                                    {
                                         tblFlags += "s";
                                         tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fumatori = true;
                                     }
@@ -309,7 +309,7 @@ namespace Marcaj.Pages.Tables
                                         tblFlags += "w";
                                         tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fereastra = true;
                                     }
-                                    
+
                                     Debug.WriteLine(tblFlags);
                                     var filter = tblFlags.Contains(flag);
 
@@ -564,7 +564,7 @@ namespace Marcaj.Pages.Tables
                                         tblFlags += "w";
                                         tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fereastra = true;
                                     }
-                                    
+
                                     Debug.WriteLine(tblFlags);
                                     var filter = tblFlags.Contains(flag);
 
@@ -761,7 +761,7 @@ namespace Marcaj.Pages.Tables
                 Text = "Toate",
                 VerticalOptions = LayoutOptions.Start,
                 HorizontalOptions = LayoutOptions.Fill,
-                Padding = new Thickness(0, 20, 0, 20),
+                Padding = new Thickness(0, 10, 0, 10),
                 Margin = new Thickness(2.5, 10, 2.5, 0),
             };
             toActive.SetDynamicResource(StyleProperty, "btn");
@@ -833,15 +833,33 @@ namespace Marcaj.Pages.Tables
                 };
                 showItems.SetDynamicResource(StyleProperty, "secondBtn");
 
+                Button hideItems = new Button
+                {
+                    Text = "Ascunde",
+                    Padding = new Thickness(8),
+                };
+                hideItems.SetDynamicResource(StyleProperty, "secondBtn");
+
                 StackLayout itemsStack = new StackLayout();
 
-                showItems.Clicked += ShowItems_Clicked;
+                showItems.Clicked += showItems_Clicked;
 
-                async void ShowItems_Clicked(object sender, EventArgs e)
+                async void showItems_Clicked(object sender, EventArgs e)
                 {
                     await ShowItemsInOrder(orderHeader.OrderID);
                     OrderHeader.Children.Remove(showItems);
                     itemsStack.Children.Add(itemsToShow);
+                    OrderHeader.Children.Add(hideItems);
+                };
+
+
+                hideItems.Clicked += hideItems_Clicked;
+
+                void hideItems_Clicked(object sender, EventArgs e)
+                {
+                    itemsStack.Children.Remove(itemsToShow);
+                    OrderHeader.Children.Remove(hideItems);
+                    OrderHeader.Children.Add(showItems);
                 };
 
                 Label Footer = new Label
@@ -929,26 +947,26 @@ namespace Marcaj.Pages.Tables
                 Grid grid = new Grid();
 
                 grid.ColumnDefinitions = new ColumnDefinitionCollection
-                    {
-                        new ColumnDefinition{Width=GridLength.Star},
-                        new ColumnDefinition{Width=GridLength.Star},
-                        new ColumnDefinition{Width=GridLength.Star}
-                    };
-
+                {
+                    new ColumnDefinition{Width=GridLength.Star},
+                    new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) },
+                    new ColumnDefinition{Width=GridLength.Star}
+                };
+                grid.HorizontalOptions = LayoutOptions.Fill;
+                grid.VerticalOptions = LayoutOptions.Start;
                 Label qtyLabel = new Label
                 {
                     HorizontalTextAlignment = TextAlignment.Start,
-                    VerticalTextAlignment = TextAlignment.Start,
+                    VerticalTextAlignment = TextAlignment.Center,
                 };
                 qtyLabel.SetDynamicResource(StyleProperty, "checkLabel");
                 qtyLabel.SetBinding(Label.TextProperty, "Quantity");
                 grid.Children.Add(qtyLabel, 0, 0);
 
-
                 Label itemLabel = new Label
                 {
                     HorizontalTextAlignment = TextAlignment.Center,
-                    VerticalTextAlignment = TextAlignment.Start,
+                    VerticalTextAlignment = TextAlignment.Center,
                 };
                 itemLabel.SetDynamicResource(StyleProperty, "checkLabel");
                 itemLabel.SetBinding(Label.TextProperty, "MenuItemTextOT");
@@ -958,19 +976,29 @@ namespace Marcaj.Pages.Tables
                 Label extPriceLabel = new Label
                 {
                     HorizontalTextAlignment = TextAlignment.End,
-                    VerticalTextAlignment = TextAlignment.Start,
+                    VerticalTextAlignment = TextAlignment.Center,
                 };
                 extPriceLabel.SetDynamicResource(StyleProperty, "checkLabel");
                 extPriceLabel.SetBinding(Label.TextProperty, "ExtendedPrice");
                 grid.Children.Add(extPriceLabel, 2, 0);
 
+                Frame itemFrame = new Frame
+                {
+                    BackgroundColor = Color.White,
+                    BorderColor = Color.Gray,
+                    VerticalOptions = LayoutOptions.Start,
+                    HorizontalOptions = LayoutOptions.Center,
+                    Padding = new Thickness(5),
 
-                view.View = grid;
+                };
+                itemFrame.Content = grid;
+
+                view.View = itemFrame;
                 return view;
             });
 
             itemsToShow = itemsList;
-            return itemsList;
+            return itemsToShow;
         }
 
         private void lstvwGrupMese_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -1081,7 +1109,7 @@ namespace Marcaj.Pages.Tables
                 Flag += 'b';
                 Flag = OrderFlag(Flag);
             }
-            else if(boothSwitch.IsToggled == false && IsFirstLoad == false)
+            else if (boothSwitch.IsToggled == false && IsFirstLoad == false)
             {
                 char a = 'b';
                 Flag = Flag.Trim(a);

@@ -32,7 +32,7 @@
                    Grid.Column="1" 
                    Grid.ColumnSpan="3" 
                    CornerRadius="4" 
-                   Margin="10"
+                   Margin="7"
                    BackgroundColor="#d9d9d9">
                 <Entry x:Name="codEntry" 
                        Placeholder="COD ACCES" 
@@ -43,7 +43,7 @@
                        HorizontalTextAlignment="Center" 
                        IsPassword="True" 
                        IsReadOnly="False" 
-                       Margin="-25"/>
+                       Margin="-30"/>
             </Frame>
             <Button Grid.Row="2" Grid.Column="1" Text="1" x:Name="btn1" Clicked="btn1_Clicked" Style="{DynamicResource btn}"/>
             <Button Grid.Row="2" Grid.Column="2" Text="2" x:Name="btn2" Clicked="btn2_Clicked" Style="{DynamicResource btn}"/>

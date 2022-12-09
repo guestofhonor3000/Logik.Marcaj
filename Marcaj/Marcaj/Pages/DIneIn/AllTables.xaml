@@ -70,9 +70,9 @@
                 </ListView>
 
                 <Grid Grid.Row="1"
-                      HorizontalOptions="FillAndExpand" 
-                      VerticalOptions="FillAndExpand"
-                      Margin="0">
+                      HorizontalOptions="Fill" 
+                      VerticalOptions="Start"
+                      Margin="2">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -95,7 +95,9 @@
                            Grid.Column="0"
                            Grid.Row="1"
                            MaxLines="1"
-                           Style="{DynamicResource checkLabel}"/>
+                           HorizontalTextAlignment="Start"
+                           HorizontalOptions="Fill"
+                           Style="{DynamicResource mainBtnLabel}"/>
 
                     <Switch Grid.Column="1"
                             Grid.Row="0"
@@ -107,7 +109,9 @@
                            Grid.Column="1"
                            Grid.Row="1"
                            MaxLines="1"
-                           Style="{DynamicResource checkLabel}"/>
+                           HorizontalTextAlignment="Start"
+                           HorizontalOptions="Fill"
+                           Style="{DynamicResource mainBtnLabel}"/>
 
                     <Switch Grid.Column="2"
                             Grid.Row="0"
@@ -119,7 +123,9 @@
                            Grid.Column="2"
                            Grid.Row="1"
                            MaxLines="1"
-                           Style="{DynamicResource checkLabel}"/>
+                           HorizontalTextAlignment="Start"
+                           HorizontalOptions="Fill"
+                           Style="{DynamicResource mainBtnLabel}"/>
                 </Grid>
             </Grid>
             
