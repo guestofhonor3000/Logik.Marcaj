@@ -106,16 +106,35 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AddIcon.png" />
+    <Content Include="BillingButton.Dark.png" />
+    <Content Include="BillingButton.Light.png" />
     <Content Include="BillingIconSml.png" />
     <Content Include="ClockInIconSml.png" />
+    <Content Include="DeliveryButton.Dark.png" />
+    <Content Include="DeliveryButton.Light.png" />
     <Content Include="DeliveryIconSml.png" />
+    <Content Include="DineInButton.Dark.png" />
+    <Content Include="DineInButton.Light.png" />
     <Content Include="DineInIconSml.png" />
+    <Content Include="FastServiceButton.Dark.png" />
+    <Content Include="FastServiceButton.Light.png" />
     <Content Include="FastServiceIconSml.png" />
+    <Content Include="OperationsButton.Dark.png" />
+    <Content Include="OperationsButton.Light.png" />
     <Content Include="OperationsIconSml.png" />
+    <Content Include="PlaceholderButton.Dark.png" />
+    <Content Include="RecallButton.Dark.png" />
+    <Content Include="RecallButton.Light.png" />
     <Content Include="RecallIconSml.png" />
+    <Content Include="ReportsButton.Dark.png" />
+    <Content Include="ReportsButton.Light.png" />
     <Content Include="ReportsIconSml.png" />
+    <Content Include="ReservationButton.Dark.png" />
+    <Content Include="ReservationButton.Light.png" />
     <Content Include="ReservationIconSml.png" />
     <Content Include="RetailIconSml.png" />
+    <Content Include="SettingsButton.Dark.png" />
+    <Content Include="SettingsButton.Light.png" />
     <Content Include="SettingsIconSml.png" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-200.png" />

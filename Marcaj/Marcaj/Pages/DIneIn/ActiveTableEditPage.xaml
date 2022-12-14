@@ -123,11 +123,11 @@
 
                 <CollectionView Grid.Row="1"
                                 Grid.ColumnSpan="3"
-                            x:Name="lstvwMenuItems" 
-                            SelectionChanged="lstvwMenuItems_ItemSelected"
-                            Margin="10,0,10,0"
-                            VerticalScrollBarVisibility="Never"
-                            SelectionMode="Single">
+                                x:Name="lstvwMenuItems" 
+                                SelectionChanged="lstvwMenuItems_ItemSelected"
+                                Margin="10,0,10,0"
+                                VerticalScrollBarVisibility="Never"
+                                SelectionMode="Single">
 
                     <CollectionView.ItemsLayout >
                         <GridItemsLayout Orientation="Vertical"

@@ -36,18 +36,18 @@ namespace Marcaj
             }
             menuBtnList = new ObservableCollection<OptionsModel>
             {
-            new OptionsModel { Text="Mese" , Image="DineInIcon.png"},
-            new OptionsModel { Text="Fast Service", Image="FastServiceIcon.png" },
-            new OptionsModel { Text="Livrare", Image="DeliveryIcon.png"},
-            new OptionsModel { Text="Retail", Image="RetailIcon.png"},
-            new OptionsModel { Text="Rezervari", Image="ReservationIcon.png"},
-            new OptionsModel { Text="Achita", Image="PlaceholderIcon.png"},
-            new OptionsModel { Text="Rechemare", Image="Recallicon.png"},
-            new OptionsModel { Text="Pontaj", Image="ClockInIcon.png"},
-            new OptionsModel { Text="Facturare", Image="BillingIcon.png"},
-            new OptionsModel { Text="Rapoarte", Image="ReportsIcon.png"},
-            new OptionsModel { Text="Operatii", Image="OperationsIcon.png"},
-            new OptionsModel { Text="Configurari", Image="SettingsIcon.png"},
+            new OptionsModel { Text="Mese" , Image="DineInButton.Dark.png"},
+            new OptionsModel { Text="Fast Service", Image="FastServiceButton.Dark.png" },
+            new OptionsModel { Text="Livrare", Image="DeliveryButton.Dark.png"},
+            new OptionsModel { Text="Retail", Image="PlaceholderButton.Dark.png"},
+            new OptionsModel { Text="Rezervari", Image="ReservationButton.Dark.png"},
+            new OptionsModel { Text="Achita", Image="PlaceholderButton.Dark.png"},
+            new OptionsModel { Text="Rechemare", Image="RecallButton.Dark.png"},
+            new OptionsModel { Text="Pontaj", Image="PlaceholderButton.Dark.png"},
+            new OptionsModel { Text="Facturare", Image="BillingButton.Dark.png"},
+            new OptionsModel { Text="Rapoarte", Image="PlaceholderButton.Dark.png"},
+            new OptionsModel { Text="Operatii", Image="OperationsButton.Dark.png"},
+            new OptionsModel { Text="Configurari", Image="SettingsButton.Dark.png"},
             
             };
             menuBtnColl.ItemsSource = menuBtnList;

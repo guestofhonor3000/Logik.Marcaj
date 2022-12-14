@@ -6,30 +6,21 @@
         <Grid Style="{DynamicResource mainGrid}">
 
             <Grid.RowDefinitions>
-                
-                <RowDefinition Height="9.2*"/>
-                <RowDefinition Height=".8*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="19*"/>
             </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="10*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-
-            <StackLayout Grid.Row="1"
-                         Grid.Column="0"
-                         Grid.ColumnSpan="3"
+            <StackLayout Grid.Row="0"
                          Orientation="Horizontal"
                          Style="{DynamicResource mainStack}"
                          HorizontalOptions="Fill">
 
-                <Frame Style="{DynamicResource mainBtnFrame}"
+                <Frame Style="{DynamicResource mainFrame}"
                        HorizontalOptions="Start">
                     <ImageButton  Source="BackIcon.png"
                                   Aspect="AspectFill"
                                   x:Name="btnBack" 
-                                  Clicked= "btnBack_Clicked"
+                                  Clicked="btnBack_Clicked"
                                   Margin="-10"/>
                 </Frame>
 
@@ -39,168 +30,161 @@
                        VerticalOptions="Center"/>
 
             </StackLayout>
+            
+            <Grid Grid.Row="1"
+                  x:Name="pageGrid">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="20*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0"
+                      x:Name="tblGroups">
+                    
+                    <Button Grid.Row="0"
+                            VerticalOptions="Fill"
+                            HorizontalOptions="Fill"
+                            Style="{DynamicResource btn}"
+                            x:Name="showGroups"
+                            Clicked="showGroups_Clicked"
+                            Text="Extinde"
+                            IsVisible="false"/>
+
+                    <ListView  x:Name="lstvwGrupMese" 
+                               ItemSelected="lstvwGrupMese_ItemSelected"/>
 
 
-            <Grid Grid.Row="0"
-                  Grid.Column="0">
+                    <Grid Grid.Row="2"
+                          x:Name="filtersGrid"
+                          HorizontalOptions="Fill" 
+                          VerticalOptions="End"
+                          Margin="5">
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="8*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                <ListView  Grid.Row="0"
-                           x:Name="lstvwGrupMese" 
-                           ItemSelected="lstvwGrupMese_ItemSelected"
-                           SelectionMode="Single"
-                           HorizontalOptions="Start">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
-                    <ListView.ItemTemplate>
+                        <Switch Grid.Column="1"
+                                Grid.Row="0"
+                                x:Name="smokingSwitch"
+                                IsToggled="False"
+                                Toggled="smokingSwitch_Toggled"
+                                OnColor="#4db290"
+                                HorizontalOptions="Fill"/>
+                        <Label Text="Fumatori:"
+                               Grid.Column="0"
+                               Grid.Row="0"
+                               MaxLines="1"
+                               HorizontalTextAlignment="Start"
+                               HorizontalOptions="Fill"
+                               Style="{DynamicResource mainBtnLabel}"/>
+
+                        <Switch Grid.Column="1"
+                                Grid.Row="1"
+                                x:Name="windowSwitch"
+                                IsToggled="False"
+                                Toggled="windowSwitch_Toggled"
+                                OnColor="#4db290"
+                                HorizontalOptions="Fill"/>
+                        <Label Text="Fereastra:"
+                               Grid.Column="0"
+                               Grid.Row="1"
+                               MaxLines="1"
+                               HorizontalTextAlignment="Start"
+                               HorizontalOptions="Fill"
+                               Style="{DynamicResource mainBtnLabel}"/>
+
+                        <Switch Grid.Column="1"
+                                Grid.Row="2"
+                                x:Name="boothSwitch"
+                                IsToggled="False"
+                                Toggled="boothSwitch_Toggled"
+                                OnColor="#4db290"
+                                HorizontalOptions="Fill"/>
+                        <Label Text="Cabina:"
+                               Grid.Column="0"
+                               Grid.Row="2"
+                               MaxLines="1"
+                               HorizontalTextAlignment="Start"
+                               HorizontalOptions="Fill"
+                               Style="{DynamicResource mainBtnLabel}"/>
+                    </Grid>
+                </Grid>
+            
+            
+                <CollectionView  x:Name="tblLayoutColl"
+                                 Grid.Column="1"
+                                 SelectionMode="None"
+                                 VerticalScrollBarVisibility="Never">
+
+                    <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <ViewCell>
 
-                                <Frame Style="{DynamicResource thirdBtnFrame}">
-                                    <Label Text="{Binding TableGroupText}"
-                                           Style="{DynamicResource mainBtnLabel}"/>
-                                </Frame>
-                            </ViewCell>
+                            <AbsoluteLayout HeightRequest="95"
+                                            WidthRequest="100">
+
+                                <ImageButton IsVisible="{Binding Visible}"
+                                            Source="{Binding Text}"
+                                            AutomationId="{Binding TableText}"
+                                            Clicked="ImageButton_Clicked"                                  
+                                            AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                                            AbsoluteLayout.LayoutFlags="All"/>
+
+                                <Label      Text="{Binding TableText}"
+                                            TextColor="White" 
+                                            FontSize="26" 
+                                            FontFamily="Verdana"  
+                                            FontAttributes="Bold" 
+                                            BackgroundColor="Transparent"
+                                            AbsoluteLayout.LayoutFlags="PositionProportional"
+                                            AbsoluteLayout.LayoutBounds="0.5,0.36"
+                                            IsEnabled="False"/>
+
+
+
+                                <Label      Text="{Binding TimeOpened}"
+                                            TextColor="White" 
+                                            FontSize="10"
+                                            IsVisible="{Binding TimeOpenedVisible}"
+                                            FontFamily="Verdana"  
+                                            FontAttributes="Bold" 
+                                            BackgroundColor="Transparent"
+                                            AbsoluteLayout.LayoutFlags="PositionProportional"
+                                            AbsoluteLayout.LayoutBounds="0,1"/>
+
+                                <Label      FontSize="Micro"
+                                            TextColor="White"
+                                            FontFamily="Verdana"
+                                            FontAttributes="Italic"
+                                            Text="{Binding EmpName}"
+                                            AbsoluteLayout.LayoutFlags="PositionProportional"
+                                            AbsoluteLayout.LayoutBounds="0,0"
+                                            />
+
+                            </AbsoluteLayout>
+
                         </DataTemplate>
-                    </ListView.ItemTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
-                </ListView>
 
-                <Grid Grid.Row="1"
-                      HorizontalOptions="Fill" 
-                      VerticalOptions="Start"
-                      Margin="2">
+                <Grid Grid.Column="2"
+                      Padding="5"
+                      x:Name="tblOrders">
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                    <StackLayout x:Name="gridLists"/>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <Switch Grid.Column="0"
-                            Grid.Row="0"
-                            x:Name="smokingSwitch"
-                            IsToggled="False"
-                            Toggled="smokingSwitch_Toggled"
-                            OnColor="#478547"/>
-                    <Label Text="Fumatori"
-                           Grid.Column="0"
-                           Grid.Row="1"
-                           MaxLines="1"
-                           HorizontalTextAlignment="Start"
-                           HorizontalOptions="Fill"
-                           Style="{DynamicResource mainBtnLabel}"/>
-
-                    <Switch Grid.Column="1"
-                            Grid.Row="0"
-                            x:Name="windowSwitch"
-                            IsToggled="False"
-                            Toggled="windowSwitch_Toggled"
-                            OnColor="#478547"/>
-                    <Label Text="Fereastra"
-                           Grid.Column="1"
-                           Grid.Row="1"
-                           MaxLines="1"
-                           HorizontalTextAlignment="Start"
-                           HorizontalOptions="Fill"
-                           Style="{DynamicResource mainBtnLabel}"/>
-
-                    <Switch Grid.Column="2"
-                            Grid.Row="0"
-                            x:Name="boothSwitch"
-                            IsToggled="False"
-                            Toggled="boothSwitch_Toggled"
-                            OnColor="#478547"/>
-                    <Label Text="Cabina"
-                           Grid.Column="2"
-                           Grid.Row="1"
-                           MaxLines="1"
-                           HorizontalTextAlignment="Start"
-                           HorizontalOptions="Fill"
-                           Style="{DynamicResource mainBtnLabel}"/>
                 </Grid>
             </Grid>
-            
-            
-            <CollectionView  x:Name="tblLayoutColl"
-                             Grid.Column="1"
-                             Grid.Row="0"
-                             SelectionMode="None"
-                             VerticalScrollBarVisibility="Never">
-
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-
-                        <AbsoluteLayout HeightRequest="95"
-                                        WidthRequest="100">
-
-                            <ImageButton IsVisible="{Binding Visible}"
-                                        Source="{Binding Text}"
-                                        AutomationId="{Binding TableText}"
-                                        Clicked="ImageButton_Clicked"                                  
-                                        AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
-                                        AbsoluteLayout.LayoutFlags="All"/>
-
-                            <Label      Text="{Binding TableText}"
-                                        TextColor="White" 
-                                        FontSize="26" 
-                                        FontFamily="Verdana"  
-                                        FontAttributes="Bold" 
-                                        BackgroundColor="Transparent"
-                                        AbsoluteLayout.LayoutFlags="PositionProportional"
-                                        AbsoluteLayout.LayoutBounds="0.5,0.36"
-                                        IsEnabled="False"/>
-
-
-
-                            <Label      Text="{Binding TimeOpened}"
-                                        TextColor="White" 
-                                        FontSize="10"
-                                        IsVisible="{Binding TimeOpenedVisible}"
-                                        FontFamily="Verdana"  
-                                        FontAttributes="Bold" 
-                                        BackgroundColor="Transparent"
-                                        AbsoluteLayout.LayoutFlags="PositionProportional"
-                                        AbsoluteLayout.LayoutBounds="0,1"/>
-
-                            <Label      FontSize="Micro"
-                                        TextColor="White"
-                                        FontFamily="Verdana"
-                                        FontAttributes="Italic"
-                                        Text="{Binding EmpName}"
-                                        AbsoluteLayout.LayoutFlags="PositionProportional"
-                                        AbsoluteLayout.LayoutBounds="0,0"
-                                        />
-
-                        </AbsoluteLayout>
-
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-
-
-            <Grid Grid.Column="2"
-                  Grid.Row="0">
-                
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <ScrollView Grid.Row="0">
-                    <StackLayout x:Name="gridLists">
-                    </StackLayout>
-                </ScrollView>
-
-            </Grid>
-
         </Grid>
     </ContentPage.Content>
 </ContentPage>

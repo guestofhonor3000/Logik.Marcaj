@@ -17,10 +17,11 @@ namespace Marcaj.Pages.Tables
     public partial class AllTables : ContentPage
     {
         EmployeeFileModel EmplFl;
-        int GroupId = 1;
-        bool isMoving = false;
-        int OrderId = 0;
-        string Flag = "";
+        int GroupId;
+        bool isMoving;
+        int OrderId;
+        string Flag;
+        bool showingGroups;
         bool IsFirstLoad = true;
         View itemsToShow;
         List<DineInTableModel> dineIns;
@@ -50,7 +51,17 @@ namespace Marcaj.Pages.Tables
 
             Clock.Text = DateTime.Now.ToString();
 
+            GroupId = 1;
+            isMoving = false;
+            OrderId = 0;
+            Flag = "";
+            showingGroups = true;
+
             PopList(GroupId, Flag);
+
+            Debug.WriteLine(IsFirstLoad);
+            Debug.WriteLine(GroupId);
+
             MessagingCenter.Subscribe<NotActiveTable>(this, "Up", (sender) =>
             {
                 PopList(GroupId, Flag);
@@ -64,6 +75,7 @@ namespace Marcaj.Pages.Tables
                 PopList(GroupId, Flag);
             });
         }
+
         async void SyncPage()
         {
 
@@ -204,7 +216,6 @@ namespace Marcaj.Pages.Tables
                 ltable.RowGUID = order.RowGUID;
 
                 await App.manager.iPostOrderHeader(ltable);
-
             }
 
             var idsInArr = idsIn.ToArray();
@@ -228,7 +239,6 @@ namespace Marcaj.Pages.Tables
                 ltable.MenuItemTextOT = orderTran.MenuItemTextOT;
 
                 lstOT.Add(ltable);
-
             }
             await App.manager.iPostOrderTransactionSync(lstOT);
             MainThread.BeginInvokeOnMainThread(async () =>
@@ -252,12 +262,16 @@ namespace Marcaj.Pages.Tables
 
                     if (b != null)
                     {
+                        Debug.WriteLine("group sounce no null");
                         lstvwGrupMese.ItemsSource = b;
                         lstvwGrupMese.SelectedItem = b[0];
                     }
 
+                    switchLayout();
+
                     var dineInss = await App.manager.iGetDineInTablesByTableGroup(GroupID);
                     dineInsAndEmp = dineInss;
+
                     if (dineInss != null)
                     {
                         var dineInGroup = dineInGroups.Where(x => x.TableGroupID == GroupID).FirstOrDefault();
@@ -310,7 +324,6 @@ namespace Marcaj.Pages.Tables
                                         tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fereastra = true;
                                     }
 
-                                    Debug.WriteLine(tblFlags);
                                     var filter = tblFlags.Contains(flag);
 
                                     if (dine.DineIn.MaxGuests == 2)
@@ -481,7 +494,6 @@ namespace Marcaj.Pages.Tables
                             }
                         }
                         tblLayoutColl.ItemsSource = tblLayout;
-                        IsFirstLoad = false;
                     }
                 }
                 else
@@ -497,9 +509,11 @@ namespace Marcaj.Pages.Tables
                     if (b != null)
                     {
                         lstvwGrupMese.ItemsSource = b;
+                        lstvwGrupMese.SelectedItem = b[0];
                     }
+                    switchLayout();
                 }
-
+                IsFirstLoad = false;
             }
             else
             {
@@ -546,9 +560,6 @@ namespace Marcaj.Pages.Tables
                             {
                                 if (Convert.ToInt32(dine.DineIn.DisplayPosition) <= nrPos)
                                 {
-                                    //Debug.WriteLine(dine.Opened);
-                                    //Debug.WriteLine(dine.EmpName);
-
                                     if ((bool)dine.DineIn.Booth)
                                     {
                                         tblFlags += "b";
@@ -565,7 +576,6 @@ namespace Marcaj.Pages.Tables
                                         tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fereastra = true;
                                     }
 
-                                    Debug.WriteLine(tblFlags);
                                     var filter = tblFlags.Contains(flag);
 
                                     if (dine.DineIn.MaxGuests == 2)
@@ -736,7 +746,6 @@ namespace Marcaj.Pages.Tables
                             }
                         }
                         tblLayoutColl.ItemsSource = tblLayout;
-                        IsFirstLoad = false;
                     }
                 }
                 else
@@ -750,9 +759,41 @@ namespace Marcaj.Pages.Tables
             }
         }
 
+        private void lstvwGrupMese_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (IsFirstLoad == false)
+            {
+                if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+                {
+                    var selIt = e.SelectedItem as DineInTableGroupModel;
+                    GroupId = selIt.TableGroupID;
+                    Debug.WriteLine("Net");
+                    Debug.WriteLine(GroupId);
+                    Debug.WriteLine(Flag);
+                    PopList(GroupId, Flag);
+                }
+                else
+                {
+                    var selIt = e.SelectedItem as LDineInTableGroupsModel;
+                    GroupId = selIt.TableGroupID;
+                    Debug.WriteLine("Local");
+                    Debug.WriteLine(GroupId);
+                    Debug.WriteLine(Flag);
+                    PopList(GroupId, Flag);
+                }
+            }
+        }
+
         async void ShowOrders(int TableID)
         {
+            if (showingGroups == true)
+            {
+                showingGroups = false;
+                switchLayout();
+            }
+            tblOrders.Children.Clear();
             gridLists.Children.Clear();
+
             var b = dineInsAndEmp.Where(x => x.DineIn.DineInTableID == TableID).FirstOrDefault();
             orderHeadersList = await App.manager.iGetOrderHeadersByDineInTableID(TableID);
 
@@ -761,8 +802,7 @@ namespace Marcaj.Pages.Tables
                 Text = "Toate",
                 VerticalOptions = LayoutOptions.Start,
                 HorizontalOptions = LayoutOptions.Fill,
-                Padding = new Thickness(0, 10, 0, 10),
-                Margin = new Thickness(2.5, 10, 2.5, 0),
+                Margin = new Thickness(5),
             };
             toActive.SetDynamicResource(StyleProperty, "btn");
             toActive.Clicked += async (sender, args) => await Navigation.PushAsync(new ActiveTable(b.DineIn, EmplFl));
@@ -784,8 +824,17 @@ namespace Marcaj.Pages.Tables
             };
             addFrame.Content = addOrder;
 
-            gridLists.Children.Add(toActive);
-            gridLists.Children.Add(addFrame);
+            tblOrders.RowDefinitions = new RowDefinitionCollection
+            {
+                new RowDefinition{ Height = new GridLength (2, GridUnitType.Star) },
+                new RowDefinition{ Height = new GridLength (4, GridUnitType.Star) },
+                new RowDefinition{ Height = new GridLength (24, GridUnitType.Star) },
+            };
+
+            
+
+            tblOrders.Children.Add(toActive, 0, 0);
+            tblOrders.Children.Add(addFrame, 0, 1);
 
             foreach (var orderHeader in orderHeadersList)
             {
@@ -852,7 +901,6 @@ namespace Marcaj.Pages.Tables
                     OrderHeader.Children.Add(hideItems);
                 };
 
-
                 hideItems.Clicked += hideItems_Clicked;
 
                 void hideItems_Clicked(object sender, EventArgs e)
@@ -908,10 +956,22 @@ namespace Marcaj.Pages.Tables
                 };
                 toOrder.SetDynamicResource(StyleProperty, "secondBtn");
 
-                orderTransactionsListByOrderID = orderTransactionsList.FindAll(x => x.OrderID == Convert.ToInt32(TableID));
-
                 // ! No Time Sync !
-                toOrder.Clicked += async (sender, args) => await Navigation.PushAsync(new ActiveTableEditPage(orderHeader, EmplFl, b.DineIn, orderTransactionsListByOrderID));
+                toOrder.Clicked += (sender, args) => toOrder_Clicked(orderHeader.OrderID);
+
+                async void toOrder_Clicked(int OrderId)
+                {
+                    var orderToEdit = orderHeadersList.Find(x => x.OrderID == OrderId);
+                    Debug.WriteLine(orderToEdit);
+                    orderTransactionsListByOrderID = orderTransactionsList.FindAll(x => x.OrderID == OrderId);
+                    Debug.WriteLine(orderTransactionsListByOrderID);
+                    foreach(var a in orderTransactionsListByOrderID)
+                    {
+                        Debug.WriteLine(a.MenuItemTextOT);
+                    }
+                    await Navigation.PushAsync(new ActiveTableEditPage(orderHeader, EmplFl, b.DineIn, orderTransactionsListByOrderID));
+                };
+
                 controls.Children.Add(moveOrder, 0, 0);
                 controls.Children.Add(toOrder, 1, 0);
 
@@ -930,13 +990,16 @@ namespace Marcaj.Pages.Tables
 
                 gridLists.Children.Add(checkFrame);
             }
+            tblOrders.Children.Add(gridLists, 0, 2);
         }
 
         async Task<View> ShowItemsInOrder(int OrderId)
-        {
+        {         
             var orderTraItems = await App.manager.iGetOrderTransactionsByOrderID(OrderId);
+            
+            ScrollView listScroll = new ScrollView();
 
-            Xamarin.Forms.ListView itemsList = new Xamarin.Forms.ListView();
+            ListView itemsList = new ListView();
             itemsList.ItemsSource = orderTraItems;
             itemsList.VerticalScrollBarVisibility = ScrollBarVisibility.Never;
 
@@ -987,42 +1050,19 @@ namespace Marcaj.Pages.Tables
                     BackgroundColor = Color.White,
                     BorderColor = Color.Gray,
                     VerticalOptions = LayoutOptions.Start,
-                    HorizontalOptions = LayoutOptions.Center,
+                    HorizontalOptions = LayoutOptions.Fill,
                     Padding = new Thickness(5),
-
+                    Margin = new Thickness(5),
                 };
                 itemFrame.Content = grid;
 
                 view.View = itemFrame;
                 return view;
             });
-
-            itemsToShow = itemsList;
+            listScroll.Content = itemsList;
+            itemsToShow = listScroll;
             return itemsToShow;
         }
-
-        private void lstvwGrupMese_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            if (IsFirstLoad != true)
-            {
-                if (Connectivity.NetworkAccess == NetworkAccess.Internet)
-                {
-                    var selIt = e.SelectedItem as DineInTableGroupModel;
-                    GroupId = selIt.TableGroupID;
-                    IsFirstLoad = false;
-                    PopList(GroupId, Flag);
-                }
-                else
-                {
-                    var selIt = e.SelectedItem as LDineInTableGroupsModel;
-                    GroupId = selIt.TableGroupID;
-                    IsFirstLoad = false;
-                    PopList(GroupId, Flag);
-                }
-            }
-
-        }
-
 
         async void ImageButton_Clicked(object sender, EventArgs e)
         {
@@ -1075,13 +1115,12 @@ namespace Marcaj.Pages.Tables
                 Flag += 's';
                 Flag = OrderFlag(Flag);
             }
-            else if (smokingSwitch.IsToggled == false && IsFirstLoad == false)
+            else if (smokingSwitch.IsToggled == false)
             {
                 char a = 's';
                 Flag = Flag.Trim(a);
                 Flag = OrderFlag(Flag);
             }
-            Debug.WriteLine(Flag);
             PopList(GroupId, Flag);
         }
 
@@ -1092,13 +1131,12 @@ namespace Marcaj.Pages.Tables
                 Flag += 'w';
                 Flag = OrderFlag(Flag);
             }
-            else if (windowSwitch.IsToggled == false && IsFirstLoad == false)
+            else if (windowSwitch.IsToggled == false)
             {
                 char a = 'w';
                 Flag = Flag.Trim(a);
                 Flag = OrderFlag(Flag);
             }
-            Debug.WriteLine(Flag);
             PopList(GroupId, Flag);
         }
 
@@ -1109,13 +1147,12 @@ namespace Marcaj.Pages.Tables
                 Flag += 'b';
                 Flag = OrderFlag(Flag);
             }
-            else if (boothSwitch.IsToggled == false && IsFirstLoad == false)
+            else if (boothSwitch.IsToggled == false)
             {
                 char a = 'b';
                 Flag = Flag.Trim(a);
                 Flag = OrderFlag(Flag);
             }
-            Debug.WriteLine(Flag);
             PopList(GroupId, Flag);
         }
 
@@ -1124,6 +1161,108 @@ namespace Marcaj.Pages.Tables
             char[] flags = flag.ToArray();
             Array.Sort(flags);
             return new string(flags);
+        }
+
+        private void switchLayout()
+        {
+            if (showingGroups)
+            {
+                pageGrid.ColumnDefinitions = new ColumnDefinitionCollection
+                {
+                    new ColumnDefinition{ Width = new GridLength(4, GridUnitType.Star) },
+                    new ColumnDefinition { Width = new GridLength(25, GridUnitType.Star) },
+                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
+                };
+
+                tblGroups.RowDefinitions = new RowDefinitionCollection
+                {
+                    new RowDefinition{ Height = new GridLength (8, GridUnitType.Star) },
+                    new RowDefinition{ Height = new GridLength (2, GridUnitType.Star) },
+                };
+
+                tblGroups.Children.Remove(showGroups);
+                showGroups.IsVisible = false;
+                tblGroups.Children.Remove(lstvwGrupMese);
+
+                lstvwGrupMese.ItemTemplate = new DataTemplate(() =>
+                {
+                    ViewCell view = new ViewCell();
+
+                    Label tblGroupText = new Label
+                    {
+                        HorizontalTextAlignment = TextAlignment.Start,
+                        VerticalTextAlignment = TextAlignment.Center,
+                    };
+                    tblGroupText.SetDynamicResource(StyleProperty, "mainBtnLabel");
+                    tblGroupText.SetBinding(Label.TextProperty, "TableGroupText");
+
+                    Frame tblGroupFrame = new Frame();
+                    tblGroupFrame.SetDynamicResource(StyleProperty, "mainFrame");
+                    tblGroupFrame.Content = tblGroupText;
+
+                    view.View = tblGroupFrame;
+                    return view;
+                });
+
+                tblGroups.Children.Add(lstvwGrupMese, 0, 0);
+                tblGroups.Children.Add(filtersGrid, 0, 1);
+                tblGroups.SetDynamicResource(StyleProperty, "secondGrid");
+
+                pageGrid.Children.Add(tblGroups, 0, 0);
+                pageGrid.Children.Remove(tblOrders);
+            } 
+            else if (showingGroups == false)
+            {              
+                pageGrid.ColumnDefinitions = new ColumnDefinitionCollection
+                {
+                    new ColumnDefinition{ Width = new GridLength(2, GridUnitType.Star) },
+                    new ColumnDefinition{ Width = new GridLength(25, GridUnitType.Star) },
+                    new ColumnDefinition { Width = new GridLength(5, GridUnitType.Star) },
+                };
+
+                tblGroups.RowDefinitions = new RowDefinitionCollection
+                {
+                    new RowDefinition{ Height = new GridLength (2, GridUnitType.Star) },
+                    new RowDefinition{ Height = new GridLength (18, GridUnitType.Star) },
+                };
+
+                tblGroups.Children.Remove(filtersGrid);
+                tblGroups.Children.Remove(lstvwGrupMese);
+
+                lstvwGrupMese.ItemTemplate = new DataTemplate(() =>
+                {
+                    ViewCell view = new ViewCell();
+
+                    Label tblGroupText = new Label
+                    {
+                        HorizontalTextAlignment = TextAlignment.Start,
+                        VerticalTextAlignment = TextAlignment.Center,
+                    };
+                    tblGroupText.SetDynamicResource(StyleProperty, "mainBtnLabel");
+                    tblGroupText.SetBinding(Label.TextProperty, "TableGroupID");
+
+                    Frame tblGroupFrame = new Frame();
+                    tblGroupFrame.SetDynamicResource(StyleProperty, "mainFrame");
+                    tblGroupFrame.Content = tblGroupText;
+
+                    view.View = tblGroupFrame;
+                    return view;
+                });
+                tblGroups.Children.Add(showGroups, 0, 0);
+                showGroups.IsVisible = true;
+                tblGroups.Children.Add(lstvwGrupMese, 0, 1);
+                tblGroups.SetDynamicResource(StyleProperty, "mainGrid");
+                tblOrders.SetDynamicResource(StyleProperty, "secondGrid");
+
+                pageGrid.Children.Add(tblGroups, 0, 0);
+                pageGrid.Children.Add(tblOrders, 2, 0);
+            };
+        }
+
+        private void showGroups_Clicked(object sender, EventArgs e)
+        {
+            showingGroups = true;
+            switchLayout();
         }
     }
 

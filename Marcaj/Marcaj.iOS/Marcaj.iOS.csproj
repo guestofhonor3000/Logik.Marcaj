@@ -319,4 +319,61 @@
   <ItemGroup>
     <BundleResource Include="Resources\ClockInIconSml.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\RecallButton.Light.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\RecallButton.Dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\DineInButton.Dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\DineInButton.Light.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\FastServiceButton.Dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\FastServiceButton.Light.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\SettingsButton.Dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\SettingsButton.Light.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\BillingButton.Dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\BillingButton.Light.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\DeliveryButton.Dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\DeliveryButton.Light.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ReportsButton.Dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ReportsButton.Light.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ReservationButton.Dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ReservationButton.Light.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\OperationsButton.Light.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\OperationsButton.Dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\PlaceholderButton.Dark.png" />
+  </ItemGroup>
 </Project>

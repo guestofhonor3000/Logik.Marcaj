@@ -59,7 +59,7 @@
 
             <Button Grid.Row="5" Grid.Column="1" Text="DEL"  x:Name="btnDel" Clicked="btnDel_Clicked" Style="{DynamicResource btn}"/>
             <Button Grid.Row="5" Grid.Column="2" Text="0" x:Name="btn0" Clicked="btn0_Clicked" Style="{DynamicResource btn}"/>
-            <Button Grid.Row="5" Grid.Column="3"  Text="OK" x:Name="btnSignIn" Clicked="btnSignIn_Clicked" BackgroundColor="#478547" CornerRadius="4" FontFamily="Verdana" FontSize="Small" Margin="5" />
+            <Button Grid.Row="5" Grid.Column="3"  Text="OK" x:Name="btnSignIn" Clicked="btnSignIn_Clicked" BackgroundColor="#4db290" CornerRadius="4" FontFamily="Verdana" FontSize="Small" Margin="5" />
 
 
         </Grid>
