@@ -560,20 +560,27 @@ namespace Marcaj.Pages.Tables
                             {
                                 if (Convert.ToInt32(dine.DineIn.DisplayPosition) <= nrPos)
                                 {
-                                    if ((bool)dine.DineIn.Booth)
+                                    try
                                     {
-                                        tblFlags += "b";
-                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Cabina = true;
+                                        if ((bool)dine.DineIn.Booth)
+                                        {
+                                            tblFlags += "b";
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Cabina = true;
+                                        }
+                                        if ((bool)dine.DineIn.Smoking)
+                                        {
+                                            tblFlags += "s";
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fumatori = true;
+                                        }
+                                        if ((bool)dine.DineIn.Window)
+                                        {
+                                            tblFlags += "w";
+                                            tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fereastra = true;
+                                        }
                                     }
-                                    if ((bool)dine.DineIn.Smoking)
+                                   catch
                                     {
-                                        tblFlags += "s";
-                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fumatori = true;
-                                    }
-                                    if ((bool)dine.DineIn.Window)
-                                    {
-                                        tblFlags += "w";
-                                        tblLayout.Where(x => x.Position == dine.DineIn.DisplayPosition).FirstOrDefault().Fereastra = true;
+
                                     }
 
                                     var filter = tblFlags.Contains(flag);

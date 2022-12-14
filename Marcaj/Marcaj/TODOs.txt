@@ -15,7 +15,7 @@ SETARI PERIFERICE
 -cauatre em pe order//done
 -update orderheader orderstatus// done
 -bug -> ordertran populates twice//not anymore baby
-
+-bug -> table groups //done
 
 
 
