@@ -786,6 +786,9 @@ namespace Marcaj.Pages.Tables
 
         async void ShowOrders(int TableID)
         {
+            var index = 0;
+            var grids = 0;
+
             if (showingGroups == true)
             {
                 showingGroups = false;
@@ -824,20 +827,21 @@ namespace Marcaj.Pages.Tables
             };
             addFrame.Content = addOrder;
 
-            tblOrders.RowDefinitions = new RowDefinitionCollection
+            tblOrders.Children.Add(toActive);
+            tblOrders.Children.Add(addFrame);
+
+            gridLists.RowDefinitions = new RowDefinitionCollection
             {
-                new RowDefinition{ Height = new GridLength (2, GridUnitType.Star) },
-                new RowDefinition{ Height = new GridLength (4, GridUnitType.Star) },
-                new RowDefinition{ Height = new GridLength (24, GridUnitType.Star) },
+                new RowDefinition { Height = GridLength.Star },
+                new RowDefinition { Height = GridLength.Star },
+                new RowDefinition { Height = GridLength.Star },
+                new RowDefinition { Height = GridLength.Star },
             };
-
-            
-
-            tblOrders.Children.Add(toActive, 0, 0);
-            tblOrders.Children.Add(addFrame, 0, 1);
 
             foreach (var orderHeader in orderHeadersList)
             {
+                index++;
+
                 StackLayout OrderHeader = new StackLayout();
 
                 Label Header = new Label
@@ -957,20 +961,7 @@ namespace Marcaj.Pages.Tables
                 toOrder.SetDynamicResource(StyleProperty, "secondBtn");
 
                 // ! No Time Sync !
-                toOrder.Clicked += (sender, args) => toOrder_Clicked(orderHeader.OrderID);
-
-                async void toOrder_Clicked(int OrderId)
-                {
-                    var orderToEdit = orderHeadersList.Find(x => x.OrderID == OrderId);
-                    Debug.WriteLine(orderToEdit);
-                    orderTransactionsListByOrderID = orderTransactionsList.FindAll(x => x.OrderID == OrderId);
-                    Debug.WriteLine(orderTransactionsListByOrderID);
-                    foreach(var a in orderTransactionsListByOrderID)
-                    {
-                        Debug.WriteLine(a.MenuItemTextOT);
-                    }
-                    await Navigation.PushAsync(new ActiveTableEditPage(orderHeader, EmplFl, b.DineIn, orderTransactionsListByOrderID));
-                };
+                toOrder.Clicked += (sender, args) => toOrder_Clicked(orderHeader.OrderID, TableID);
 
                 controls.Children.Add(moveOrder, 0, 0);
                 controls.Children.Add(toOrder, 1, 0);
@@ -988,10 +979,26 @@ namespace Marcaj.Pages.Tables
                 checkFrame.Content = OrderHeader;
                 OrderHeader.ClassId = orderHeader.OrderID.ToString();
 
-                gridLists.Children.Add(checkFrame);
+                gridLists.Children.Add(checkFrame, 0, index - 1);
+                
+                if (index % 5 == 0)
+                {
+                    tblOrders.Children.Add(gridLists = new Grid
+                    {
+                        RowDefinitions = new RowDefinitionCollection
+                        {
+                            new RowDefinition{Height = GridLength.Star},
+                            new RowDefinition{Height = GridLength.Star},
+                            new RowDefinition{Height = GridLength.Star},
+                            new RowDefinition{Height = GridLength.Star},
+                        }
+                    });
+                };
+                tblOrders.Children.Add(gridLists);
             }
-            tblOrders.Children.Add(gridLists, 0, 2);
+
         }
+
 
         async Task<View> ShowItemsInOrder(int OrderId)
         {         
@@ -1095,6 +1102,26 @@ namespace Marcaj.Pages.Tables
                     await Navigation.PushAsync(new NotActiveTable(b.DineIn, EmplFl, "closed"));
                 }
             }
+        }
+
+        async void toOrder_Clicked(int OrdId, int TblId)
+        {
+            Debug.WriteLine(OrdId);
+            Debug.WriteLine(TblId);
+
+            var b = dineInsAndEmp.Where(x => x.DineIn.DineInTableID == TblId).FirstOrDefault();
+            orderHeadersList = await App.manager.iGetOrderHeadersByDineInTableID(TblId);
+            var oo = await App.manager.iGetOrderTransactionsByOrderID(OrderId);
+            var orderToEdit = orderHeadersList.Find(x => x.OrderID == OrdId);
+            Debug.WriteLine(orderToEdit);
+            orderTransactionsListByOrderID = orderTransactionsList.FindAll(x => x.OrderID == OrdId);
+            Debug.WriteLine(orderTransactionsListByOrderID);
+
+            foreach (var a in orderTransactionsListByOrderID)
+            {
+                Debug.WriteLine(a.MenuItemTextOT);
+            }
+            await Navigation.PushAsync(new ActiveTableEditPage(orderHeader, EmplFl, b.DineIn, oo));
         }
 
         private void moveOrder_Clicked(object sender, int id)
@@ -1209,7 +1236,7 @@ namespace Marcaj.Pages.Tables
                 tblGroups.SetDynamicResource(StyleProperty, "secondGrid");
 
                 pageGrid.Children.Add(tblGroups, 0, 0);
-                pageGrid.Children.Remove(tblOrders);
+                pageGrid.Children.Remove(tblOrdersScroll);
             } 
             else if (showingGroups == false)
             {              
@@ -1252,10 +1279,10 @@ namespace Marcaj.Pages.Tables
                 showGroups.IsVisible = true;
                 tblGroups.Children.Add(lstvwGrupMese, 0, 1);
                 tblGroups.SetDynamicResource(StyleProperty, "mainGrid");
-                tblOrders.SetDynamicResource(StyleProperty, "secondGrid");
+                //tblOrders.SetDynamicResource(StyleProperty, "secondGrid");
 
                 pageGrid.Children.Add(tblGroups, 0, 0);
-                pageGrid.Children.Add(tblOrders, 2, 0);
+                pageGrid.Children.Add(tblOrdersScroll, 2, 0);
             };
         }
 

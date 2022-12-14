@@ -176,14 +176,17 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
 
-
-                <Grid Grid.Column="2"
-                      Padding="5"
+                <ScrollView Grid.Column="2"
+                            x:Name="tblOrdersScroll">
+                <StackLayout Padding="5"
                       x:Name="tblOrders">
+                    
+                        <Grid x:Name="gridLists">
 
-                    <StackLayout x:Name="gridLists"/>
-
-                </Grid>
+                        </Grid>
+                    
+                </StackLayout>
+                </ScrollView>
             </Grid>
         </Grid>
     </ContentPage.Content>
