@@ -149,8 +149,6 @@
                                             AbsoluteLayout.LayoutBounds="0.5,0.36"
                                             IsEnabled="False"/>
 
-
-
                                 <Label      Text="{Binding TimeOpened}"
                                             TextColor="White" 
                                             FontSize="10"
@@ -177,15 +175,15 @@
                 </CollectionView>
 
                 <ScrollView Grid.Column="2"
-                            x:Name="tblOrdersScroll">
-                <StackLayout Padding="5"
-                      x:Name="tblOrders">
+                            x:Name="ordersScrollView">
                     
-                        <Grid x:Name="gridLists">
+                    <StackLayout Padding="5"
+                                 x:Name="tblOrders">
 
+                        <Grid x:Name="gridLists">
                         </Grid>
                     
-                </StackLayout>
+                    </StackLayout>
                 </ScrollView>
             </Grid>
         </Grid>

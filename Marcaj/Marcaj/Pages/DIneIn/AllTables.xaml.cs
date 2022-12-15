@@ -794,13 +794,13 @@ namespace Marcaj.Pages.Tables
         async void ShowOrders(int TableID)
         {
             var index = 0;
-            var grids = 0;
 
             if (showingGroups == true)
             {
                 showingGroups = false;
                 switchLayout();
             }
+
             tblOrders.Children.Clear();
             gridLists.Children.Clear();
 
@@ -836,14 +836,6 @@ namespace Marcaj.Pages.Tables
 
             tblOrders.Children.Add(toActive);
             tblOrders.Children.Add(addFrame);
-
-            gridLists.RowDefinitions = new RowDefinitionCollection
-            {
-                new RowDefinition { Height = GridLength.Star },
-                new RowDefinition { Height = GridLength.Star },
-                new RowDefinition { Height = GridLength.Star },
-                new RowDefinition { Height = GridLength.Star },
-            };
 
             foreach (var orderHeader in orderHeadersList)
             {
@@ -957,7 +949,6 @@ namespace Marcaj.Pages.Tables
                 };
                 moveOrder.SetDynamicResource(StyleProperty, "secondBtn");
 
-
                 moveOrder.Clicked += (sender, args) => moveOrder_Clicked(sender, orderHeader.OrderID);
 
                 Button toOrder = new Button
@@ -982,28 +973,30 @@ namespace Marcaj.Pages.Tables
                     BackgroundColor = Color.FromHex("#d9d9d9"),
                 };
 
-                checkFrame.AutomationId = OrderHeader.ClassId;
-                checkFrame.Content = OrderHeader;
-                OrderHeader.ClassId = orderHeader.OrderID.ToString();
 
+                //checkFrame.AutomationId = OrderHeader.ClassId;
+                //OrderHeader.ClassId = orderHeader.OrderID.ToString();
+
+                checkFrame.Content = OrderHeader;
                 gridLists.Children.Add(checkFrame, 0, index - 1);
-                
-                if (index % 5 == 0)
+
+                /*if (index % 4 == 0)
                 {
                     tblOrders.Children.Add(gridLists = new Grid
                     {
                         RowDefinitions = new RowDefinitionCollection
-                        {
-                            new RowDefinition{Height = GridLength.Star},
-                            new RowDefinition{Height = GridLength.Star},
-                            new RowDefinition{Height = GridLength.Star},
-                            new RowDefinition{Height = GridLength.Star},
-                        }
+                         {
+                             new RowDefinition{Height = GridLength.Star},
+                             new RowDefinition{Height = GridLength.Star},
+                             new RowDefinition{Height = GridLength.Star},
+                             new RowDefinition{Height = GridLength.Star},
+                         }
                     });
                 };
-                tblOrders.Children.Add(gridLists);
-            }
 
+                gridLists.Children.Add(checkFrame, 0, index - 1);*/
+            }
+             tblOrders.Children.Add(gridLists);
         }
 
 
@@ -1011,8 +1004,6 @@ namespace Marcaj.Pages.Tables
         {         
             var orderTraItems = await App.manager.iGetOrderTransactionsByOrderID(OrderId);
             
-            ScrollView listScroll = new ScrollView();
-
             ListView itemsList = new ListView();
             itemsList.ItemsSource = orderTraItems;
             itemsList.VerticalScrollBarVisibility = ScrollBarVisibility.Never;
@@ -1073,8 +1064,7 @@ namespace Marcaj.Pages.Tables
                 view.View = itemFrame;
                 return view;
             });
-            listScroll.Content = itemsList;
-            itemsToShow = listScroll;
+            itemsToShow = itemsList;
             return itemsToShow;
         }
 
@@ -1102,7 +1092,7 @@ namespace Marcaj.Pages.Tables
                 if (b.Opened)
                 {
                     var Id = b.DineIn.DineInTableID;
-                    ShowOrders(Id);
+                    ShowOrders(Id);                    
                 }
                 else
                 {
@@ -1243,7 +1233,7 @@ namespace Marcaj.Pages.Tables
                 tblGroups.SetDynamicResource(StyleProperty, "secondGrid");
 
                 pageGrid.Children.Add(tblGroups, 0, 0);
-                pageGrid.Children.Remove(tblOrdersScroll);
+                pageGrid.Children.Remove(ordersScrollView);
             } 
             else if (showingGroups == false)
             {              
@@ -1286,10 +1276,10 @@ namespace Marcaj.Pages.Tables
                 showGroups.IsVisible = true;
                 tblGroups.Children.Add(lstvwGrupMese, 0, 1);
                 tblGroups.SetDynamicResource(StyleProperty, "mainGrid");
-                //tblOrders.SetDynamicResource(StyleProperty, "secondGrid");
+                tblOrders.SetDynamicResource(StyleProperty, "secondStack");
 
                 pageGrid.Children.Add(tblGroups, 0, 0);
-                pageGrid.Children.Add(tblOrdersScroll, 2, 0);
+                pageGrid.Children.Add(ordersScrollView, 2, 0);
             };
         }
 
