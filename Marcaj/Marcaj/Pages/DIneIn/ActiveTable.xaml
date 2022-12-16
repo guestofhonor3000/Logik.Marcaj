@@ -5,57 +5,49 @@
     <ContentPage.Content>
 
         <Grid Style="{DynamicResource mainGrid}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width=".5*"/>
-                <ColumnDefinition Width="9.5*"/>
-            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="19*"/>
+            </Grid.RowDefinitions>
 
-            <StackLayout Grid.Column="0"
-                         Style="{DynamicResource mainStack}">
+            <StackLayout Grid.Row="0"
+                         Orientation="Horizontal"
+                         Style="{DynamicResource mainStack}"
+                         HorizontalOptions="Fill">
 
-                <Frame Style="{DynamicResource sideBtnFrame}"
-                       VerticalOptions="Start">
-                    <Label x:Name="tableName"
-                           Style="{DynamicResource mainBtnLabel}"/>
-                </Frame>
-                
-                <Frame Style="{DynamicResource sideBtnFrame}"
-                       VerticalOptions="StartAndExpand">
-                    <ImageButton  Source="AddIcon.png"
-                                  Aspect="AspectFill"
-                                  x:Name="btnNewOrder"
-                                  Clicked="btnNewOrder_Clicked" 
-                                  Margin="-10"/>
-                </Frame>
-
-                <Frame Style="{DynamicResource sideBtnFrame}"
-                       VerticalOptions="End">
-                    <ImageButton  Source="BackIcon.png"
+                <Frame Style="{DynamicResource mainFrame}"
+                       HorizontalOptions="Start">
+                    <ImageButton  Source="BackButton.Dark.png"
                                   Aspect="AspectFill"
                                   x:Name="btnBack" 
-                                  Clicked= "btnBack_Clicked"
-                                  Margin="-10"/>
+                                  Clicked="btnBack_Clicked"
+                                  Margin="-15"/>
                 </Frame>
+
+                <Label x:Name="Clock"
+                       Style="{DynamicResource mainBtnLabel}"
+                       HorizontalOptions="CenterAndExpand"   
+                       VerticalOptions="Center"/>
             </StackLayout>
 
-            <ScrollView Grid.Row="0" Grid.Column="1">
+            <ScrollView Grid.Row="1">
                 <StackLayout x:Name="gridGridLists">
-                <Grid   x:Name="gridLists">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                    <Grid   x:Name="gridLists">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                </Grid>
-            </StackLayout>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                    </Grid>
+                </StackLayout>
             </ScrollView>
-          
         </Grid>
     </ContentPage.Content>
 </ContentPage>

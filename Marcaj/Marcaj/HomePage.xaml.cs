@@ -39,13 +39,13 @@ namespace Marcaj
             new OptionsModel { Text="Mese" , Image="DineInButton.Dark.png"},
             new OptionsModel { Text="Fast Service", Image="FastServiceButton.Dark.png" },
             new OptionsModel { Text="Livrare", Image="DeliveryButton.Dark.png"},
-            new OptionsModel { Text="Retail", Image="PlaceholderButton.Dark.png"},
+            new OptionsModel { Text="Retail", Image="RetailButton.Dark.png"},
             new OptionsModel { Text="Rezervari", Image="ReservationButton.Dark.png"},
             new OptionsModel { Text="Achita", Image="PlaceholderButton.Dark.png"},
             new OptionsModel { Text="Rechemare", Image="RecallButton.Dark.png"},
-            new OptionsModel { Text="Pontaj", Image="PlaceholderButton.Dark.png"},
+            new OptionsModel { Text="Pontaj", Image="ClockInButton.Dark.png"},
             new OptionsModel { Text="Facturare", Image="BillingButton.Dark.png"},
-            new OptionsModel { Text="Rapoarte", Image="PlaceholderButton.Dark.png"},
+            new OptionsModel { Text="Rapoarte", Image="ReportsButton.Dark.png"},
             new OptionsModel { Text="Operatii", Image="OperationsButton.Dark.png"},
             new OptionsModel { Text="Configurari", Image="SettingsButton.Dark.png"},
             
@@ -61,6 +61,7 @@ namespace Marcaj
             //SyncLocal();
             StationName.Text = "Station: "+ a.ComputerName;
             EmployeeName.Text = "Employee: " + EmplFl.FirstName;
+            TimeDate.Text = DateTime.Now.ToString();
         }
         async void SyncLocal()
         {

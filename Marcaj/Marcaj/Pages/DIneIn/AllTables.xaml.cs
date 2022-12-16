@@ -23,7 +23,6 @@ namespace Marcaj.Pages.Tables
         string Flag;
         bool showingGroups;
         bool IsFirstLoad = true;
-        View itemsToShow;
         List<DineInTableModel> dineIns;
         List<DineInTableAndEmpModel> dineInsAndEmp;
         List<DineInTableGroupModel> dineInGroups;
@@ -812,17 +811,17 @@ namespace Marcaj.Pages.Tables
                 Text = "Toate",
                 VerticalOptions = LayoutOptions.Start,
                 HorizontalOptions = LayoutOptions.Fill,
-                Margin = new Thickness(5),
+                Padding = new Thickness(8)
             };
             toActive.SetDynamicResource(StyleProperty, "btn");
             toActive.Clicked += async (sender, args) => await Navigation.PushAsync(new ActiveTable(b.DineIn, EmplFl));
 
             ImageButton addOrder = new ImageButton
             {
-                Source = "AddIcon.png",
+                Source = "AddButton.Large.png",
                 VerticalOptions = LayoutOptions.Fill,
                 HorizontalOptions = LayoutOptions.Fill,
-
+                Aspect = Aspect.AspectFill
             };
             addOrder.Clicked += async (sender, args) => await Navigation.PushAsync(new NotActiveTable(b.DineIn, EmplFl, "opened"));
 
@@ -831,17 +830,19 @@ namespace Marcaj.Pages.Tables
                 CornerRadius = 4,
                 Margin = new Thickness(5),
                 BackgroundColor = Color.FromHex("#d9d9d9"),
+                VerticalOptions = LayoutOptions.Start,
+                HorizontalOptions = LayoutOptions.Fill,
             };
             addFrame.Content = addOrder;
 
-            tblOrders.Children.Add(toActive);
-            tblOrders.Children.Add(addFrame);
+            tblOrders.Children.Insert( 0, toActive);
+            tblOrders.Children.Insert( 1, addFrame);
 
             foreach (var orderHeader in orderHeadersList)
             {
                 index++;
-
-                StackLayout OrderHeader = new StackLayout();
+                gridLists = new StackLayout();
+                gridLists.Padding = new Thickness(5);
 
                 Label Header = new Label
                 {
@@ -856,7 +857,7 @@ namespace Marcaj.Pages.Tables
                     BorderColor = Color.Gray,
                     VerticalOptions = LayoutOptions.Start,
                     HorizontalOptions = LayoutOptions.Center,
-                    Padding = new Thickness(5),
+                    Padding = new Thickness(10),
 
                 };
                 headerFrame.Content = Header;
@@ -882,6 +883,7 @@ namespace Marcaj.Pages.Tables
                 {
                     Text = "Arata",
                     Padding = new Thickness(8),
+                    Margin = new Thickness(0)
                 };
                 showItems.SetDynamicResource(StyleProperty, "secondBtn");
 
@@ -889,56 +891,128 @@ namespace Marcaj.Pages.Tables
                 {
                     Text = "Ascunde",
                     Padding = new Thickness(8),
+                    Margin = new Thickness(0)
                 };
                 hideItems.SetDynamicResource(StyleProperty, "secondBtn");
 
-                StackLayout itemsStack = new StackLayout();
+                StackLayout itemsControls = new StackLayout();
+                itemsControls.Padding = new Thickness(0);
 
-                showItems.Clicked += showItems_Clicked;
+                var orderTraItems = await App.manager.iGetOrderTransactionsByOrderID(orderHeader.OrderID);
 
-                async void showItems_Clicked(object sender, EventArgs e)
+                StackLayout items = new StackLayout();
+
+                foreach (var order in orderTraItems)
                 {
-                    await ShowItemsInOrder(orderHeader.OrderID);
-                    OrderHeader.Children.Remove(showItems);
-                    itemsStack.Children.Add(itemsToShow);
-                    OrderHeader.Children.Add(hideItems);
-                };
+                    Grid grid = new Grid();
 
+                    grid.ColumnDefinitions = new ColumnDefinitionCollection
+                    {
+                        new ColumnDefinition{Width=GridLength.Star},
+                        new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) },
+                        new ColumnDefinition{Width=GridLength.Star}
+                    };
+
+                    Label qtyLabel = new Label
+                    {
+                        Text = order.Quantity.ToString(),
+                        HorizontalTextAlignment = TextAlignment.Start,
+                        VerticalTextAlignment = TextAlignment.Center,
+                    };
+                    qtyLabel.SetDynamicResource(StyleProperty, "checkLabel");
+                    grid.Children.Add(qtyLabel, 0, 0);
+
+                    Label itemLabel = new Label
+                    {
+                        Text = order.MenuItemTextOT.ToString(),
+                        HorizontalTextAlignment = TextAlignment.Center,
+                        VerticalTextAlignment = TextAlignment.Center,
+                    };
+                    itemLabel.SetDynamicResource(StyleProperty, "checkLabel");
+                    grid.Children.Add(itemLabel, 1, 0);
+
+
+                    Label extPriceLabel = new Label
+                    {
+                        Text = order.ExtendedPrice.ToString(),
+                        HorizontalTextAlignment = TextAlignment.End,
+                        VerticalTextAlignment = TextAlignment.Center,
+                    };
+                    extPriceLabel.SetDynamicResource(StyleProperty, "checkLabel");
+                    grid.Children.Add(extPriceLabel, 2, 0);
+
+                    Frame itemFrame = new Frame
+                    {
+                        BackgroundColor = Color.White,
+                        BorderColor = Color.Gray,
+                        VerticalOptions = LayoutOptions.Start,
+                        HorizontalOptions = LayoutOptions.Fill,
+                        Padding = new Thickness(5),
+                        Margin = new Thickness(5),
+                    };
+                    itemFrame.Content = grid;
+
+                    items.Children.Add(itemFrame);
+                }
+                
+                showItems.Clicked += showItems_Clicked;
                 hideItems.Clicked += hideItems_Clicked;
+
+                void showItems_Clicked(object sender, EventArgs e)
+                {
+                    itemsControls.Children.Remove(showItems);
+                    itemsControls.Children.Add(items);
+                    itemsControls.Children.Add(hideItems);
+                };
 
                 void hideItems_Clicked(object sender, EventArgs e)
                 {
-                    itemsStack.Children.Remove(itemsToShow);
-                    OrderHeader.Children.Remove(hideItems);
-                    OrderHeader.Children.Add(showItems);
+                    itemsControls.Children.Remove(items);
+                    itemsControls.Children.Remove(hideItems);
+                    itemsControls.Children.Add(showItems);
                 };
+
+                itemsControls.Children.Add(showItems);
 
                 Label Footer = new Label
                 {
                     Text = "Total: " + orderHeader.AmountDue.ToString(),
+                    FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+                    TextDecorations = TextDecorations.Underline,
+                    Padding = new Thickness(10),
                     HorizontalTextAlignment = TextAlignment.Center,
                     HorizontalOptions = LayoutOptions.Center,
                     VerticalOptions = LayoutOptions.End,
                 };
+
+                /*Frame footerFrame = new Frame
+                {
+                    BackgroundColor = Color.White,
+                    BorderColor = Color.Gray,
+                    VerticalOptions = LayoutOptions.Start,
+                    HorizontalOptions = LayoutOptions.Fill,
+                    Padding = new Thickness(10),
+
+                };
+                footerFrame.Content = Footer;*/
 
                 Footer.SetDynamicResource(StyleProperty, "checkLabel");
                 txtDateTimeOpenedTable.SetDynamicResource(StyleProperty, "checkLabel");
                 txtServer.SetDynamicResource(StyleProperty, "checkLabel");
                 Header.SetDynamicResource(StyleProperty, "checkLabel");
 
-                OrderHeader.Children.Add(headerFrame);
-                OrderHeader.Children.Add(txtServer);
-                OrderHeader.Children.Add(txtDateTimeOpenedTable);
-                OrderHeader.Children.Add(showItems);
-                OrderHeader.Children.Add(itemsStack);
-                OrderHeader.Children.Add(Footer);
+                gridLists.Children.Add(headerFrame);
+                gridLists.Children.Add(txtServer);
+                gridLists.Children.Add(txtDateTimeOpenedTable);
+                gridLists.Children.Add(itemsControls);
+                gridLists.Children.Add(Footer);
 
                 Grid controls = new Grid
                 {
                     ColumnDefinitions =
                     {
-                    new ColumnDefinition { Width = GridLength.Star },
-                    new ColumnDefinition { Width = GridLength.Star },
+                        new ColumnDefinition { Width = GridLength.Star },
+                        new ColumnDefinition { Width = GridLength.Star },
                     }
                 };
 
@@ -946,6 +1020,7 @@ namespace Marcaj.Pages.Tables
                 {
                     Text = "Muta",
                     Padding = new Thickness(8),
+                    Margin = new Thickness(0)
                 };
                 moveOrder.SetDynamicResource(StyleProperty, "secondBtn");
 
@@ -955,6 +1030,7 @@ namespace Marcaj.Pages.Tables
                 {
                     Text = "Edit",
                     Padding = new Thickness(8),
+                    Margin = new Thickness(0)
                 };
                 toOrder.SetDynamicResource(StyleProperty, "secondBtn");
 
@@ -964,109 +1040,21 @@ namespace Marcaj.Pages.Tables
                 controls.Children.Add(moveOrder, 0, 0);
                 controls.Children.Add(toOrder, 1, 0);
 
-                OrderHeader.Children.Add(controls);
+                gridLists.Children.Add(controls);
 
                 Frame checkFrame = new Frame
                 {
                     CornerRadius = 4,
                     Margin = new Thickness(5),
                     BackgroundColor = Color.FromHex("#d9d9d9"),
-                };
-
-
-                //checkFrame.AutomationId = OrderHeader.ClassId;
-                //OrderHeader.ClassId = orderHeader.OrderID.ToString();
-
-                checkFrame.Content = OrderHeader;
-                gridLists.Children.Add(checkFrame, 0, index - 1);
-
-                /*if (index % 4 == 0)
-                {
-                    tblOrders.Children.Add(gridLists = new Grid
-                    {
-                        RowDefinitions = new RowDefinitionCollection
-                         {
-                             new RowDefinition{Height = GridLength.Star},
-                             new RowDefinition{Height = GridLength.Star},
-                             new RowDefinition{Height = GridLength.Star},
-                             new RowDefinition{Height = GridLength.Star},
-                         }
-                    });
-                };
-
-                gridLists.Children.Add(checkFrame, 0, index - 1);*/
-            }
-             tblOrders.Children.Add(gridLists);
-        }
-
-
-        async Task<View> ShowItemsInOrder(int OrderId)
-        {         
-            var orderTraItems = await App.manager.iGetOrderTransactionsByOrderID(OrderId);
-            
-            ListView itemsList = new ListView();
-            itemsList.ItemsSource = orderTraItems;
-            itemsList.VerticalScrollBarVisibility = ScrollBarVisibility.Never;
-
-            itemsList.ItemTemplate = new DataTemplate(() =>
-            {
-                ViewCell view = new ViewCell();
-
-                Grid grid = new Grid();
-
-                grid.ColumnDefinitions = new ColumnDefinitionCollection
-                {
-                    new ColumnDefinition{Width=GridLength.Star},
-                    new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) },
-                    new ColumnDefinition{Width=GridLength.Star}
-                };
-                grid.HorizontalOptions = LayoutOptions.Fill;
-                grid.VerticalOptions = LayoutOptions.Start;
-                Label qtyLabel = new Label
-                {
-                    HorizontalTextAlignment = TextAlignment.Start,
-                    VerticalTextAlignment = TextAlignment.Center,
-                };
-                qtyLabel.SetDynamicResource(StyleProperty, "checkLabel");
-                qtyLabel.SetBinding(Label.TextProperty, "Quantity");
-                grid.Children.Add(qtyLabel, 0, 0);
-
-                Label itemLabel = new Label
-                {
-                    HorizontalTextAlignment = TextAlignment.Center,
-                    VerticalTextAlignment = TextAlignment.Center,
-                };
-                itemLabel.SetDynamicResource(StyleProperty, "checkLabel");
-                itemLabel.SetBinding(Label.TextProperty, "MenuItemTextOT");
-                grid.Children.Add(itemLabel, 1, 0);
-
-
-                Label extPriceLabel = new Label
-                {
-                    HorizontalTextAlignment = TextAlignment.End,
-                    VerticalTextAlignment = TextAlignment.Center,
-                };
-                extPriceLabel.SetDynamicResource(StyleProperty, "checkLabel");
-                extPriceLabel.SetBinding(Label.TextProperty, "ExtendedPrice");
-                grid.Children.Add(extPriceLabel, 2, 0);
-
-                Frame itemFrame = new Frame
-                {
-                    BackgroundColor = Color.White,
-                    BorderColor = Color.Gray,
-                    VerticalOptions = LayoutOptions.Start,
-                    HorizontalOptions = LayoutOptions.Fill,
                     Padding = new Thickness(5),
-                    Margin = new Thickness(5),
                 };
-                itemFrame.Content = grid;
 
-                view.View = itemFrame;
-                return view;
-            });
-            itemsToShow = itemsList;
-            return itemsToShow;
+                checkFrame.Content = gridLists;
+                tblOrders.Children.Insert(index + 1, checkFrame);
+            }
         }
+
 
         async void ImageButton_Clicked(object sender, EventArgs e)
         {
@@ -1103,23 +1091,15 @@ namespace Marcaj.Pages.Tables
 
         async void toOrder_Clicked(int OrdId, int TblId)
         {
-            Debug.WriteLine(OrdId);
-            Debug.WriteLine(TblId);
-
-            var b = dineInsAndEmp.Where(x => x.DineIn.DineInTableID == TblId).FirstOrDefault();
+            var b = dineInsAndEmp.Where(x => x.DineIn.DineInTableID == TblId).FirstOrDefault();           
             orderHeadersList = await App.manager.iGetOrderHeadersByDineInTableID(TblId);
-            var oo = await App.manager.iGetOrderTransactionsByOrderID(OrderId);
-            var orderToEdit = orderHeadersList.Find(x => x.OrderID == OrdId);
-            Debug.WriteLine(orderToEdit);
+            var orderToEdit = orderHeadersList.Find(x => x.OrderID == OrdId);  
+            orderTransactionsList = await App.manager.iGetOrderTransactionsByOrderID(OrdId);
             orderTransactionsListByOrderID = orderTransactionsList.FindAll(x => x.OrderID == OrdId);
-            Debug.WriteLine(orderTransactionsListByOrderID);
-
-            foreach (var a in orderTransactionsListByOrderID)
-            {
-                Debug.WriteLine(a.MenuItemTextOT);
-            }
-            await Navigation.PushAsync(new ActiveTableEditPage(orderHeader, EmplFl, b.DineIn, oo));
+            
+            await Navigation.PushAsync(new ActiveTableEditPage(orderToEdit, EmplFl, b.DineIn, orderTransactionsListByOrderID));
         }
+
 
         private void moveOrder_Clicked(object sender, int id)
         {

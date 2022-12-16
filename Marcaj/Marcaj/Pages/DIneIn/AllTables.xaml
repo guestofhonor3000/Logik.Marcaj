@@ -17,11 +17,11 @@
 
                 <Frame Style="{DynamicResource mainFrame}"
                        HorizontalOptions="Start">
-                    <ImageButton  Source="BackIcon.png"
+                    <ImageButton  Source="BackButton.Dark.png"
                                   Aspect="AspectFill"
                                   x:Name="btnBack" 
                                   Clicked="btnBack_Clicked"
-                                  Margin="-10"/>
+                                  Margin="-15"/>
                 </Frame>
 
                 <Label x:Name="Clock"
@@ -129,7 +129,7 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
 
-                            <AbsoluteLayout HeightRequest="95"
+                            <AbsoluteLayout HeightRequest="100"
                                             WidthRequest="100">
 
                                 <ImageButton IsVisible="{Binding Visible}"
@@ -180,9 +180,8 @@
                     <StackLayout Padding="5"
                                  x:Name="tblOrders">
 
-                        <Grid x:Name="gridLists">
-                        </Grid>
-                    
+                        <StackLayout x:Name="gridLists"/>
+                        
                     </StackLayout>
                 </ScrollView>
             </Grid>

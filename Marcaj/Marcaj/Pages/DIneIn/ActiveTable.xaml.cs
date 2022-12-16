@@ -29,7 +29,8 @@ namespace Marcaj.Pages.Tables
 			orderTransactionsListByOrderID = new List<OrderTransactionsModel>();
 			EmpFile = empFile;
 			DineIn = dineIn;
-            tableName.Text = DineIn.DineInTableText;
+            //tableName.Text = DineIn.DineInTableText;
+            Clock.Text = DateTime.Now.ToString();
             PopList();
 			MessagingCenter.Subscribe<NotActiveTable>(this, "Up", (sender) =>
 			{
@@ -57,9 +58,28 @@ namespace Marcaj.Pages.Tables
 			orderHeadersList = await App.manager.iGetOrderHeadersByDineInTableID(DineIn.DineInTableID);
 			
 			gridLists.Children.Clear();
-			int index = 0;
+
+            ImageButton addOrder = new ImageButton
+            {
+                Source = "AddButton.Large.png",
+                VerticalOptions = LayoutOptions.Fill,
+                HorizontalOptions = LayoutOptions.Fill,
+                Aspect = Aspect.AspectFit
+            };
+			addOrder.Clicked += AddOrder_Clicked;
+
+            Frame addFrame = new Frame
+            {
+                CornerRadius = 10,
+                Margin = 10,
+                BackgroundColor = Color.FromHex("#d9d9d9")
+            };
+			addFrame.Content = addOrder;
+			gridLists.Children.Add(addFrame ,0 ,0);
+            
+			int index = 1;
 			var rowIndex = 0;
-			var collIndex = 0;
+			var collIndex = 1;
 
 			foreach (var orderHeader in orderHeadersList)
 			{
@@ -277,7 +297,7 @@ namespace Marcaj.Pages.Tables
                 checkFrame.AutomationId = lstvwOrderHeader.ClassId;
 				
 
-                gridLists.Children.Add(checkFrame);
+                gridLists.Children.Add(checkFrame, collIndex, rowIndex);
 
 				index = index + 1;
 
@@ -322,12 +342,10 @@ namespace Marcaj.Pages.Tables
 
 		}
 
-		private async void btnNewOrder_Clicked(object sender, EventArgs e)
+		private async void AddOrder_Clicked(object sender, EventArgs e)
 		{
-			await Navigation.PushAsync(new NotActiveTable(DineIn, EmpFile, "opened"));
-		}
-
-
+            await Navigation.PushAsync(new NotActiveTable(DineIn, EmpFile, "opened"));
+        }
 
 		private async void btnBack_Clicked(object sender, EventArgs e)
 		{

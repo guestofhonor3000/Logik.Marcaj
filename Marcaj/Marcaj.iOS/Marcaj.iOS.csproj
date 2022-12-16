@@ -146,9 +146,6 @@
     <BundleResource Include="Resources\HomeTabButton.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\RestImg.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\Table6Open.png" />
   </ItemGroup>
   <ItemGroup>
@@ -375,5 +372,23 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\PlaceholderButton.Dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\RetailButton.Dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ClockInButton.Dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\AddButton.Large.Dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\AddButton.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\BackButton.Dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Logo.png" />
   </ItemGroup>
 </Project>

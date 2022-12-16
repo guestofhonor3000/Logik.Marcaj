@@ -5,9 +5,9 @@
     <ContentPage.Content>
         <Grid Style="{DynamicResource homePageGrid}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="4*"/>
-                <RowDefinition Height="40*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="43*"/>
+                <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0" Style="{DynamicResource homeTabGrid}" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
@@ -45,11 +45,11 @@
                         <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Image Source="RestImg.jpg" 
+                <Image Source="Logo.png" 
                        Grid.Row="0" 
                        Grid.ColumnSpan="2" 
-                       Aspect="AspectFill" 
-                       Margin="20,10,20,0"/>
+                       Aspect="AspectFill"
+                       Margin="22,20,22,5"/>
 
                 <CollectionView x:Name="menuBtnColl"
                                 Grid.Row="1" 
@@ -77,11 +77,13 @@
             <Grid Grid.Row="2"  BackgroundColor="#171a1d">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Label HorizontalOptions="Center" Grid.Column="0" x:Name="StationName"/>
-                <Label HorizontalOptions="Center" Grid.Column="1" x:Name="EmployeeName"/>
+                <Label Style="{DynamicResource mainBtnLabel}" Grid.Column="0" x:Name="StationName"/>
+                <Label Style="{DynamicResource mainBtnLabel}" Grid.Column="1" x:Name="TimeDate"/>
+                <Label Style="{DynamicResource mainBtnLabel}" Grid.Column="2" x:Name="EmployeeName"/>
 
             </Grid>
         </Grid>
