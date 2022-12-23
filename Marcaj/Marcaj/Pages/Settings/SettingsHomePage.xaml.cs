@@ -79,7 +79,7 @@ namespace Marcaj.Pages.Settings
                    ((ListView)sender).SelectedItem = null;
         }
 
-        private async void menuBtnLst_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private void menuBtnLst_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
 
 

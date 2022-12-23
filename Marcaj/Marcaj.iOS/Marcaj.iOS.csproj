@@ -391,4 +391,22 @@
   <ItemGroup>
     <BundleResource Include="Resources\Logo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\EditButtonIcon.Dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\SettleIcon.Dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\OptionsIcon.Dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\PersonIcon.Dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\QtyIcon.Dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ScaleIcon.Dark.png" />
+  </ItemGroup>
 </Project>

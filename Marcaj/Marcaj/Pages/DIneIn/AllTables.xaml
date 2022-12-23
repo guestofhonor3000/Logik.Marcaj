@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Marcaj.Pages.Tables.AllTables">
+             x:Class="Marcaj.Pages.Tables.AllTables"
+             NavigationPage.HasNavigationBar="True">
     <ContentPage.Content>
         <Grid Style="{DynamicResource mainGrid}">
 
@@ -15,14 +16,14 @@
                          Style="{DynamicResource mainStack}"
                          HorizontalOptions="Fill">
 
-                <Frame Style="{DynamicResource mainFrame}"
-                       HorizontalOptions="Start">
-                    <ImageButton  Source="BackButton.Dark.png"
-                                  Aspect="AspectFill"
-                                  x:Name="btnBack" 
-                                  Clicked="btnBack_Clicked"
-                                  Margin="-15"/>
-                </Frame>
+                <ImageButton  Source="BackButton.Dark.png"
+                              CornerRadius="4"
+                              HorizontalOptions="Start"
+                              VerticalOptions="Center"
+                              Aspect="AspectFit"
+                              x:Name="btnBack" 
+                              Clicked="btnBack_Clicked"
+                              Margin="5"/>
 
                 <Label x:Name="Clock"
                        Style="{DynamicResource mainBtnLabel}"
@@ -129,7 +130,7 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
 
-                            <AbsoluteLayout HeightRequest="100"
+                            <AbsoluteLayout HeightRequest="110"
                                             WidthRequest="100">
 
                                 <ImageButton IsVisible="{Binding Visible}"

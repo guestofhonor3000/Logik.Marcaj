@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms.Xaml;
 
 namespace Marcaj.Pages.Tables
@@ -19,10 +20,12 @@ namespace Marcaj.Pages.Tables
         EmployeeFileModel EmplFl;
         int GroupId;
         bool isMoving;
+        bool isChgServer;
         int OrderId;
         string Flag;
         bool showingGroups;
         bool IsFirstLoad = true;
+
         List<DineInTableModel> dineIns;
         List<DineInTableAndEmpModel> dineInsAndEmp;
         List<DineInTableGroupModel> dineInGroups;
@@ -52,6 +55,7 @@ namespace Marcaj.Pages.Tables
 
             GroupId = 1;
             isMoving = false;
+            isChgServer = false;
             OrderId = 0;
             Flag = "";
             showingGroups = true;
@@ -801,11 +805,13 @@ namespace Marcaj.Pages.Tables
             }
 
             tblOrders.Children.Clear();
-            gridLists.Children.Clear();
 
             var b = dineInsAndEmp.Where(x => x.DineIn.DineInTableID == TableID).FirstOrDefault();
             orderHeadersList = await App.manager.iGetOrderHeadersByDineInTableID(TableID);
 
+            var emps = await App.manager.iGetAllEmployeeFiles();
+            var empsList = emps.Where(x => x.EmployeeID > 0);
+            
             Button toActive = new Button
             {
                 Text = "Toate",
@@ -849,27 +855,101 @@ namespace Marcaj.Pages.Tables
                     Text = "#" + orderHeader.OrderID.ToString(),
                     HorizontalTextAlignment = TextAlignment.Center,
                     HorizontalOptions = LayoutOptions.Center,
+                    FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
                 };
 
                 Frame headerFrame = new Frame
                 {
+                    CornerRadius = 4,
                     BackgroundColor = Color.White,
                     BorderColor = Color.Gray,
-                    VerticalOptions = LayoutOptions.Start,
+                    VerticalOptions = LayoutOptions.Center,
                     HorizontalOptions = LayoutOptions.Center,
                     Padding = new Thickness(10),
 
                 };
                 headerFrame.Content = Header;
 
+                Grid serverControls = new Grid
+                {
+                    ColumnDefinitions =
+                    {
+                        new ColumnDefinition { Width = new GridLength(4, GridUnitType.Star) },
+                        new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) }
+                    }
+                };
+
                 Label txtServer = new Label
                 {
                     Text = "Deschis de: " + b.EmpName,
-                    HorizontalOptions = LayoutOptions.Center,
-                    VerticalOptions = LayoutOptions.Start,
+                    HorizontalOptions = LayoutOptions.Fill,
+                    VerticalOptions = LayoutOptions.Center,
                     HorizontalTextAlignment = TextAlignment.Center
                 };
 
+                Xamarin.Forms.Picker chgServer = new Xamarin.Forms.Picker 
+                {
+                    HorizontalOptions = LayoutOptions.Fill,
+                    VerticalOptions = LayoutOptions.Center,
+                };
+                chgServer.IsVisible = false;
+
+                var EmpsList = new List<int>();
+
+                foreach (var emp in empsList)
+                {
+                    EmpsList.Add(emp.EmployeeID);
+                }
+                chgServer.ItemsSource = EmpsList;
+                chgServer.SelectedIndexChanged += ChgServer_SelectedIndexChanged;
+
+                void ChgServer_SelectedIndexChanged(object sender, EventArgs e)
+                {
+                    var serverPicker = (Xamarin.Forms.Picker)sender;
+                    int selectedIndex = serverPicker.SelectedIndex;
+
+                    if (selectedIndex != -1)
+                    {
+                    
+                    }
+                }
+
+                Button chgServerBtn = new Button
+                {
+                    Text = "Schimiba",
+                    Padding = new Thickness(8),
+                    Margin = new Thickness(0),
+                    HorizontalOptions = LayoutOptions.Fill,
+                    VerticalOptions = LayoutOptions.Center,
+                };
+                chgServerBtn.SetDynamicResource(StyleProperty, "secondBtn");
+                var color = chgServerBtn.BackgroundColor;
+                chgServerBtn.Clicked += chgServerBtn_Clicked;
+
+                void chgServerBtn_Clicked(object sender, EventArgs e)
+                {
+                    if (isChgServer == false) 
+                    {
+                        serverControls.Children.Remove(txtServer);
+                        serverControls.Children.Add(chgServer, 0, 0);
+                        chgServerBtn.Text = "Ok";                      
+                        chgServerBtn.BackgroundColor = Color.FromHex("#4db290");
+                        chgServer.IsVisible = true;
+                        isChgServer = true;
+                    }
+                    else if (isChgServer) 
+                    {
+                        serverControls.Children.Remove(chgServer);
+                        serverControls.Children.Add(txtServer, 0, 0);
+                        chgServerBtn.Text = "Schimiba";
+                        chgServerBtn.BackgroundColor = color;
+                        chgServer.IsVisible = false;
+                        isChgServer = false;
+                    }
+                };
+
+                serverControls.Children.Add(txtServer, 0, 0);
+                serverControls.Children.Add(chgServerBtn, 1, 0);
 
                 Label txtDateTimeOpenedTable = new Label
                 {
@@ -909,18 +989,29 @@ namespace Marcaj.Pages.Tables
                     grid.ColumnDefinitions = new ColumnDefinitionCollection
                     {
                         new ColumnDefinition{Width=GridLength.Star},
-                        new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) },
+                        new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) },
                         new ColumnDefinition{Width=GridLength.Star}
                     };
 
                     Label qtyLabel = new Label
                     {
-                        Text = order.Quantity.ToString(),
-                        HorizontalTextAlignment = TextAlignment.Start,
+                        Text = "x" + order.Quantity.ToString(),
+                        HorizontalTextAlignment = TextAlignment.Center,
                         VerticalTextAlignment = TextAlignment.Center,
                     };
                     qtyLabel.SetDynamicResource(StyleProperty, "checkLabel");
-                    grid.Children.Add(qtyLabel, 0, 0);
+
+                    Frame qtyLabelFrame = new Frame
+                    {
+                        CornerRadius = 4,
+                        BackgroundColor = Color.FromHex("#d3d3d3"),
+                        BorderColor = Color.FromHex("#454a55"),
+                        VerticalOptions = LayoutOptions.Center,
+                        HorizontalOptions = LayoutOptions.Fill,
+                        Padding = new Thickness(4),
+                    };
+                    qtyLabelFrame.Content = qtyLabel;
+                    grid.Children.Add(qtyLabelFrame, 0, 0);
 
                     Label itemLabel = new Label
                     {
@@ -931,18 +1022,29 @@ namespace Marcaj.Pages.Tables
                     itemLabel.SetDynamicResource(StyleProperty, "checkLabel");
                     grid.Children.Add(itemLabel, 1, 0);
 
-
                     Label extPriceLabel = new Label
                     {
-                        Text = order.ExtendedPrice.ToString(),
-                        HorizontalTextAlignment = TextAlignment.End,
+                        Text = "L: " + order.ExtendedPrice.ToString(),
+                        HorizontalTextAlignment = TextAlignment.Center,
                         VerticalTextAlignment = TextAlignment.Center,
                     };
                     extPriceLabel.SetDynamicResource(StyleProperty, "checkLabel");
-                    grid.Children.Add(extPriceLabel, 2, 0);
+
+                    Frame extPriceLabelFrame = new Frame
+                    {
+                        CornerRadius = 4,
+                        BackgroundColor = Color.FromHex("#d3d3d3"),
+                        BorderColor = Color.FromHex("#454a55"),
+                        VerticalOptions = LayoutOptions.Center,
+                        HorizontalOptions = LayoutOptions.Fill,
+                        Padding = new Thickness(4),
+                    };
+                    extPriceLabelFrame.Content = extPriceLabel;
+                    grid.Children.Add(extPriceLabelFrame, 2, 0);
 
                     Frame itemFrame = new Frame
                     {
+                        CornerRadius = 4,
                         BackgroundColor = Color.White,
                         BorderColor = Color.Gray,
                         VerticalOptions = LayoutOptions.Start,
@@ -1002,12 +1104,12 @@ namespace Marcaj.Pages.Tables
                 Header.SetDynamicResource(StyleProperty, "checkLabel");
 
                 gridLists.Children.Add(headerFrame);
-                gridLists.Children.Add(txtServer);
+                gridLists.Children.Add(serverControls);
                 gridLists.Children.Add(txtDateTimeOpenedTable);
                 gridLists.Children.Add(itemsControls);
                 gridLists.Children.Add(Footer);
 
-                Grid controls = new Grid
+                Grid orderControls = new Grid
                 {
                     ColumnDefinitions =
                     {
@@ -1037,10 +1139,10 @@ namespace Marcaj.Pages.Tables
                 // ! No Time Sync !
                 toOrder.Clicked += (sender, args) => toOrder_Clicked(orderHeader.OrderID, TableID);
 
-                controls.Children.Add(moveOrder, 0, 0);
-                controls.Children.Add(toOrder, 1, 0);
+                orderControls.Children.Add(moveOrder, 0, 0);
+                orderControls.Children.Add(toOrder, 1, 0);
 
-                gridLists.Children.Add(controls);
+                gridLists.Children.Add(orderControls);
 
                 Frame checkFrame = new Frame
                 {
@@ -1054,7 +1156,6 @@ namespace Marcaj.Pages.Tables
                 tblOrders.Children.Insert(index + 1, checkFrame);
             }
         }
-
 
         async void ImageButton_Clicked(object sender, EventArgs e)
         {
@@ -1173,9 +1274,9 @@ namespace Marcaj.Pages.Tables
             {
                 pageGrid.ColumnDefinitions = new ColumnDefinitionCollection
                 {
-                    new ColumnDefinition{ Width = new GridLength(4, GridUnitType.Star) },
+                    new ColumnDefinition{ Width = new GridLength(6, GridUnitType.Star) },
                     new ColumnDefinition { Width = new GridLength(25, GridUnitType.Star) },
-                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
+                    new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) },
                 };
 
                 tblGroups.RowDefinitions = new RowDefinitionCollection
@@ -1221,7 +1322,7 @@ namespace Marcaj.Pages.Tables
                 {
                     new ColumnDefinition{ Width = new GridLength(2, GridUnitType.Star) },
                     new ColumnDefinition{ Width = new GridLength(25, GridUnitType.Star) },
-                    new ColumnDefinition { Width = new GridLength(5, GridUnitType.Star) },
+                    new ColumnDefinition { Width = new GridLength(6, GridUnitType.Star) },
                 };
 
                 tblGroups.RowDefinitions = new RowDefinitionCollection
@@ -1262,7 +1363,6 @@ namespace Marcaj.Pages.Tables
                 pageGrid.Children.Add(ordersScrollView, 2, 0);
             };
         }
-
         private void showGroups_Clicked(object sender, EventArgs e)
         {
             showingGroups = true;

@@ -120,6 +120,7 @@
     <Content Include="DineInButton.Dark.png" />
     <Content Include="DineInButton.Light.png" />
     <Content Include="DineInIconSml.png" />
+    <Content Include="EditButtonIcon.Dark.png" />
     <Content Include="FastServiceButton.Dark.png" />
     <Content Include="FastServiceButton.Light.png" />
     <Content Include="FastServiceIconSml.png" />
@@ -127,7 +128,10 @@
     <Content Include="OperationsButton.Dark.png" />
     <Content Include="OperationsButton.Light.png" />
     <Content Include="OperationsIconSml.png" />
+    <Content Include="OptionsIcon.Dark.png" />
+    <Content Include="PersonIcon.Dark.png" />
     <Content Include="PlaceholderButton.Dark.png" />
+    <Content Include="QtyIcon.Dark.png" />
     <Content Include="RecallButton.Dark.png" />
     <Content Include="RecallButton.Light.png" />
     <Content Include="RecallIconSml.png" />
@@ -139,6 +143,7 @@
     <Content Include="ReservationIconSml.png" />
     <Content Include="RetailButton.Dark.png" />
     <Content Include="RetailIconSml.png" />
+    <Content Include="ScaleIcon.Dark.png" />
     <Content Include="SettingsButton.Dark.png" />
     <Content Include="SettingsButton.Light.png" />
     <Content Include="SettingsIconSml.png" />
@@ -204,6 +209,7 @@
     <Content Include="ScaleIcon.png" />
     <Content Include="SecondaryBlankButton.png" />
     <Content Include="SettingsIcon.png" />
+    <Content Include="SettleIcon.Dark.png" />
     <Content Include="SettleIcon.png" />
     <Content Include="Table2Occupied.png" />
     <Content Include="Table2Open.png" />

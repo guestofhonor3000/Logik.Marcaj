@@ -17,7 +17,7 @@ namespace Marcaj
     {
         public static ServiceManager manager { get; private set; }
         static LServiceManager LDatabase;
-        bool noCon = false;
+        //bool noCon = false;
         private static Timer timer;
         public static LServiceManager lDatabase
         {
