@@ -216,140 +216,140 @@
                         <RowDefinition Height="1.5*"/>
                     </Grid.RowDefinitions>
 
-
                     <Frame Grid.Row="0"
                            BackgroundColor="#d8d8d8"
                            CornerRadius="4"
                            Padding="5"
                            Margin="10,5,10,5">
 
-                        <ListView  x:Name="lstvwOrderTransactions"
-                                   SelectedItem="lstvwOrderTransactions_ItemSelected">
+                        <Grid Margin="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="6*"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
 
-                            <ListView.Header>
+                            <Frame Grid.Row="0" 
+                                   CornerRadius="4"
+                                   BackgroundColor="White"
+                                   HorizontalOptions="Fill"
+                                   VerticalOptions="Fill"
+                                   Margin="5"
+                                   Padding="0">
 
-                                <Frame  CornerRadius="4"
-                                        BackgroundColor="White"
-                                        HorizontalOptions="Fill"
-                                        VerticalOptions="Start"
-                                        Margin="5"
-                                        Padding="0">
-                                    
-                                    <Grid Padding="5"
-                                          RowSpacing="5">
-                                        
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="2*"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
+                                <Grid RowSpacing="5">
+                                    <Grid.RowDefinitions>   
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
 
-                                        <Grid Grid.Row="0"
-                                              Padding="5"
-                                              Margin="0">
+                                    <Grid Grid.Row="0"
+                                          Margin="0">
 
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="2*"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                        </Grid.ColumnDefinitions>
 
-                                            <Label Grid.Column="0" 
+                                        <Label Grid.Column="0" 
                                                x:Name="txtTableName" 
                                                Style="{DynamicResource checkLabel}"/>
 
-                                            <Label Grid.Column="1" 
+                                        <Label Grid.Column="1" 
                                                x:Name="txtServer" 
                                                Style="{DynamicResource checkLabel}"/>
 
-                                            <Label Grid.Column="2" 
+                                        <Label Grid.Column="2" 
                                                x:Name="txtStation" 
                                                Style="{DynamicResource checkLabel}"/>
-
-                                        </Grid>
-
-                                        <Frame Grid.Row="1"
-                                               BackgroundColor="#454a55"
-                                               CornerRadius="4"
-                                               HorizontalOptions="Center"
-                                               VerticalOptions="Center"
-                                               Padding="10"
-                                               Margin="0">
-
-                                            <Label Grid.Row="0"
-                                                       x:Name="txtOrderName" 
-                                                       Style="{DynamicResource mainBtnLabel}"
-                                                       FontSize="20"
-                                                       VerticalOptions="Center"
-                                                       HorizontalOptions="Center"
-                                                       HorizontalTextAlignment="Center"/>
-
-                                        </Frame>
-
-                                        <Label Grid.Row="2" 
-                                               x:Name="txtDateTimeOpenedTable" 
-                                               Style="{DynamicResource checkLabel}"
-                                               VerticalOptions="Center"
-                                               HorizontalOptions="Center"
-                                               HorizontalTextAlignment="Center"
-                                               VerticalTextAlignment="Center"
-                                               Padding="5"
-                                               Margin="0"/>
-
                                     </Grid>
-                                </Frame>
-                            </ListView.Header>
 
+                                    <Frame Grid.Row="1"
+                                           BackgroundColor="#454a55"
+                                           CornerRadius="4"
+                                           HorizontalOptions="CenterAndExpand"  
+                                           VerticalOptions="Fill"    
+                                           Padding="0">
 
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-                                        <Frame BackgroundColor="White"
+                                        <Label Grid.Row="0"
+                                               x:Name="txtOrderName" 
+                                               Style="{DynamicResource mainBtnLabel}"
+                                               FontSize="20"
+                                               Margin="10,0,10,0"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Center"
+                                               HorizontalTextAlignment="Center"/>
+                                    </Frame>
+
+                                    <Label Grid.Row="2" 
+                                           x:Name="txtDateTimeOpenedTable" 
+                                           Style="{DynamicResource checkLabel}"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Center"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"
+                                           Margin="0"/>
+                                </Grid>
+                            </Frame>
+
+                            
+                            <ListView Grid.Row="1"
+                                      x:Name="lstvwOrderTransactions"
+                                      SelectedItem="lstvwOrderTransactions_ItemSelected">
+
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Frame BackgroundColor="White"
                                                CornerRadius="4"
                                                Margin="0,5,0,5"
                                                HorizontalOptions="Fill"
                                                VerticalOptions="Start"
                                                Padding="5">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="3*"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                </Grid.ColumnDefinitions>
-                                               
-                                                <Button Grid.Column="0" 
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="3*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Button Grid.Column="0" 
                                                         Text="{Binding Quantity}" 
-                                                        Style="{DynamicResource btn}"
+                                                        Style="{DynamicResource secondBtn}"
                                                         AutomationId="{Binding MenuItemTextOT}"
                                                         Clicked="ItemQty_Clicked"/>
-                                                
-                                                <Label Grid.Column="1" 
+
+                                                    <Label Grid.Column="1" 
                                                        Text="{Binding MenuItemTextOT}" 
                                                        Style="{DynamicResource checkLabel}"
                                                        HorizontalTextAlignment="Center"
                                                        HorizontalOptions="Center"
                                                        VerticalOptions="Center"/>
-                                                
-                                                <Button Grid.Column="2" 
+
+                                                    <Button Grid.Column="2" 
                                                         Text="{Binding ExtendedPrice}" 
-                                                        Style="{DynamicResource btn}"
+                                                        Style="{DynamicResource secondBtn}"
                                                         AutomationId="{Binding MenuItemTextOT}"
                                                         Clicked="ItemPrice_Clicked"/>
-                                            </Grid>
-                                        </Frame>
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
+                                                </Grid>
+                                            </Frame>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
 
-                            <ListView.Footer>
-                                <Button x:Name="txtAmountDue"
-                                        Clicked="txtAmountDue_Clicked"
-                                        Style="{DynamicResource btn}"
-                                        FontSize="20"
-                                        HorizontalOptions="Center"
-                                        Margin="10"/>
-                            </ListView.Footer>
-                        </ListView>
+                            
+                            <Button Grid.Row="2"
+                                    x:Name="txtAmountDue"
+                                    Clicked="txtAmountDue_Clicked"
+                                    Style="{DynamicResource secondBtn}"
+                                    FontSize="20"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="CenterAndExpand"/>
+
+                        </Grid>
                     </Frame>
 
                     
@@ -402,7 +402,6 @@
                         </Frame>
 
                             <Button Grid.Column="3"
-                                    Text="-/+"
                                     TextColor="#50e9da"
                                     x:Name="btnDis_Sur"
                                     Clicked="btnDis_Sur_Clicked"
@@ -461,8 +460,7 @@
                                        HorizontalTextAlignment="Center"
                                        HorizontalOptions="FillAndExpand"
                                        VerticalOptions="FillAndExpand"
-                                       Margin="-30"
-                                       Placeholder = "Modifica Pret"/>
+                                       Margin="-30"/>
                             </Frame>
 
                         </Grid>

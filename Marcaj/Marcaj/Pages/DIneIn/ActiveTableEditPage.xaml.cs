@@ -172,7 +172,6 @@ namespace Marcaj.Pages.Tables
                 {
                     Source = selIt.PictureName,
                     Aspect = Aspect.AspectFill,
-                    HeightRequest = 100
                 };
                 Label itemName = new Label
                 {
@@ -261,30 +260,32 @@ namespace Marcaj.Pages.Tables
 
             if (priceFrame.IsVisible == false)
             {
-                btnDis_Sur_Clicked(a, e);               
+                selectDis_Sur();
             }
-
-            if (discount)
+            else
             {
-                if (ModPrice != 0 && ModPrice < b.MenuItemUnitPrice)
+                if (discount)
                 {
-                    b.ExtendedPrice = (b.MenuItemUnitPrice - ModPrice) * b.Quantity;
-                    total += b.ExtendedPrice;
+                    if (ModPrice != 0 && ModPrice < b.MenuItemUnitPrice)
+                    {
+                        b.ExtendedPrice = (b.MenuItemUnitPrice - ModPrice) * b.Quantity;
+                        total += b.ExtendedPrice;
+                    }
+                    else if (ModPrice == 0) b.ExtendedPrice = b.ExtendedPrice;
                 }
-                else if (ModPrice == 0) b.ExtendedPrice = b.ExtendedPrice;
-            }
-            else if (surcharge) 
-            {
-                if (ModPrice != 0)
+                else if (surcharge)
                 {
-                    b.ExtendedPrice = (b.MenuItemUnitPrice + ModPrice) * b.Quantity;
-                    total += b.ExtendedPrice;
+                    if (ModPrice != 0)
+                    {
+                        b.ExtendedPrice = (b.MenuItemUnitPrice + ModPrice) * b.Quantity;
+                        total += b.ExtendedPrice;
+                    }
+                    else if (ModPrice == 0) b.ExtendedPrice = b.ExtendedPrice;
                 }
-                else if (ModPrice == 0) b.ExtendedPrice = b.ExtendedPrice;
-            }
 
-            a.Text = b.ExtendedPrice.ToString();
-            txtAmountDue.Text = total.ToString();
+                a.Text = b.ExtendedPrice.ToString();
+                txtAmountDue.Text = total.ToString();
+            }
         }
 
         private void txtAmountDue_Clicked(object sender, EventArgs e)
@@ -293,7 +294,7 @@ namespace Marcaj.Pages.Tables
 
             if (priceFrame.IsVisible == false)
             {
-                btnDis_Sur_Clicked(a, e);
+                selectDis_Sur();
                 a.Text = total.ToString();
             }
 
@@ -370,6 +371,136 @@ namespace Marcaj.Pages.Tables
             return numpad;
         }
 
+        private View selectDis_Sur() 
+        {
+            if (priceFrame.IsVisible)
+            {
+                if(discount) price.Placeholder = "Discount in LEI";
+                else if(surcharge) price.Placeholder = "Suprataxa in LEI";
+            }
+            else
+            {
+                multiGrid.Children.Clear();
+                qtyFrame.IsVisible = false;
+
+                if (discount)
+                {
+                    multiGrid.RowDefinitions = new RowDefinitionCollection
+                {
+                    new RowDefinition { Height = GridLength.Star },
+                    new RowDefinition { Height = GridLength.Star },
+                };
+
+                    Button PerId = new Button
+                    {
+                        Text = "Procent ID",
+                        Margin = new Thickness(0),
+                    };
+                    PerId.SetDynamicResource(StyleProperty, "btn");
+
+                    Button Cash = new Button
+                    {
+                        Text = "Cash",
+                        Margin = new Thickness(0),
+                    };
+                    Cash.SetDynamicResource(StyleProperty, "btn");
+
+                    PerId.Clicked += PerId_Clicked;
+                    Cash.Clicked += Cash_Clicked;
+
+                    void PerId_Clicked(object sender1, EventArgs e1)
+                    {
+                        multiGrid.Children.Clear();
+
+                        Label IdsList = new Label
+                        {
+                            Text = "Lista Discount:",
+                        };
+                        IdsList.SetDynamicResource(StyleProperty, "mainLabel");
+
+                        multiGrid.Children.Add(IdsList);
+                    }
+
+                    void Cash_Clicked(object sender2, EventArgs e2)
+                    {
+                        multiGrid.Children.Clear();
+                        multiGrid.RowDefinitions = new RowDefinitionCollection
+                    {
+                        new RowDefinition { Height = GridLength.Star },
+                        new RowDefinition { Height = new GridLength (4, GridUnitType.Star) },
+                    };
+
+                        makeNumpad();
+                        price.Placeholder = "Discount in LEI";
+                        priceFrame.IsVisible = true;
+                        multiGrid.Children.Add(priceFrame, 0, 0);
+                        multiGrid.Children.Add(numpad, 0, 1);
+                    }
+
+                    multiGrid.Children.Add(PerId, 0, 0);
+                    multiGrid.Children.Add(Cash, 0, 1);
+                }
+                else if (surcharge)
+                {
+                    multiGrid.RowDefinitions = new RowDefinitionCollection
+                {
+                    new RowDefinition { Height = GridLength.Star },
+                    new RowDefinition { Height = GridLength.Star },
+                };
+
+                    Button PerId = new Button
+                    {
+                        Text = "Procent ID",
+                        Margin = new Thickness(0),
+                    };
+                    PerId.SetDynamicResource(StyleProperty, "btn");
+
+                    Button Cash = new Button
+                    {
+                        Text = "Cash",
+                        Margin = new Thickness(0),
+                    };
+                    Cash.SetDynamicResource(StyleProperty, "btn");
+
+                    PerId.Clicked += PerId_Clicked;
+                    Cash.Clicked += Cash_Clicked;
+
+                    void PerId_Clicked(object sender1, EventArgs e1)
+                    {
+                        multiGrid.Children.Clear();
+
+                        Label IdsList = new Label
+                        {
+                            Text = "Lista Suprataxe:",
+                        };
+                        IdsList.SetDynamicResource(StyleProperty, "mainBtnLabel");
+
+                        multiGrid.Children.Add(IdsList);
+                    }
+
+                    void Cash_Clicked(object sender2, EventArgs e2)
+                    {
+                        multiGrid.Children.Clear();
+                        multiGrid.RowDefinitions = new RowDefinitionCollection
+                    {
+                        new RowDefinition { Height = GridLength.Star },
+                        new RowDefinition { Height = new GridLength (4, GridUnitType.Star) },
+                    };
+
+                        makeNumpad();
+                        price.Placeholder = "Suprataxa in LEI";
+                        priceFrame.IsVisible = true;
+                        multiGrid.Children.Add(priceFrame, 0, 0);
+                        multiGrid.Children.Add(numpad, 0, 1);
+                    }
+
+                    multiGrid.Children.Add(PerId, 0, 0);
+                    multiGrid.Children.Add(Cash, 0, 1);
+                }
+            }
+            return multiGrid;
+        }
+
         private async void digitBtn_Clicked(int numPressed) 
         {
             if (numPressed < 10) 
@@ -378,7 +509,7 @@ namespace Marcaj.Pages.Tables
                 {
                     sQty += numPressed.ToString();
                     Qty = Convert.ToInt32(sQty);
-                    qty.Text = sQty;
+                    qty.Text = "x" + sQty;
                     Debug.WriteLine(sQty);
                     Debug.WriteLine(Qty);
                 }
@@ -387,7 +518,7 @@ namespace Marcaj.Pages.Tables
                     sModPrice+= numPressed.ToString();
                     ModPrice= Convert.ToSingle(sModPrice);
                     if (discount) price.Text = "-" + sModPrice;
-                    else price.Text = sModPrice;
+                    else if (surcharge) price.Text = "+" + sModPrice;
                     Debug.WriteLine(sModPrice);
                     Debug.WriteLine(ModPrice);
                 }
@@ -414,7 +545,8 @@ namespace Marcaj.Pages.Tables
                     if (sQty != "")
                     {
                         Qty = Convert.ToInt32(sQty);
-                        qty.Text = sQty;
+                        qty.Text = "Aplica" + qty.Text;
+                        qty.TextColor = Color.FromHex("#4db290");
                     }
                     else
                     {
@@ -426,16 +558,15 @@ namespace Marcaj.Pages.Tables
                     if (sModPrice != "")
                     {
                         ModPrice = Convert.ToSingle(sModPrice);
-                        if (discount) price.Text = "-" + sModPrice;
-                        else price.Text = sModPrice;
+                        price.Text = "Aplica " + price.Text;
+                        price.TextColor = Color.FromHex("#4db290");
                     }
                     else
                     {
                         ModPrice = 0;
                     }
                 }
-            }
-            
+            }  
         }
 
         private void btnQty_Clicked(object sender, EventArgs e)
@@ -457,31 +588,23 @@ namespace Marcaj.Pages.Tables
 
         private void btnDis_Sur_Clicked(object sender, EventArgs e)
         {
-            multiGrid.Children.Clear();
-            qtyFrame.IsVisible = false;
-
-            if (discount)
-            {
+            var a = sender as Button;
+            
+            if (discount) 
+            { 
                 discount = false;
                 surcharge = true;
+                a.Text = "Sur";
             }
             else if (surcharge)
             {
                 surcharge = false;
                 discount = true;
+                a.Text = "Dis";
             }
 
-            multiGrid.RowDefinitions = new RowDefinitionCollection
-            {
-                new RowDefinition { Height = GridLength.Star },
-                new RowDefinition { Height = new GridLength (4, GridUnitType.Star) },
-            };
-
-            makeNumpad();
-            priceFrame.IsVisible = true;
-            multiGrid.Children.Add(priceFrame, 0, 0);
-            multiGrid.Children.Add(numpad, 0, 1);
         }
+
 
         private void btnOpts_Clicked(object sender, EventArgs e)
         {
