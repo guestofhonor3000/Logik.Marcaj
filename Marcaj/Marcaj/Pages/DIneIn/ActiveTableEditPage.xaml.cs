@@ -30,6 +30,7 @@ namespace Marcaj.Pages.Tables
         string sQty;
         float ModPrice;
         string sModPrice;
+        string InStock;
         bool discount = true;
         bool surcharge = false;
         bool IsFirstLoad = true;
@@ -146,6 +147,7 @@ namespace Marcaj.Pages.Tables
                     orderTra.MenuItemUnitPrice = selIt.DefaultUnitPrice;
                     orderTra.ExtendedPrice = orderTra.MenuItemUnitPrice * orderTra.Quantity;
                     orderTraList.Add(orderTra);
+                    
                 }
                 else
                 {
@@ -260,7 +262,7 @@ namespace Marcaj.Pages.Tables
 
             if (priceFrame.IsVisible == false)
             {
-                selectDis_Sur();
+                btnDis_Sur_Clicked(sender, e);
             }
             else
             {
@@ -294,7 +296,7 @@ namespace Marcaj.Pages.Tables
 
             if (priceFrame.IsVisible == false)
             {
-                selectDis_Sur();
+                btnDis_Sur_Clicked(sender, e);
                 a.Text = total.ToString();
             }
 
@@ -371,135 +373,6 @@ namespace Marcaj.Pages.Tables
             return numpad;
         }
 
-        private View selectDis_Sur() 
-        {
-            if (priceFrame.IsVisible)
-            {
-                if(discount) price.Placeholder = "Discount in LEI";
-                else if(surcharge) price.Placeholder = "Suprataxa in LEI";
-            }
-            else
-            {
-                multiGrid.Children.Clear();
-                qtyFrame.IsVisible = false;
-
-                if (discount)
-                {
-                    multiGrid.RowDefinitions = new RowDefinitionCollection
-                {
-                    new RowDefinition { Height = GridLength.Star },
-                    new RowDefinition { Height = GridLength.Star },
-                };
-
-                    Button PerId = new Button
-                    {
-                        Text = "Procent ID",
-                        Margin = new Thickness(0),
-                    };
-                    PerId.SetDynamicResource(StyleProperty, "btn");
-
-                    Button Cash = new Button
-                    {
-                        Text = "Cash",
-                        Margin = new Thickness(0),
-                    };
-                    Cash.SetDynamicResource(StyleProperty, "btn");
-
-                    PerId.Clicked += PerId_Clicked;
-                    Cash.Clicked += Cash_Clicked;
-
-                    void PerId_Clicked(object sender1, EventArgs e1)
-                    {
-                        multiGrid.Children.Clear();
-
-                        Label IdsList = new Label
-                        {
-                            Text = "Lista Discount:",
-                        };
-                        IdsList.SetDynamicResource(StyleProperty, "mainLabel");
-
-                        multiGrid.Children.Add(IdsList);
-                    }
-
-                    void Cash_Clicked(object sender2, EventArgs e2)
-                    {
-                        multiGrid.Children.Clear();
-                        multiGrid.RowDefinitions = new RowDefinitionCollection
-                    {
-                        new RowDefinition { Height = GridLength.Star },
-                        new RowDefinition { Height = new GridLength (4, GridUnitType.Star) },
-                    };
-
-                        makeNumpad();
-                        price.Placeholder = "Discount in LEI";
-                        priceFrame.IsVisible = true;
-                        multiGrid.Children.Add(priceFrame, 0, 0);
-                        multiGrid.Children.Add(numpad, 0, 1);
-                    }
-
-                    multiGrid.Children.Add(PerId, 0, 0);
-                    multiGrid.Children.Add(Cash, 0, 1);
-                }
-                else if (surcharge)
-                {
-                    multiGrid.RowDefinitions = new RowDefinitionCollection
-                {
-                    new RowDefinition { Height = GridLength.Star },
-                    new RowDefinition { Height = GridLength.Star },
-                };
-
-                    Button PerId = new Button
-                    {
-                        Text = "Procent ID",
-                        Margin = new Thickness(0),
-                    };
-                    PerId.SetDynamicResource(StyleProperty, "btn");
-
-                    Button Cash = new Button
-                    {
-                        Text = "Cash",
-                        Margin = new Thickness(0),
-                    };
-                    Cash.SetDynamicResource(StyleProperty, "btn");
-
-                    PerId.Clicked += PerId_Clicked;
-                    Cash.Clicked += Cash_Clicked;
-
-                    void PerId_Clicked(object sender1, EventArgs e1)
-                    {
-                        multiGrid.Children.Clear();
-
-                        Label IdsList = new Label
-                        {
-                            Text = "Lista Suprataxe:",
-                        };
-                        IdsList.SetDynamicResource(StyleProperty, "mainBtnLabel");
-
-                        multiGrid.Children.Add(IdsList);
-                    }
-
-                    void Cash_Clicked(object sender2, EventArgs e2)
-                    {
-                        multiGrid.Children.Clear();
-                        multiGrid.RowDefinitions = new RowDefinitionCollection
-                    {
-                        new RowDefinition { Height = GridLength.Star },
-                        new RowDefinition { Height = new GridLength (4, GridUnitType.Star) },
-                    };
-
-                        makeNumpad();
-                        price.Placeholder = "Suprataxa in LEI";
-                        priceFrame.IsVisible = true;
-                        multiGrid.Children.Add(priceFrame, 0, 0);
-                        multiGrid.Children.Add(numpad, 0, 1);
-                    }
-
-                    multiGrid.Children.Add(PerId, 0, 0);
-                    multiGrid.Children.Add(Cash, 0, 1);
-                }
-            }
-            return multiGrid;
-        }
 
         private async void digitBtn_Clicked(int numPressed) 
         {
@@ -589,8 +462,8 @@ namespace Marcaj.Pages.Tables
         private void btnDis_Sur_Clicked(object sender, EventArgs e)
         {
             var a = sender as Button;
-            
-            if (discount) 
+
+            /*if (discount) 
             { 
                 discount = false;
                 surcharge = true;
@@ -601,7 +474,162 @@ namespace Marcaj.Pages.Tables
                 surcharge = false;
                 discount = true;
                 a.Text = "Dis";
+            
+
+            if (priceFrame.IsVisible)
+            {
+                if (discount) price.Placeholder = "Discount in LEI";
+                else if (surcharge) price.Placeholder = "Suprataxa in LEI";
             }
+            else
+            */
+
+            
+                multiGrid.Children.Clear();
+                qtyFrame.IsVisible = false;
+
+                multiGrid.RowDefinitions = new RowDefinitionCollection
+                {
+                    new RowDefinition { Height = GridLength.Star },
+                    new RowDefinition { Height = GridLength.Star },
+                };
+
+                Button Discount = new Button
+                {
+                        Text = "Discount",
+                        Margin = new Thickness(0),
+                };
+                Discount.SetDynamicResource(StyleProperty, "btn");
+
+                Button Surcharge = new Button
+                {
+                        Text = "Suprataxa",
+                        Margin = new Thickness(0),
+                };
+                Surcharge.SetDynamicResource(StyleProperty, "btn");
+
+                Discount.Clicked += Discount_Clicked;
+                Surcharge.Clicked += Surcharge_Clicked;
+
+                void Discount_Clicked(object sender0, EventArgs e0) 
+                {
+                    multiGrid.Children.Clear();
+                    multiGrid.RowDefinitions = new RowDefinitionCollection
+                    {
+                    new RowDefinition { Height = GridLength.Star },
+                    new RowDefinition { Height = GridLength.Star },
+                    };
+
+                    Button PerId = new Button
+                    {
+                        Text = "Procent ID",
+                        Margin = new Thickness(0),
+                    };
+                    PerId.SetDynamicResource(StyleProperty, "btn");
+
+                    Button Cash = new Button
+                    {
+                        Text = "Cash",
+                        Margin = new Thickness(0),
+                    };
+                    Cash.SetDynamicResource(StyleProperty, "btn");
+
+                    PerId.Clicked += PerId_Clicked;
+                    Cash.Clicked += Cash_Clicked;
+
+                    void PerId_Clicked(object sender1, EventArgs e1)
+                    {
+                        multiGrid.Children.Clear();
+
+                        Label IdsList = new Label
+                        {
+                            Text = "Lista Discount:",
+                        };
+                        IdsList.SetDynamicResource(StyleProperty, "mainBtnLabel");
+
+                        multiGrid.Children.Add(IdsList);
+                    }
+
+                    void Cash_Clicked(object sender2, EventArgs e2)
+                    {
+                        multiGrid.Children.Clear();
+                        multiGrid.RowDefinitions = new RowDefinitionCollection
+                        {
+                        new RowDefinition { Height = GridLength.Star },
+                        new RowDefinition { Height = new GridLength (4, GridUnitType.Star) },
+                        };
+
+                        makeNumpad();
+                        price.Placeholder = "Discount in LEI";
+                        priceFrame.IsVisible = true;
+                        multiGrid.Children.Add(priceFrame, 0, 0);
+                        multiGrid.Children.Add(numpad, 0, 1);
+                    }
+
+                    multiGrid.Children.Add(PerId, 0, 0);
+                    multiGrid.Children.Add(Cash, 0, 1);
+                }
+
+                void Surcharge_Clicked(object sender3, EventArgs e3)
+                {
+                    multiGrid.Children.Clear();
+                    multiGrid.RowDefinitions = new RowDefinitionCollection
+                    {
+                    new RowDefinition { Height = GridLength.Star },
+                    new RowDefinition { Height = GridLength.Star },
+                    };
+
+                    Button PerId = new Button
+                    {
+                        Text = "Procent ID",
+                        Margin = new Thickness(0),
+                    };
+                    PerId.SetDynamicResource(StyleProperty, "btn");
+
+                    Button Cash = new Button
+                    {
+                        Text = "Cash",
+                        Margin = new Thickness(0),
+                    };
+                    Cash.SetDynamicResource(StyleProperty, "btn");
+
+                    PerId.Clicked += PerId_Clicked;
+                    Cash.Clicked += Cash_Clicked;
+
+                    void PerId_Clicked(object sender1, EventArgs e1)
+                    {
+                        multiGrid.Children.Clear();
+
+                        Label IdsList = new Label
+                        {
+                            Text = "Lista Suprataxe:",
+                        };
+                        IdsList.SetDynamicResource(StyleProperty, "mainBtnLabel");
+
+                        multiGrid.Children.Add(IdsList);
+                    }
+
+                    void Cash_Clicked(object sender2, EventArgs e2)
+                    {
+                        multiGrid.Children.Clear();
+                        multiGrid.RowDefinitions = new RowDefinitionCollection
+                    {
+                        new RowDefinition { Height = GridLength.Star },
+                        new RowDefinition { Height = new GridLength (4, GridUnitType.Star) },
+                    };
+
+                        makeNumpad();
+                        price.Placeholder = "Suprataxa in LEI";
+                        priceFrame.IsVisible = true;
+                        multiGrid.Children.Add(priceFrame, 0, 0);
+                        multiGrid.Children.Add(numpad, 0, 1);
+                    }
+
+                    multiGrid.Children.Add(PerId, 0, 0);
+                    multiGrid.Children.Add(Cash, 0, 1);
+                }
+            multiGrid.Children.Add(Discount, 0, 0);
+            multiGrid.Children.Add(Surcharge, 0, 1);
 
         }
 
