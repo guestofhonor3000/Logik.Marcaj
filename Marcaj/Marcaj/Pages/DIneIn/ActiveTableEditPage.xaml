@@ -175,13 +175,13 @@
 
                 </CollectionView>
 
-                <Grid Grid.Column="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="14*"/>
-                        <ColumnDefinition Width="6*"/>
-                    </Grid.ColumnDefinitions>
+                <!--Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="14*"/>
+                        <RowDefinition Height="6*"/>
+                    </Grid.RowDefinitions-->
 
-                    <CollectionView Grid.Column="0"
+                    <CollectionView Grid.Column="1"
                                     x:Name="lstvwMenuItems" 
                                     SelectionChanged="lstvwMenuItems_ItemSelected"
                                     VerticalScrollBarVisibility="Never"
@@ -197,7 +197,7 @@
                         
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Frame Style="{DynamicResource thirdBtnFrame}"
+                                <Frame Style="{DynamicResource mainFrame}"
                                        Margin="0"
                                        Padding="0"
                                        HorizontalOptions="Fill"
@@ -209,12 +209,12 @@
                                                   Margin="0"
                                                   Padding="0">
                                         <Label Text="{Binding QtyCountDown}"
-                                               Style="{DynamicResource secondBtnLabel}"
+                                               Style="{DynamicResource mainBtnLabel}"
                                                HorizontalOptions="Fill"
                                                VerticalOptions="Fill"/>
 
                                         <Label Text="{Binding MenuItemText}"
-                                               Style="{DynamicResource secondBtnLabel}"
+                                               Style="{DynamicResource mainBtnLabel}"
                                                HorizontalOptions="Fill"
                                                VerticalOptions="Fill"/>
                                     </StackLayout>
@@ -223,7 +223,7 @@
                         </CollectionView.ItemTemplate>
                     </CollectionView>
 
-                    <Grid Grid.Column="1"                 
+                    <!--Grid Grid.Row="1"                 
                           Style="{DynamicResource secondGrid}"
                           Margin="0,10,0,10">
                         
@@ -231,81 +231,10 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="5*"/>
                         </Grid.ColumnDefinitions>
-
-                        <Grid Grid.Column="0"
-                              Margin="0,0,5,0">
-
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-
-                            <Frame Grid.Row="0" 
-                               Style="{DynamicResource mainFrame}"
-                               Margin="0"
-                               Padding="0"
-                               VerticalOptions="Fill"
-                               HorizontalOptions="Fill">
-
-                                <ImageButton Source="QtyIcon.Dark.png"
-                                         Aspect="AspectFit" 
-                                         Padding="0"
-                                         Margin="0"
-                                         x:Name="btnQty"
-                                         Clicked="btnQty_Clicked"/>
-                            </Frame>
-
-                            <Frame Grid.Row="1" 
-                               Style="{DynamicResource mainFrame}"
-                               VerticalOptions="Fill"
-                               HorizontalOptions="Fill"
-                               Padding="0"
-                               Margin="0">
-
-                                <ImageButton Source="OptionsIcon.Dark.png"
-                                         Aspect="AspectFit" 
-                                         Padding="0"
-                                         Margin="0"
-                                         x:Name="btnOpts"/>
-                            </Frame>
-
-                            <Frame Grid.Row="2" 
-                               Style="{DynamicResource mainFrame}"
-                               Margin="0"
-                               Padding="0"
-                               VerticalOptions="Fill"
-                               HorizontalOptions="Fill">
-
-                                <ImageButton Source="ScaleIcon.Dark.png"
-                                         Aspect="AspectFit" 
-                                         Padding="0"
-                                         Margin="0"
-                                         x:Name="btnScale"/>
-                            </Frame>
-
-                            <Button Grid.Row="3"
-                                Text="Dis"
-                                TextColor="#50e9da"
-                                x:Name="btnDis_Sur"
-                                Clicked="btnDis_Sur_Clicked"
-                                Style="{DynamicResource btn}"
-                                Margin="0"/>
-
-
-                            <Frame Grid.Row="4" 
-                               Style="{DynamicResource mainFrame}"
-                               Margin="0"
-                               Padding="0"
-                               VerticalOptions="Fill"
-                               HorizontalOptions="Fill">
-                            </Frame>
-                        </Grid>
+                
 
                         <Frame Grid.Column="1"
-                           Style="{DynamicResource secondBtnFrame}"
+                           Style="{DynamicResource btnFrame}"
                            Padding="10"
                            Margin="5,0,0,0">
 
@@ -350,14 +279,14 @@
                             </Grid>
                         </Frame>
                     </Grid>
-                </Grid>
+                </Grid-->
                 
                 <Grid Grid.Column="2" 
                       Style="{DynamicResource secondGrid}">
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="12*"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="13*"/>
+                        <RowDefinition Height="2*"/>
                     </Grid.RowDefinitions>
 
                     <Frame Grid.Row="0"
@@ -393,9 +322,9 @@
                                           Padding="0">
 
                                         <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition Width="3*"/>
-                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
 
                                         <Label Grid.Column="0" 
@@ -403,14 +332,17 @@
                                                Style="{DynamicResource checkLabel}"/>
 
                                         <Label Grid.Column="1" 
-                                               x:Name="txtServer" 
-                                               Style="{DynamicResource checkLabel}"/>
+                                               x:Name="txtDateTimeOpenedTable" 
+                                               Style="{DynamicResource checkLabel}"
+                                               FontSize="14"/>
+                                        
 
                                         <Label Grid.Column="2" 
                                                x:Name="txtStation" 
                                                Style="{DynamicResource checkLabel}"/>
                                     </Grid>
 
+                                    
                                     <Frame Grid.Row="1"
                                            BackgroundColor="#454a55"
                                            CornerRadius="4"
@@ -429,32 +361,64 @@
                                                HorizontalTextAlignment="Center"/>
                                     </Frame>
 
-                                    <Label Grid.Row="2" 
-                                           x:Name="txtDateTimeOpenedTable" 
-                                           Style="{DynamicResource checkLabel}"
-                                           VerticalOptions="Center"
-                                           HorizontalOptions="Center"
-                                           HorizontalTextAlignment="Center"
-                                           VerticalTextAlignment="Center"
-                                           Margin="0"
-                                           Padding="0"/>
+                                    <Grid Grid.Row="2"
+                                          Margin="0"
+                                          Padding="0">
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <Label Grid.Column="0" 
+                                               x:Name="txtServer" 
+                                               Style="{DynamicResource checkLabel}"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Center"
+                                               HorizontalTextAlignment="Center"
+                                               VerticalTextAlignment="Center"
+                                               Margin="0"
+                                               Padding="0"/>
+
+                                        <Label Grid.Column="1" 
+                                               x:Name="txtClient" 
+                                               Style="{DynamicResource checkLabel}"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Center"
+                                               HorizontalTextAlignment="Center"
+                                               VerticalTextAlignment="Center"
+                                               Margin="0"
+                                               Padding="0"/>
+                                    </Grid>
                                 </Grid>
                             </Frame>
 
                             
-                            <ListView Grid.Row="1"
-                                      x:Name="lstvwOrderTransactions"
-                                      SelectedItem="lstvwOrderTransactions_ItemSelected">
+                            <CollectionView Grid.Row="1"
+                                            x:Name="lstvwOrderTransactions"
+                                            SelectionChanged="lstvwOrderTransactions_ItemSelected"
+                                            VerticalScrollBarVisibility="Never"
+                                            SelectionMode="Single">
 
-                                <ListView.ItemTemplate>
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Vertical"
+                                                       ItemSpacing="5"/>
+                                </CollectionView.ItemsLayout>
+
+                                <CollectionView.ItemTemplate>
                                     <DataTemplate>
-                                        <ViewCell>
-                                            <Frame BackgroundColor="White"
-                                               CornerRadius="4"
-                                               Margin="0,5,0,5"
-                                               HorizontalOptions="Fill"
-                                               VerticalOptions="Start"
-                                               Padding="5">
+
+                                            <Frame x:Name="itemFrame"
+                                                   BackgroundColor="White"
+                                                   CornerRadius="4" 
+                                                   Padding="0"
+                                                   HeightRequest="50"
+                                                   HasShadow="True"
+                                                   HorizontalOptions="Fill"
+                                                   VerticalOptions="Start"
+                                                   AutomationId="{Binding MenuItemTextOT}"
+                                                   Focused="itemFrame_Focused">
+                                                
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*"/>
@@ -462,36 +426,50 @@
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
 
-                                                    <Button Grid.Column="0" 
-                                                        Text="{Binding Quantity}" 
-                                                        Style="{DynamicResource secondBtn}"
-                                                        AutomationId="{Binding MenuItemTextOT}"
-                                                        Clicked="ItemQty_Clicked"/>
+                                                    <Button Grid.Column="0"
+                                                            Text="{Binding Quantity}" 
+                                                            Style="{DynamicResource btn}"
+                                                            AutomationId="{Binding MenuItemTextOT}"
+                                                            HorizontalOptions="Fill"
+                                                            VerticalOptions="Fill"
+                                                            BorderColor="#4db290"
+                                                            BorderWidth="{Binding isEditable}"
+                                                            IsEnabled="{Binding itemEdit}"
+                                                            Margin="2"
+                                                            x:Name="ItemQty"
+                                                            Clicked="ItemQty_Clicked"/>
 
                                                     <Label Grid.Column="1" 
-                                                       Text="{Binding MenuItemTextOT}" 
-                                                       Style="{DynamicResource checkLabel}"
-                                                       HorizontalTextAlignment="Center"
-                                                       HorizontalOptions="Center"
-                                                       VerticalOptions="Center"/>
+                                                           Text="{Binding MenuItemTextOT}" 
+                                                           Style="{DynamicResource checkLabel}"
+                                                           HorizontalTextAlignment="Center"
+                                                           HorizontalOptions="Fill"
+                                                           VerticalOptions="Fill"/>
 
                                                     <Button Grid.Column="2" 
-                                                        Text="{Binding ExtendedPrice}" 
-                                                        Style="{DynamicResource secondBtn}"
-                                                        AutomationId="{Binding MenuItemTextOT}"
-                                                        Clicked="ItemPrice_Clicked"/>
+                                                            Text="{Binding ExtendedPrice}" 
+                                                            Style="{DynamicResource btn}"
+                                                            AutomationId="{Binding MenuItemTextOT}"
+                                                            HorizontalOptions="Fill"
+                                                            VerticalOptions="Fill"
+                                                            BorderColor="#4db290"
+                                                            BorderWidth="{Binding isEditable}"
+                                                            IsEnabled="{Binding itemEdit}"
+                                                            Margin="2"
+                                                            x:Name="ItemPrice"
+                                                            Clicked="ItemPrice_Clicked"/>
                                                 </Grid>
                                             </Frame>
-                                        </ViewCell>
+
                                     </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
 
 
                             <Button Grid.Row="2"
                                     x:Name="txtAmountDue"
                                     Clicked="txtAmountDue_Clicked"
-                                    Style="{DynamicResource secondBtn}"
+                                    Style="{DynamicResource btn}"
                                     FontSize="20"
                                     HorizontalOptions="Center"
                                     VerticalOptions="CenterAndExpand"
@@ -499,39 +477,114 @@
                         </Grid>
                     </Frame>
 
-                    
                     <Grid Grid.Row="1"
                           Margin="10,5,10,10">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Frame Grid.Column="0"
+                        <Frame Grid.Row="0"
+                               Grid.Column="0" 
+                               Style="{DynamicResource mainFrame}"
+                               Margin="0"
+                               Padding="0"
+                               VerticalOptions="Fill"
+                               HorizontalOptions="Fill">
+
+                            <Button Text="QTY"
+                                    Padding="0"
+                                    Margin="0" 
+                                    x:Name="btnQty"
+                                    Clicked="btnQty_Clicked"
+                                    TextColor="#50e9da"
+                                    Style="{DynamicResource btn}"/>
+                        </Frame>
+
+                        <Frame Grid.Row="0"
+                               Grid.Column="1" 
+                               Style="{DynamicResource mainFrame}"
+                               VerticalOptions="Fill"
+                               HorizontalOptions="Fill"
+                               Padding="0"
+                               Margin="0">
+
+                            <Button Text="MODIF"
+                                    Padding="0"
+                                    Margin="0" 
+                                    x:Name="btnModifs"
+                                    Clicked="btnModifs_Clicked"
+                                    TextColor="#50e9da"
+                                    Style="{DynamicResource btn}"/>
+                        </Frame>
+
+                        <Button Grid.Row="0"
+                                Grid.Column="2"
+                                Text="PRET"
+                                TextColor="#50e9da"
+                                x:Name="btnDis_Sur"
+                                Clicked="btnDis_Sur_Clicked"
+                                Style="{DynamicResource btn}"
+                                Margin="0"/>
+
+
+                        <Frame Grid.Row="0"
+                               Grid.Column="3" 
+                               Style="{DynamicResource mainFrame}"
+                               Margin="0"
+                               Padding="0"
+                               VerticalOptions="Fill"
+                               HorizontalOptions="Fill">
+
+                            <Button Text="CLIENT"
+                                    Padding="0"
+                                    Margin="0"
+                                    x:Name="btnClient"
+                                    Clicked="btnClient_Clicked"
+                                    TextColor="#50e9da"
+                                    Style="{DynamicResource btn}"/>
+                        </Frame>
+
+                        <Frame Grid.Row="1"
+                               Grid.Column="0"
                                Style="{DynamicResource mainFrame}"
                                Padding="0"
                                Margin="0">
 
-                            <ImageButton x:Name="btnAnuleazaOrder" 
+                            <Button Text="ANULEAZA"
+                                    Padding="0"
+                                    Margin="0" 
+                                    x:Name="btnAnuleazaOrder" 
                                     Clicked="btnAnuleazaOrder_Clicked"
-                                     Source="EditButton.Dark.png"
-                                     Margin="-10"/>
+                                    TextColor="#50e9da"
+                                    Style="{DynamicResource btn}"/>
                         </Frame>
 
-                        <Frame Grid.Column="1" 
+                        <Frame Grid.Row="1"
+                               Grid.Column="1" 
                                Style="{DynamicResource mainFrame}"
                                Padding="0"
                                Margin="0">
 
                             <ImageButton x:Name="btnSettle" 
-                                     Clicked="btnSettle_Clicked"
-                                     Source="SettleIcon.Dark.png"
-                                     Margin="-10"/>
+                                        Clicked="btnSettle_Clicked"
+                                        Source="SettleIcon.Dark.png"
+                                        Aspect="AspectFill"
+                                        Margin="0"/>
                         </Frame>
 
 
-                        <ImageButton Grid.Column="2" 
+                        <ImageButton Grid.Row="1"
+                                     Grid.Column="2"
+                                     Grid.ColumnSpan="2"
                                      BackgroundColor="#4db290"
                                      CornerRadius="4"
                                      x:Name="btnDone" 

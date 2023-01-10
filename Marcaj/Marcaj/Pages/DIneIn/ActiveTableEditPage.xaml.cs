@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Marcaj.Models.CustomModels;
 using Marcaj.Models.DbModels;
+using Marcaj.Pages.Modals;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using static System.Net.Mime.MediaTypeNames;
@@ -19,21 +23,25 @@ namespace Marcaj.Pages.Tables
 		OrderHeadersModel OrderHeader;
 		EmployeeFileModel EmpFile;
 		DineInTableModel DineIn;
+        OrderTransactionsModel OrderTra;
+        List<OrderHeadersModel> orderHeaderList;
         List<MenuItemsModel> menuItems;
         List<MenuItemsModel> allMenuItems;
         List<OrderTransactionsModel> orderTraList;
-        List<int> digits = new List<int>();
 
-        int digit;
-        View numpad;
         int Qty = 1;
-        string sQty;
-        float ModPrice;
-        string sModPrice;
-        string InStock;
-        bool discount = true;
-        bool surcharge = false;
+        //string sQty;
+        //float ModPrice;
+        //string sModPrice;
+        //string InStock;
+        //bool discount = true;
+        //bool surcharge = false;
+        bool chgQty = false;
+        bool chgPrice = false;
+        bool chgMods = false;
         bool IsFirstLoad = true;
+        bool itemEdit = false;
+        //bool isEditable = false;
         int GroupId = 0;
         float total;
 		public ActiveTableEditPage (OrderHeadersModel orderHeader, EmployeeFileModel empFile, DineInTableModel dineIn, List<OrderTransactionsModel> orderTransactions)
@@ -41,27 +49,20 @@ namespace Marcaj.Pages.Tables
 			InitializeComponent ();
 
             //Clock.Text = DateTime.Now.ToString();
-            #region digits
-            digits.Add(1);
-            digits.Add(2);
-            digits.Add(3);
-            digits.Add(4);
-            digits.Add(5);
-            digits.Add(6);
-            digits.Add(7);
-            digits.Add(8);
-            digits.Add(9);
-            digits.Add(11);
-            digits.Add(0);
-            digits.Add(12);
-            #endregion
             OrderHeader = orderHeader;
             EmpFile = empFile;
             DineIn = dineIn;
             orderTraList = orderTransactions;
+            
             Debug.WriteLine(orderTraList.Count);
             PopList(IsFirstLoad, GroupId);
 		}
+
+
+
+            public new bool IsEnabled { get; set; }
+            
+
 
         async void PopList(bool isFirstLoad, int groupId)
         {
@@ -70,6 +71,8 @@ namespace Marcaj.Pages.Tables
                 OrderHeader.SynchVer = DateTime.Now;
                 await App.manager.iPutSynchVerOrderHeaders(OrderHeader, OrderHeader.OrderID);
                 txtServer.Text = "Deschis de: " + EmpFile.FirstName;
+                txtClient.Text = "Client:" + OrderHeader.SpecificCustomerName;
+                if (OrderHeader.SpecificCustomerName == null) txtClient.Text = "Client: Nou";
                 txtStation.Text = "Statie: " + OrderHeader.StationID;
                 txtOrderName.Text = "#" + OrderHeader.OrderID.ToString();
                 txtTableName.Text = "Masa: " + DineIn.DineInTableText;
@@ -166,7 +169,7 @@ namespace Marcaj.Pages.Tables
                 txtAmountDue.Text = total.ToString();
                 Debug.WriteLine(total.ToString());
 
-                multiGrid.Children.Clear();
+                /*multiGrid.Children.Clear();
                 qtyFrame.IsVisible = false;
 
                 StackLayout Detalii= new StackLayout();
@@ -191,12 +194,11 @@ namespace Marcaj.Pages.Tables
                 Detalii.Children.Add(itemDetails);
 
                 multiGrid.Children.Add(Detalii);
+                */
             }
 
             ((CollectionView)sender).SelectedItem = null;
         }
-
-
 
         int entries_ = 0;
         
@@ -219,433 +221,124 @@ namespace Marcaj.Pages.Tables
                     lstvwMenuItems.ItemsSource = menuItems;
                 }
             }
-
         }
 
-         private void lstvwOrderTransactions_ItemSelected(object sender, SelectedItemChangedEventArgs e) 
+        
+        private async void lstvwOrderTransactions_ItemSelected(object sender, SelectionChangedEventArgs e)
         {
-            /*if (IsFirstLoad != true)
+
+            if (e.CurrentSelection.FirstOrDefault() != null)
             {
-                var selIt = e.SelectedItem as OrderTransactionsModel;
-                IsFirstLoad = false;
-                
-            }*/
+                var selIt = e.CurrentSelection.FirstOrDefault() as OrderTransactionsModel;
+                OrderTra = selIt;
+                Debug.WriteLine(selIt.MenuItemTextOT);
+
+                if (chgMods) 
+                {
+                    var menuItem = menuItems.FirstOrDefault(x => x.MenuItemID == selIt.MenuItemID);
+                    var modifsModal = new ModifiersModalPage(selIt , menuItem);
+                    await Navigation.PushModalAsync(modifsModal);
+                    chgMods= false;
+                    btnModifs.BorderWidth = 0;
+                }
+                else if (itemEdit == false) 
+                { 
+                    itemEdit= true;
+                }
+            }
+            ((CollectionView)sender).SelectedItem = null;
         }
 
-        private void ItemQty_Clicked(object sender, EventArgs e)
+        private void itemFrame_Focused(object sender, FocusEventArgs e)
+        {
+            var a = sender as Frame;
+            //if (a.AutomationId == OrderTra.MenuItemTextOT) isEditable= true;
+        }
+
+
+        private async void ItemQty_Clicked(object sender, EventArgs e)
         {
             var a = sender as Button;
             var b = orderTraList.Where(x => x.MenuItemTextOT == a.AutomationId).FirstOrDefault();
 
-            if (qtyFrame.IsVisible == false) 
+            if (itemEdit)
             {
-                 btnQty_Clicked(a, e);  
-            }
-            if (Qty != 1) 
-            { 
-                b.Quantity = Qty;
-                b.ExtendedPrice = b.MenuItemUnitPrice * b.Quantity;
-                total += b.ExtendedPrice;
-                a.Text = b.Quantity.ToString();
-            }
-            //orderTraList.Add(b);
-            txtAmountDue.Text = total.ToString();
+                var qtyModal = new QtyModalPage(a, b);
+                await Navigation.PushModalAsync(qtyModal);
+                itemEdit = false;
+                //total += b.ExtendedPrice;
 
-
+                //orderTraList.Add(b);
+                //total += b.ExtendedPrice * b.Quantity;
+                //txtAmountDue.Text = total.ToString();
+            }
         }
 
-        private void ItemPrice_Clicked(object sender, EventArgs e)
+
+        private async void ItemPrice_Clicked(object sender, EventArgs e)
         {
             var a = sender as Button;
             var b = orderTraList.Where(x => x.MenuItemTextOT == a.AutomationId).FirstOrDefault();
 
-
-            if (priceFrame.IsVisible == false)
+            if (itemEdit)
             {
-                btnDis_Sur_Clicked(sender, e);
-            }
-            else
-            {
-                if (discount)
-                {
-                    if (ModPrice != 0 && ModPrice < b.MenuItemUnitPrice)
-                    {
-                        b.ExtendedPrice = (b.MenuItemUnitPrice - ModPrice) * b.Quantity;
-                        total += b.ExtendedPrice;
-                    }
-                    else if (ModPrice == 0) b.ExtendedPrice = b.ExtendedPrice;
-                }
-                else if (surcharge)
-                {
-                    if (ModPrice != 0)
-                    {
-                        b.ExtendedPrice = (b.MenuItemUnitPrice + ModPrice) * b.Quantity;
-                        total += b.ExtendedPrice;
-                    }
-                    else if (ModPrice == 0) b.ExtendedPrice = b.ExtendedPrice;
-                }
 
-                a.Text = b.ExtendedPrice.ToString();
-                txtAmountDue.Text = total.ToString();
+                var priceModal = new PriceModalPage(a, b);
+                await Navigation.PushModalAsync(priceModal);
+                itemEdit = false;
+                //total += b.ExtendedPrice * b.Quantity;
+                //txtAmountDue.Text = total.ToString();
             }
         }
 
         private void txtAmountDue_Clicked(object sender, EventArgs e)
         {
             var a = sender as Button;
-
-            if (priceFrame.IsVisible == false)
-            {
-                btnDis_Sur_Clicked(sender, e);
-                a.Text = total.ToString();
-            }
-
-            if (discount)
-            {
-                if (ModPrice != 0 && ModPrice < Convert.ToSingle(a.Text))
-                {
-                    total = Convert.ToSingle(a.Text) - ModPrice;
-                }
-            }
-            else if (surcharge)
-            {
-                if (ModPrice != 0)
-                {
-                    total = Convert.ToSingle(a.Text) + ModPrice;
-                }
-            }
-
-            a.Text = total.ToString();
+            //a.Text = total.ToString();
         }
 
-        private View makeNumpad()
-        {
-            int row = 0;
-            int col = -1;
-            Grid Numpad = new Grid
-            {
-                ColumnDefinitions =
-                {
-                    new ColumnDefinition { Width = GridLength.Star },
-                    new ColumnDefinition { Width = GridLength.Star },
-                    new ColumnDefinition { Width = GridLength.Star }
-                },
-                RowDefinitions =
-                {
-                    new RowDefinition { Height = GridLength.Star },
-                    new RowDefinition { Height = GridLength.Star },
-                    new RowDefinition { Height = GridLength.Star },
-                    new RowDefinition { Height = GridLength.Star },
-                },
-            };
-
-            foreach (var digit in digits) 
-            {
-                col++;
-                if (col == 3)
-                { 
-                    row++; 
-                    col = 0; 
-                }
-
-                Button digitBtn = new Button
-                {
-                    Text = digit.ToString(),
-                    Margin = new Thickness(0),
-                };
-                digitBtn.SetDynamicResource(StyleProperty, "btn");
-                digitBtn.Clicked += (sender, EventArgs) => digitBtn_Clicked(digit);
-
-                if (digit == 11) 
-                {
-                    digitBtn.Text = "DEL";
-                }
-
-                if (digit == 12)
-                {
-                    digitBtn.Text = "OK";
-                    digitBtn.BackgroundColor = Color.FromHex("#4db290");
-                }
-
-                Numpad.Children.Add(digitBtn, col, row);
-            }
-            numpad = Numpad;
-            return numpad;
-        }
-
-
-        private async void digitBtn_Clicked(int numPressed) 
-        {
-            if (numPressed < 10) 
-            {
-                if (qtyFrame.IsVisible)
-                {
-                    sQty += numPressed.ToString();
-                    Qty = Convert.ToInt32(sQty);
-                    qty.Text = "x" + sQty;
-                    Debug.WriteLine(sQty);
-                    Debug.WriteLine(Qty);
-                }
-                else if (priceFrame.IsVisible) 
-                {                    
-                    sModPrice+= numPressed.ToString();
-                    ModPrice= Convert.ToSingle(sModPrice);
-                    if (discount) price.Text = "-" + sModPrice;
-                    else if (surcharge) price.Text = "+" + sModPrice;
-                    Debug.WriteLine(sModPrice);
-                    Debug.WriteLine(ModPrice);
-                }
-            }
-            else if (numPressed == 11) 
-            {
-                if (qtyFrame.IsVisible)
-                {
-                    sQty = "";
-                    Qty = 1;
-                    qty.Text = qty.Placeholder;
-                } 
-                else if (priceFrame.IsVisible) 
-                {
-                    sModPrice = "";
-                    ModPrice = 0;
-                    price.Text = price.Placeholder;
-                }
-            }
-            else if (numPressed == 12)
-            {
-                if (qtyFrame.IsVisible)
-                {
-                    if (sQty != "")
-                    {
-                        Qty = Convert.ToInt32(sQty);
-                        qty.Text = "Aplica" + qty.Text;
-                        qty.TextColor = Color.FromHex("#4db290");
-                    }
-                    else
-                    {
-                        Qty = 1;
-                    }
-                }
-                else if (priceFrame.IsVisible) 
-                {
-                    if (sModPrice != "")
-                    {
-                        ModPrice = Convert.ToSingle(sModPrice);
-                        price.Text = "Aplica " + price.Text;
-                        price.TextColor = Color.FromHex("#4db290");
-                    }
-                    else
-                    {
-                        ModPrice = 0;
-                    }
-                }
-            }  
-        }
 
         private void btnQty_Clicked(object sender, EventArgs e)
         {
-            multiGrid.Children.Clear();
-            priceFrame.IsVisible = false;
-
-            multiGrid.RowDefinitions = new RowDefinitionCollection
-            {
-                new RowDefinition { Height = GridLength.Star },
-                new RowDefinition { Height = new GridLength (4, GridUnitType.Star) },
-            };
-
-            makeNumpad();
-            qtyFrame.IsVisible= true;
-            multiGrid.Children.Add(qtyFrame, 0, 0);
-            multiGrid.Children.Add(numpad, 0, 1);
+            if (chgQty == false) chgQty = true;
+            Debug.WriteLine(chgQty);
         }
+
 
         private void btnDis_Sur_Clicked(object sender, EventArgs e)
         {
-            var a = sender as Button;
-
-            /*if (discount) 
-            { 
-                discount = false;
-                surcharge = true;
-                a.Text = "Sur";
-            }
-            else if (surcharge)
-            {
-                surcharge = false;
-                discount = true;
-                a.Text = "Dis";
-            
-
-            if (priceFrame.IsVisible)
-            {
-                if (discount) price.Placeholder = "Discount in LEI";
-                else if (surcharge) price.Placeholder = "Suprataxa in LEI";
-            }
-            else
-            */
-
-            
-                multiGrid.Children.Clear();
-                qtyFrame.IsVisible = false;
-
-                multiGrid.RowDefinitions = new RowDefinitionCollection
-                {
-                    new RowDefinition { Height = GridLength.Star },
-                    new RowDefinition { Height = GridLength.Star },
-                };
-
-                Button Discount = new Button
-                {
-                        Text = "Discount",
-                        Margin = new Thickness(0),
-                };
-                Discount.SetDynamicResource(StyleProperty, "btn");
-
-                Button Surcharge = new Button
-                {
-                        Text = "Suprataxa",
-                        Margin = new Thickness(0),
-                };
-                Surcharge.SetDynamicResource(StyleProperty, "btn");
-
-                Discount.Clicked += Discount_Clicked;
-                Surcharge.Clicked += Surcharge_Clicked;
-
-                void Discount_Clicked(object sender0, EventArgs e0) 
-                {
-                    multiGrid.Children.Clear();
-                    multiGrid.RowDefinitions = new RowDefinitionCollection
-                    {
-                    new RowDefinition { Height = GridLength.Star },
-                    new RowDefinition { Height = GridLength.Star },
-                    };
-
-                    Button PerId = new Button
-                    {
-                        Text = "Procent ID",
-                        Margin = new Thickness(0),
-                    };
-                    PerId.SetDynamicResource(StyleProperty, "btn");
-
-                    Button Cash = new Button
-                    {
-                        Text = "Cash",
-                        Margin = new Thickness(0),
-                    };
-                    Cash.SetDynamicResource(StyleProperty, "btn");
-
-                    PerId.Clicked += PerId_Clicked;
-                    Cash.Clicked += Cash_Clicked;
-
-                    void PerId_Clicked(object sender1, EventArgs e1)
-                    {
-                        multiGrid.Children.Clear();
-
-                        Label IdsList = new Label
-                        {
-                            Text = "Lista Discount:",
-                        };
-                        IdsList.SetDynamicResource(StyleProperty, "mainBtnLabel");
-
-                        multiGrid.Children.Add(IdsList);
-                    }
-
-                    void Cash_Clicked(object sender2, EventArgs e2)
-                    {
-                        multiGrid.Children.Clear();
-                        multiGrid.RowDefinitions = new RowDefinitionCollection
-                        {
-                        new RowDefinition { Height = GridLength.Star },
-                        new RowDefinition { Height = new GridLength (4, GridUnitType.Star) },
-                        };
-
-                        makeNumpad();
-                        price.Placeholder = "Discount in LEI";
-                        priceFrame.IsVisible = true;
-                        multiGrid.Children.Add(priceFrame, 0, 0);
-                        multiGrid.Children.Add(numpad, 0, 1);
-                    }
-
-                    multiGrid.Children.Add(PerId, 0, 0);
-                    multiGrid.Children.Add(Cash, 0, 1);
-                }
-
-                void Surcharge_Clicked(object sender3, EventArgs e3)
-                {
-                    multiGrid.Children.Clear();
-                    multiGrid.RowDefinitions = new RowDefinitionCollection
-                    {
-                    new RowDefinition { Height = GridLength.Star },
-                    new RowDefinition { Height = GridLength.Star },
-                    };
-
-                    Button PerId = new Button
-                    {
-                        Text = "Procent ID",
-                        Margin = new Thickness(0),
-                    };
-                    PerId.SetDynamicResource(StyleProperty, "btn");
-
-                    Button Cash = new Button
-                    {
-                        Text = "Cash",
-                        Margin = new Thickness(0),
-                    };
-                    Cash.SetDynamicResource(StyleProperty, "btn");
-
-                    PerId.Clicked += PerId_Clicked;
-                    Cash.Clicked += Cash_Clicked;
-
-                    void PerId_Clicked(object sender1, EventArgs e1)
-                    {
-                        multiGrid.Children.Clear();
-
-                        Label IdsList = new Label
-                        {
-                            Text = "Lista Suprataxe:",
-                        };
-                        IdsList.SetDynamicResource(StyleProperty, "mainBtnLabel");
-
-                        multiGrid.Children.Add(IdsList);
-                    }
-
-                    void Cash_Clicked(object sender2, EventArgs e2)
-                    {
-                        multiGrid.Children.Clear();
-                        multiGrid.RowDefinitions = new RowDefinitionCollection
-                    {
-                        new RowDefinition { Height = GridLength.Star },
-                        new RowDefinition { Height = new GridLength (4, GridUnitType.Star) },
-                    };
-
-                        makeNumpad();
-                        price.Placeholder = "Suprataxa in LEI";
-                        priceFrame.IsVisible = true;
-                        multiGrid.Children.Add(priceFrame, 0, 0);
-                        multiGrid.Children.Add(numpad, 0, 1);
-                    }
-
-                    multiGrid.Children.Add(PerId, 0, 0);
-                    multiGrid.Children.Add(Cash, 0, 1);
-                }
-            multiGrid.Children.Add(Discount, 0, 0);
-            multiGrid.Children.Add(Surcharge, 0, 1);
-
+            if (chgPrice == false) chgPrice = true;
+            Debug.WriteLine(chgQty);
         }
 
 
-        private void btnOpts_Clicked(object sender, EventArgs e)
+        private void btnModifs_Clicked(object sender, EventArgs e)
         {
-
+            if (chgMods == false)
+            {
+                chgMods = true;
+                btnModifs.BorderWidth= 5;
+                btnModifs.BorderColor = Color.FromHex("#4db290");
+            }
+            Debug.WriteLine(chgMods);
         }
 
-        private void btnScale_Clicked(object sender, EventArgs e)
+        private async void btnClient_Clicked(object sender, EventArgs e)
+        {
+            var a = sender as Button;
+            var clientModal = new ClientModalPage(OrderHeader, orderHeaderList);
+            await Navigation.PushModalAsync(clientModal);
+            txtClient.Text = "Client:" + OrderHeader.SpecificCustomerName;
+        }
+
+        private void btnVoid_Clicked(object sender, EventArgs e)
         {
 
         }
 
         private CancellationTokenSource _tokenSource;
         int entries = 0;
+
         private async void Entry_TextChanged(object sender, TextChangedEventArgs e)
         {
             entries++;
@@ -737,6 +430,5 @@ namespace Marcaj.Pages.Tables
             }
             await Navigation.PopAsync();
         }
-
     }
 }

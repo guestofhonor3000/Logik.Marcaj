@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Marcaj.Pages.Modals.ClientModalPage"
+             NavigationPage.HasNavigationBar="True"
+             BackgroundColor="Transparent">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Frame Grid.Column="1"
+                   Grid.Row="1"
+                   Style="{DynamicResource secondBtnFrame}"
+                   Padding="10">
+
+                <Grid Grid.Column ="1"
+                      Grid.Row ="1">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="9*"/>
+                    </Grid.RowDefinitions>
+
+
+                    <Grid Grid.Row="0">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="1"
+                                   Text="Modifica Client:"
+                                   Style="{DynamicResource mainBtnLabel}"
+                                   HorizontalOptions="CenterAndExpand"
+                                   HorizontalTextAlignment="Center"
+                                   VerticalTextAlignment="Center"
+                                   VerticalOptions="Center"/>
+
+                        <Button Grid.Column="2"
+                                    x:Name="closeModal"
+                                    Text="X"
+                                    Style="{DynamicResource btn}"
+                                    HorizontalOptions="Fill"
+                                    VerticalOptions="Fill"
+                                    Margin="0"
+                                    Clicked="closeModal_Clicked"/>
+                    </Grid>
+
+                    <Grid x:Name="multiGrid"
+                          Grid.Row="1">
+                    </Grid>
+                </Grid>
+            </Frame>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

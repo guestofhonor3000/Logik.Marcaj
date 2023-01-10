@@ -19,6 +19,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Pages\Modals\ClientModalPage.xaml.cs">
+      <DependentUpon>ClientModalPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\Modals\PriceModalPage.xaml.cs">
+      <DependentUpon>PriceModalPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\Modals\QtyModalPage.xaml.cs">
+      <DependentUpon>QtyModalPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Pages\Settings\Statie\ThemePage.xaml.cs">
       <DependentUpon>ThemePage.xaml</DependentUpon>
     </Compile>
@@ -38,6 +47,18 @@
 
   <ItemGroup>
     <EmbeddedResource Update="HomePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\Modals\ModifiersModalPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\Modals\ClientModalPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\Modals\PriceModalPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\Modals\QtyModalPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\Settings\Statie\ThemePage.xaml">
