@@ -57,14 +57,14 @@ namespace Marcaj.Pages.Modals
             Button Discount = new Button
             {
                 Text = "Discount",
-                Margin = new Thickness(0),
+                Margin = new Thickness(20, 10, 20, 10),
             };
             Discount.SetDynamicResource(StyleProperty, "btn");
 
             Button Surcharge = new Button
             {
                 Text = "Suprataxa",
-                Margin = new Thickness(0),
+                Margin = new Thickness(20, 10, 20, 10),
             };
             Surcharge.SetDynamicResource(StyleProperty, "btn");
 
@@ -85,14 +85,14 @@ namespace Marcaj.Pages.Modals
                 Button PerId = new Button
                 {
                     Text = "Procent ID",
-                    Margin = new Thickness(0),
+                    Margin = new Thickness(20, 10, 20, 10),
                 };
                 PerId.SetDynamicResource(StyleProperty, "btn");
 
                 Button Cash = new Button
                 {
                     Text = "Cash",
-                    Margin = new Thickness(0),
+                    Margin = new Thickness(20, 10, 20, 10),
                 };
                 Cash.SetDynamicResource(StyleProperty, "btn");
 
@@ -146,14 +146,14 @@ namespace Marcaj.Pages.Modals
                 Button PerId = new Button
                 {
                     Text = "Procent ID",
-                    Margin = new Thickness(0),
+                    Margin = new Thickness(20, 10, 20, 10),
                 };
                 PerId.SetDynamicResource(StyleProperty, "btn");
 
                 Button Cash = new Button
                 {
                     Text = "Cash",
-                    Margin = new Thickness(0),
+                    Margin = new Thickness(20, 10, 20, 10),
                 };
                 Cash.SetDynamicResource(StyleProperty, "btn");
 

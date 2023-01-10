@@ -21,10 +21,13 @@
             <Frame Grid.Column="1"
                    Grid.Row="1"
                    Style="{DynamicResource secondBtnFrame}"
-                   Padding="10">
+                   Padding="0">
 
-                <Grid Grid.Column ="1"
-                      Grid.Row ="1">
+                <Grid x:Name="mainGrid"
+                      Grid.Column ="1"
+                      Grid.Row ="1"
+                      Padding="0"
+                      RowSpacing="0">
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -32,7 +35,10 @@
                     </Grid.RowDefinitions>
 
 
-                    <Grid Grid.Row="0">
+                    <Grid Grid.Row="0"
+                          Style="{DynamicResource checkGrid}"
+                          Margin="0"
+                          Padding="0">
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -41,24 +47,26 @@
                         </Grid.ColumnDefinitions>
 
                         <Label Grid.Column="1"
-                                   Text="Modifica Client:"
-                                   Style="{DynamicResource mainBtnLabel}"
-                                   HorizontalOptions="CenterAndExpand"
-                                   HorizontalTextAlignment="Center"
-                                   VerticalTextAlignment="Center"
-                                   VerticalOptions="Center"/>
+                               Text="Modifica Client:"
+                               Style="{DynamicResource mainBtnLabel}"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center"
+                               VerticalOptions="Center"/>
 
                         <Button Grid.Column="2"
-                                    x:Name="closeModal"
-                                    Text="X"
-                                    Style="{DynamicResource btn}"
-                                    HorizontalOptions="Fill"
-                                    VerticalOptions="Fill"
-                                    Margin="0"
-                                    Clicked="closeModal_Clicked"/>
+                                x:Name="closeModal"
+                                Text="X"
+                                Style="{DynamicResource btn}"
+                                BackgroundColor="#dc5656"
+                                HorizontalOptions="Fill"
+                                VerticalOptions="Fill"
+                                Margin="5"
+                                Clicked="closeModal_Clicked"/>
                     </Grid>
 
                     <Grid x:Name="multiGrid"
+                          Margin="10"
                           Grid.Row="1">
                     </Grid>
                 </Grid>

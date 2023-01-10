@@ -21,17 +21,22 @@
             <Frame Grid.Column="1"
                    Grid.Row="1"
                    Style="{DynamicResource secondBtnFrame}"
-                   Padding="10">
+                   Padding="0">
 
-                <Grid x:Name="multiGrid">
+                <Grid Grid.Column ="1"
+                      Grid.Row ="1"
+                      Padding="0"
+                      RowSpacing="0">
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="2*"/>
-                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="9*"/>
                     </Grid.RowDefinitions>
 
-                    <Grid Grid.Row="0">
+                    <Grid Grid.Row="0"
+                          Style="{DynamicResource checkGrid}"
+                          Margin="0"
+                          Padding="0">
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -51,19 +56,29 @@
                                 x:Name="closeModal"
                                 Text="X"
                                 Style="{DynamicResource btn}"
+                                BackgroundColor="#dc5656"
                                 HorizontalOptions="Fill"
                                 VerticalOptions="Fill"
-                                Margin="0"
+                                Margin="5"
                                 Clicked="closeModal_Clicked"/>
                     </Grid>
-                    
-                    <Frame x:Name="qtyFrame"
-                           Grid.Row="1"
-                           CornerRadius="4"
-                           BackgroundColor="#d9d9d9"
-                           Margin="0">
 
-                        <Entry x:Name="qty"                                     
+                    <Grid x:Name="multiGrid"
+                          Margin="10"
+                          Grid.Row="1">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="4*"/>
+                        </Grid.RowDefinitions>
+
+                        <Frame x:Name="qtyFrame"
+                               Grid.Row="0"
+                               CornerRadius="4"
+                               BackgroundColor="#d9d9d9"
+                               Margin="0">
+
+                            <Entry x:Name="qty"                                     
                                BackgroundColor="Transparent"
                                FontFamily="Verdana"
                                FontSize="Small"
@@ -73,7 +88,8 @@
                                HorizontalOptions="FillAndExpand"
                                VerticalOptions="FillAndExpand"
                                Margin="-30"/>
-                    </Frame>
+                        </Frame>
+                    </Grid>
                 </Grid>
             </Frame>
         </Grid>

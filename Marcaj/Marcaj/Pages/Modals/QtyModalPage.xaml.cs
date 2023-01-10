@@ -44,7 +44,7 @@ namespace Marcaj.Pages.Modals
             digits.Add(12);
             #endregion
             makeNumpad();
-            multiGrid.Children.Add(numpad, 0, 2);
+            multiGrid.Children.Add(numpad, 0, 1);
 		}
 
         private View makeNumpad()

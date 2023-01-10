@@ -94,7 +94,7 @@
             
             <Style x:Key="sideBtnFrame" TargetType="Frame">
                 <Setter Property="CornerRadius" Value="4"/>
-                <Setter Property="BackgroundColor" Value="#23262b"/>
+                <Setter Property="BackgroundColor" Value="#171a1d"/>
                 <Setter Property="Margin" Value="5"/>
             </Style>
 

@@ -41,6 +41,7 @@ namespace Marcaj.Pages.Tables
         bool chgMods = false;
         bool IsFirstLoad = true;
         bool itemEdit = false;
+        string DateTimeOpened;
         //bool isEditable = false;
         int GroupId = 0;
         float total;
@@ -76,7 +77,9 @@ namespace Marcaj.Pages.Tables
                 txtStation.Text = "Statie: " + OrderHeader.StationID;
                 txtOrderName.Text = "#" + OrderHeader.OrderID.ToString();
                 txtTableName.Text = "Masa: " + DineIn.DineInTableText;
-                txtDateTimeOpenedTable.Text = OrderHeader.OrderDateTime.ToString();
+                DateTimeOpened = OrderHeader.OrderDateTime.ToString();
+                txtDateOpenedTable.Text = DateTimeOpened.Split(' ')[0];
+                txtTimeOpenedTable.Text = DateTimeOpened.Split(' ')[1];
                 txtAmountDue.Text = OrderHeader.AmountDue.ToString();
                 //tableName.Text = DineIn.DineInTableText;
                 allMenuItems = await App.manager.iGetMenuItems();
