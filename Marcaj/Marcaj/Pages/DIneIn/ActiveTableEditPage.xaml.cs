@@ -39,8 +39,8 @@ namespace Marcaj.Pages.Tables
         bool chgQty = false;
         bool chgPrice = false;
         bool chgMods = false;
+        bool isVoid = false;
         bool IsFirstLoad = true;
-        bool itemEdit = false;
         string DateTimeOpened;
         //bool isEditable = false;
         int GroupId = 0;
@@ -82,8 +82,10 @@ namespace Marcaj.Pages.Tables
                 txtTimeOpenedTable.Text = DateTimeOpened.Split(' ')[1];
                 txtAmountDue.Text = OrderHeader.AmountDue.ToString();
                 //tableName.Text = DineIn.DineInTableText;
-                allMenuItems = await App.manager.iGetMenuItems();
+
                 total = Convert.ToSingle(txtAmountDue.Text);
+
+                allMenuItems = await App.manager.iGetMenuItems();
                 var a = await App.manager.iGetMenuGroups();
                 if (a != null)
                 {
@@ -229,68 +231,41 @@ namespace Marcaj.Pages.Tables
         
         private async void lstvwOrderTransactions_ItemSelected(object sender, SelectionChangedEventArgs e)
         {
+            var a = sender as CollectionView;
+            var currentSel = e.CurrentSelection.FirstOrDefault() as OrderTransactionsModel;
 
-            if (e.CurrentSelection.FirstOrDefault() != null)
+            if (currentSel != null)
             {
-                var selIt = e.CurrentSelection.FirstOrDefault() as OrderTransactionsModel;
-                OrderTra = selIt;
-                Debug.WriteLine(selIt.MenuItemTextOT);
+                a.SelectedItem = currentSel;
+                OrderTra = currentSel;
+                //Debug.WriteLine(selIt.MenuItemTextOT);
 
                 if (chgMods) 
                 {
-                    var menuItem = menuItems.FirstOrDefault(x => x.MenuItemID == selIt.MenuItemID);
-                    var modifsModal = new ModifiersModalPage(selIt , menuItem);
+                    var menuItem = menuItems.FirstOrDefault(x => x.MenuItemID == currentSel.MenuItemID);
+                    var modifsModal = new ModifiersModalPage(currentSel , menuItem);
                     await Navigation.PushModalAsync(modifsModal);
                     chgMods= false;
                     btnModifs.BorderWidth = 0;
+                    a.SelectedItem = null;
                 }
-                else if (itemEdit == false) 
-                { 
-                    itemEdit= true;
+                else if (chgQty) 
+                {
+                    var qtyModal = new QtyModalPage(currentSel);
+                    await Navigation.PushModalAsync(qtyModal);
+                    chgQty = false;
+                    btnQty.BorderWidth = 0;
+                    a.SelectedItem = null;
                 }
-            }
-            ((CollectionView)sender).SelectedItem = null;
-        }
-
-        private void itemFrame_Focused(object sender, FocusEventArgs e)
-        {
-            var a = sender as Frame;
-            //if (a.AutomationId == OrderTra.MenuItemTextOT) isEditable= true;
-        }
-
-
-        private async void ItemQty_Clicked(object sender, EventArgs e)
-        {
-            var a = sender as Button;
-            var b = orderTraList.Where(x => x.MenuItemTextOT == a.AutomationId).FirstOrDefault();
-
-            if (itemEdit)
-            {
-                var qtyModal = new QtyModalPage(a, b);
-                await Navigation.PushModalAsync(qtyModal);
-                itemEdit = false;
-                //total += b.ExtendedPrice;
-
-                //orderTraList.Add(b);
-                //total += b.ExtendedPrice * b.Quantity;
-                //txtAmountDue.Text = total.ToString();
-            }
-        }
-
-
-        private async void ItemPrice_Clicked(object sender, EventArgs e)
-        {
-            var a = sender as Button;
-            var b = orderTraList.Where(x => x.MenuItemTextOT == a.AutomationId).FirstOrDefault();
-
-            if (itemEdit)
-            {
-
-                var priceModal = new PriceModalPage(a, b);
-                await Navigation.PushModalAsync(priceModal);
-                itemEdit = false;
-                //total += b.ExtendedPrice * b.Quantity;
-                //txtAmountDue.Text = total.ToString();
+                else if (chgPrice)
+                {
+                    var priceModal = new PriceModalPage(currentSel);
+                    await Navigation.PushModalAsync(priceModal);
+                    chgPrice = false;
+                    btnDis_Sur.BorderWidth = 0;
+                    a.SelectedItem = null;
+                }
+                else a.SelectedItem = null;
             }
         }
 
@@ -300,20 +275,25 @@ namespace Marcaj.Pages.Tables
             //a.Text = total.ToString();
         }
 
-
         private void btnQty_Clicked(object sender, EventArgs e)
         {
-            if (chgQty == false) chgQty = true;
-            Debug.WriteLine(chgQty);
+            if (chgQty == false)
+            {
+                chgQty = true;
+                btnQty.BorderWidth = 5;
+                btnQty.BorderColor = Color.FromHex("#4db290");
+            }
         }
-
 
         private void btnDis_Sur_Clicked(object sender, EventArgs e)
         {
-            if (chgPrice == false) chgPrice = true;
-            Debug.WriteLine(chgQty);
+            if (chgPrice == false) 
+            { 
+                chgPrice = true;
+                btnDis_Sur.BorderWidth = 5;
+                btnDis_Sur.BorderColor = Color.FromHex("#4db290");
+            }
         }
-
 
         private void btnModifs_Clicked(object sender, EventArgs e)
         {
@@ -323,7 +303,6 @@ namespace Marcaj.Pages.Tables
                 btnModifs.BorderWidth= 5;
                 btnModifs.BorderColor = Color.FromHex("#4db290");
             }
-            Debug.WriteLine(chgMods);
         }
 
         private async void btnClient_Clicked(object sender, EventArgs e)
@@ -331,13 +310,18 @@ namespace Marcaj.Pages.Tables
             var a = sender as Button;
             var clientModal = new ClientModalPage(OrderHeader, orderHeaderList);
             await Navigation.PushModalAsync(clientModal);
-            txtClient.Text = "Client:" + OrderHeader.SpecificCustomerName;
+            //txtClient.Text = "Client:" + OrderHeader.SpecificCustomerName;
         }
 
-        private void btnVoid_Clicked(object sender, EventArgs e)
+        /*private void btnVoid_Clicked(object sender, EventArgs e)
         {
-
-        }
+            if (isVoid == false)
+            {
+                isVoid = true;
+                btnVoid.BorderWidth = 5;
+                btnModifs.BorderColor = Color.FromHex("#4db290");
+            }
+        }*/
 
         private CancellationTokenSource _tokenSource;
         int entries = 0;

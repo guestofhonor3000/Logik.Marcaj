@@ -15,19 +15,19 @@ namespace Marcaj.Pages.Modals
     public partial class PriceModalPage : ContentPage
     {
         OrderTransactionsModel item;
-        Button priceBtn;
+        //Button priceBtn;
         List<int> digits = new List<int>();
         bool discount;
         bool surcharge;
         float ModPrice;
         string sModPrice;
         View numpad;
-        public PriceModalPage( Button a, OrderTransactionsModel orderItem )
+        public PriceModalPage( OrderTransactionsModel orderItem )
         {
             InitializeComponent();
             item = orderItem;
             ModPrice = item.MenuItemUnitPrice;
-            priceBtn = a;
+            //priceBtn = a;
             #region digits
             digits.Add(1);
             digits.Add(2);
@@ -290,7 +290,7 @@ namespace Marcaj.Pages.Modals
                     }
                     else if (ModPrice == 0) item.ExtendedPrice = item.ExtendedPrice;
                 }
-                priceBtn.Text = item.ExtendedPrice.ToString();
+                //priceBtn.Text = item.ExtendedPrice.ToString();
                 await Navigation.PopModalAsync();
             }       
         }

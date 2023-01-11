@@ -15,19 +15,19 @@ namespace Marcaj.Pages.Modals
 	public partial class QtyModalPage : ContentPage
 	{
         OrderTransactionsModel item;
-        Button qtyBtn;
+        //Button qtyBtn;
         List<int> digits = new List<int>();
 
         View numpad;
         float Qty;
         string sQty;
 
-        public QtyModalPage (Button a , OrderTransactionsModel orderItem)
+        public QtyModalPage (OrderTransactionsModel orderItem)
 		{
 			InitializeComponent();
             item = orderItem;
             Qty = item.Quantity;
-            qtyBtn = a;
+            //qtyBtn = a;
             qty.Placeholder = "x" + item.Quantity.ToString();
             #region digits
             digits.Add(1);
@@ -126,19 +126,19 @@ namespace Marcaj.Pages.Modals
                 {
                     item.Quantity = Qty;
                     item.ExtendedPrice = item.MenuItemUnitPrice * item.Quantity;
-                    qtyBtn.Text = item.Quantity.ToString();
+                    //qtyBtn.Text = item.Quantity.ToString();
                 }
                 else if (Qty == 0)
                 {
                     Qty = 1;
                     item.Quantity = Qty;
                     item.ExtendedPrice = item.MenuItemUnitPrice * item.Quantity;
-                    qtyBtn.Text = item.Quantity.ToString();
+                    //qtyBtn.Text = item.Quantity.ToString();
                 }
                 else if (Qty == item.Quantity) 
                 {
                     item.ExtendedPrice = item.MenuItemUnitPrice * item.Quantity;
-                    qtyBtn.Text = item.Quantity.ToString();
+                    //qtyBtn.Text = item.Quantity.ToString();
                 }
 
                 await Navigation.PopModalAsync();

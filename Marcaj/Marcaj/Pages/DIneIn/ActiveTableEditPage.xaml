@@ -11,8 +11,8 @@
                 <RowDefinition Height="19*"/>
             </Grid.RowDefinitions>
 
-            
-            
+
+
             <Grid Grid.Row="0"                  
                   Style="{DynamicResource checkGrid}">
 
@@ -34,12 +34,6 @@
                               Clicked="btnCancel_Clicked"
                               Margin="5"/>
 
-                <!--Label x:Name="Clock"
-                       Style="{DynamicResource mainBtnLabel}"
-                       HorizontalOptions="Start"   
-                       VerticalOptions="Center"/-->
-
-
                 <Frame Grid.Column="2"
                        CornerRadius="5"
                        Background="#f1f1f1"
@@ -59,12 +53,6 @@
                            HorizontalTextAlignment="Center"
                            />
                 </Frame>
-
-                <!--Frame Style="{DynamicResource sideBtnFrame}"
-                               VerticalOptions="End">
-                    <Label  x:Name="tableName"
-                                Style="{DynamicResource mainBtnLabel}"/>
-                </Frame-->
 
                 <Grid Grid.Column="4">
                     <Grid.ColumnDefinitions>
@@ -113,8 +101,6 @@
             </Grid>
 
 
-            
-            
             <Grid Grid.Row="1"
                   Style="{DynamicResource secondGrid}">
 
@@ -123,70 +109,46 @@
                     <ColumnDefinition Width="5*"/>
                     <ColumnDefinition Width="2.5*"/>
                 </Grid.ColumnDefinitions>
-                
-                <!--StackLayout Grid.Column="0"
-                             Style="{DynamicResource secondStack}">
 
-                    <Frame Style="{DynamicResource sideBtnFrame}"
-                           VerticalOptions="Start">
-                        <ImageButton  Source="PersonIcon.png"
-                                      Aspect="AspectFill"
-                                      Margin="-10"/>
-                    </Frame>
 
-                    <Frame Style="{DynamicResource sideBtnFrame}"
-                           VerticalOptions="End">
-                        <ImageButton  Source="AddIcon.png"
-                                      Aspect="AspectFill"
-                                      Margin="-10"/>
-                    </Frame>
-                </StackLayout-->
-            
-                
-                  <CollectionView Grid.Column="0"
+                <CollectionView Grid.Column="0"
                                   Margin="5"
                                   x:Name="lstvwMenuGroups" 
                                   SelectionChanged="lstvwMenuGroups_ItemSelected"
                                   Style="{DynamicResource secondList}"
                                   SelectionMode="Single">
 
-                        <CollectionView.ItemsLayout>
-                                <GridItemsLayout Orientation="Vertical"
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical"
                                                  Span="2"
                                                  VerticalItemSpacing="5"
                                                  HorizontalItemSpacing="5"/>
-                        </CollectionView.ItemsLayout>
-                        
-                         <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Frame Style="{DynamicResource secondBtnFrame}"
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Style="{DynamicResource secondBtnFrame}"
                                        Margin="0"
                                        Padding="0"
                                        HorizontalOptions="Fill"
                                        VerticalOptions="Fill"
                                        HeightRequest="80">
-                                    <Label Text="{Binding MenuGroupText}" 
+                                <Label Text="{Binding MenuGroupText}" 
                                            Style="{DynamicResource mainBtnLabel}"
                                            HorizontalOptions="Fill"
                                            VerticalOptions="Fill"/>
-                                </Frame>
-                            </DataTemplate>
-                         </CollectionView.ItemTemplate>
-
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
                 </CollectionView>
+                
 
-                <!--Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="14*"/>
-                        <RowDefinition Height="6*"/>
-                    </Grid.RowDefinitions-->
-
-                    <CollectionView Grid.Column="1"
-                                    x:Name="lstvwMenuItems" 
-                                    SelectionChanged="lstvwMenuItems_ItemSelected"
-                                    VerticalScrollBarVisibility="Never"
-                                    SelectionMode="Single"
-                                    Style="{DynamicResource thirdList}">
+                <CollectionView Grid.Column="1"
+                                x:Name="lstvwMenuItems" 
+                                SelectionChanged="lstvwMenuItems_ItemSelected"
+                                VerticalScrollBarVisibility="Never"
+                                SelectionMode="Single"
+                                Style="{DynamicResource thirdList}">
 
                         <CollectionView.ItemsLayout >
                             <GridItemsLayout Orientation="Vertical"
@@ -204,10 +166,11 @@
                                        VerticalOptions="Fill"
                                        HeightRequest="85">
 
-                                    <StackLayout  HorizontalOptions="Fill"
-                                                  VerticalOptions="Fill"
-                                                  Margin="0"
-                                                  Padding="0">
+                                    <StackLayout HorizontalOptions="Fill"
+                                                 VerticalOptions="Fill"
+                                                 Margin="0"
+                                                 Padding="0">
+                                        
                                         <Label Text="{Binding QtyCountDown}"
                                                Style="{DynamicResource mainBtnLabel}"
                                                HorizontalOptions="Fill"
@@ -221,65 +184,8 @@
                                 </Frame>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
-                    </CollectionView>
+                </CollectionView>
 
-                    <!--Grid Grid.Row="1"                 
-                          Style="{DynamicResource secondGrid}"
-                          Margin="0,10,0,10">
-                        
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="5*"/>
-                        </Grid.ColumnDefinitions>
-                
-
-                        <Frame Grid.Column="1"
-                           Style="{DynamicResource btnFrame}"
-                           Padding="10"
-                           Margin="5,0,0,0">
-
-                            <Grid x:Name="multiGrid">
-
-                                <Frame x:Name="qtyFrame"
-                                   CornerRadius="4"
-                                   IsVisible="false"
-                                   BackgroundColor="#d9d9d9"
-                                   Margin="0">
-
-                                    <Entry x:Name="qty"                                     
-                                       BackgroundColor="Transparent"
-                                       FontFamily="Verdana"
-                                       FontSize="Small"
-                                       PlaceholderColor="Black" 
-                                       TextColor="Black" 
-                                       HorizontalTextAlignment="Center"
-                                       HorizontalOptions="FillAndExpand"
-                                       VerticalOptions="FillAndExpand"
-                                       Margin="-30"
-                                       Placeholder = "Cantitate"/>
-                                </Frame>
-
-                                <Frame x:Name="priceFrame"
-                                   CornerRadius="4"
-                                   IsVisible="false"
-                                   BackgroundColor="#d9d9d9"
-                                   Margin="0">
-
-                                    <Entry x:Name="price"                                     
-                                       BackgroundColor="Transparent"
-                                       FontFamily="Verdana"
-                                       FontSize="Small"
-                                       PlaceholderColor="Black" 
-                                       TextColor="Black" 
-                                       HorizontalTextAlignment="Center"
-                                       HorizontalOptions="FillAndExpand"
-                                       VerticalOptions="FillAndExpand"
-                                       Margin="-30"/>
-                                </Frame>
-                            </Grid>
-                        </Frame>
-                    </Grid>
-                </Grid-->
                 
                 <Grid Grid.Column="2" 
                       Style="{DynamicResource secondGrid}">
@@ -290,7 +196,7 @@
                     </Grid.RowDefinitions>
 
                     <Frame Grid.Row="0"
-                           BackgroundColor="#d8d8d8"
+                           BackgroundColor="#c4c4c4"
                            CornerRadius="4"
                            Padding="5"
                            Margin="10,10,10,5">
@@ -426,12 +332,11 @@
                                                    BackgroundColor="White"
                                                    CornerRadius="4" 
                                                    Padding="0"
-                                                   HeightRequest="50"
+                                                   HeightRequest="60"
                                                    HasShadow="True"
                                                    HorizontalOptions="Fill"
                                                    VerticalOptions="Start"
-                                                   AutomationId="{Binding MenuItemTextOT}"
-                                                   Focused="itemFrame_Focused">
+                                                   AutomationId="{Binding MenuItemTextOT}">
                                                 
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
@@ -440,17 +345,21 @@
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
 
-                                                    <Button Grid.Column="0"
-                                                            Text="{Binding Quantity}" 
-                                                            Style="{DynamicResource btn}"
-                                                            AutomationId="{Binding MenuItemTextOT}"
-                                                            HorizontalOptions="Fill"
-                                                            VerticalOptions="Fill"
-                                                            BorderColor="#4db290"
-                                                            IsEnabled="{Binding itemEdit}"
-                                                            Margin="2"
-                                                            x:Name="ItemQty"
-                                                            Clicked="ItemQty_Clicked"/>
+                                                    <Frame Grid.Column="0"
+                                                           CornerRadius="4"
+                                                           BackgroundColor="#f1f1f1"
+                                                           BorderColor="#23262b"
+                                                           HorizontalOptions="Fill"
+                                                           VerticalOptions="Fill"
+                                                           Padding="0"
+                                                           Margin="2">
+                                                        <Label Text="{Binding Quantity}"
+                                                               Style="{DynamicResource checkLabel}"
+                                                               HorizontalOptions="Fill"
+                                                               VerticalOptions="Fill"
+                                                               Margin="0"
+                                                               x:Name="ItemQty"/>
+                                                    </Frame>
 
                                                     <Label Grid.Column="1" 
                                                            Text="{Binding MenuItemTextOT}" 
@@ -459,17 +368,21 @@
                                                            HorizontalOptions="Fill"
                                                            VerticalOptions="Fill"/>
 
-                                                    <Button Grid.Column="2" 
-                                                            Text="{Binding ExtendedPrice}" 
-                                                            Style="{DynamicResource btn}"
-                                                            AutomationId="{Binding MenuItemTextOT}"
-                                                            HorizontalOptions="Fill"
-                                                            VerticalOptions="Fill"
-                                                            BorderColor="#4db290"
-                                                            IsEnabled="{Binding itemEdit}"
-                                                            Margin="2"
-                                                            x:Name="ItemPrice"
-                                                            Clicked="ItemPrice_Clicked"/>
+                                                    <Frame Grid.Column="2"
+                                                           CornerRadius="4"
+                                                           BackgroundColor="#f1f1f1"
+                                                           BorderColor="#23262b"
+                                                           HorizontalOptions="Fill"
+                                                           VerticalOptions="Fill"
+                                                           Padding="0"
+                                                           Margin="2">
+                                                        <Label  Text="{Binding ExtendedPrice}" 
+                                                                Style="{DynamicResource checkLabel}"
+                                                                HorizontalOptions="Fill"
+                                                                VerticalOptions="Fill"
+                                                                Margin="0"
+                                                                x:Name="ItemPrice"/>
+                                                    </Frame>
                                                 </Grid>
                                             </Frame>
 
@@ -504,81 +417,55 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Frame Grid.Row="0"
-                               Grid.Column="0" 
-                               Style="{DynamicResource mainFrame}"
-                               Margin="0"
-                               Padding="0"
-                               VerticalOptions="Fill"
-                               HorizontalOptions="Fill">
-
-                            <Button Text="QTY"
-                                    Padding="0"
-                                    Margin="0" 
+                        <Button Grid.Row="0"
+                                    Grid.Column="0" 
+                                    Text="QTY"                                   
                                     x:Name="btnQty"
                                     Clicked="btnQty_Clicked"
                                     TextColor="#50e9da"
-                                    Style="{DynamicResource btn}"/>
-                        </Frame>
-
-                        <Frame Grid.Row="0"
-                               Grid.Column="1" 
-                               Style="{DynamicResource mainFrame}"
-                               VerticalOptions="Fill"
-                               HorizontalOptions="Fill"
-                               Padding="0"
-                               Margin="0">
-
-                            <Button Text="MODIF"
+                                    Style="{DynamicResource btn}"
                                     Padding="0"
-                                    Margin="0" 
+                                    Margin="0"/>
+
+                        <Button Grid.Row="0"
+                                    Grid.Column="1"
                                     x:Name="btnModifs"
                                     Clicked="btnModifs_Clicked"
+                                    Text="MODIF"
                                     TextColor="#50e9da"
-                                    Style="{DynamicResource btn}"/>
-                        </Frame>
+                                    Style="{DynamicResource btn}"
+                                    Margin="0"
+                                    Padding="0" />
 
                         <Button Grid.Row="0"
                                 Grid.Column="2"
-                                Text="PRET"
-                                TextColor="#50e9da"
                                 x:Name="btnDis_Sur"
                                 Clicked="btnDis_Sur_Clicked"
+                                Text="PRET"
+                                TextColor="#50e9da" 
                                 Style="{DynamicResource btn}"
-                                Margin="0"/>
+                                Margin="0"
+                                Padding="0"/>
 
-
-                        <Frame Grid.Row="0"
-                               Grid.Column="3" 
-                               Style="{DynamicResource mainFrame}"
-                               Margin="0"
-                               Padding="0"
-                               VerticalOptions="Fill"
-                               HorizontalOptions="Fill">
-
-                            <Button Text="CLIENT"
-                                    Padding="0"
-                                    Margin="0"
+                        <Button Grid.Row="0"
+                                    Grid.Column="3"
+                                    Text="CLIENT"
                                     x:Name="btnClient"
                                     Clicked="btnClient_Clicked"
                                     TextColor="#50e9da"
-                                    Style="{DynamicResource btn}"/>
-                        </Frame>
-
-                        <Frame Grid.Row="1"
-                               Grid.Column="0"
-                               Style="{DynamicResource mainFrame}"
-                               Padding="0"
-                               Margin="0">
-
-                            <Button Text="ANULEAZA"
+                                    Style="{DynamicResource btn}"
                                     Padding="0"
-                                    Margin="0" 
+                                    Margin="0"/>
+
+                        <Button Grid.Row="1"
+                                    Grid.Column="0"
+                                    Text="ANULEAZA"                                    
                                     x:Name="btnAnuleazaOrder" 
                                     Clicked="btnAnuleazaOrder_Clicked"
                                     TextColor="#50e9da"
-                                    Style="{DynamicResource btn}"/>
-                        </Frame>
+                                    Style="{DynamicResource btn}"
+                                    Padding="0"
+                                    Margin="0"/>
 
                         <Frame Grid.Row="1"
                                Grid.Column="1" 

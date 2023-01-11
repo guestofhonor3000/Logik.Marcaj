@@ -15,14 +15,17 @@ namespace Marcaj.Pages.Modals
 	public partial class ClientModalPage : ContentPage
 	{
 		OrderHeadersModel order;
-        LGKMClientsModel clients;
+        LGKMClientsModel client;
         List<LGKMClientsModel> clientsList;
+        List<LGKMClientsModel> clientIdsList;
         List<OrderHeadersModel> ordersList;
         string ClientName;
 		public ClientModalPage(OrderHeadersModel orderHeader, List<OrderHeadersModel> orderHeadersList)
 		{
 			InitializeComponent ();
-			order= orderHeader;
+            clientsList = new List<LGKMClientsModel> ();
+            clientIdsList = new List<LGKMClientsModel> ();
+            order = orderHeader;
             ordersList = orderHeadersList;
             multiShow();
 		}
@@ -61,49 +64,57 @@ namespace Marcaj.Pages.Modals
                 ScrollView clientScroll = new ScrollView();
 
                 clientsList = await App.manager.iGetAllClients();
-
-                foreach( var client in clientsList) 
+                clientIdsList = clientsList.Where(x => x.ID == clientsList[index].ID).ToList();
+                
+                foreach (var clients in clientsList) 
                 {
-                    index++;
-
-                    Frame clientFrame = new Frame();
-                    clientFrame.SetDynamicResource(StyleProperty, "mainFrame");
-
-                    Grid clientGrid = new Grid();
-                    clientGrid.ColumnDefinitions = new ColumnDefinitionCollection
+                    foreach (var clientIds in clientIdsList)
                     {
-                        new ColumnDefinition { Width = GridLength.Star },
-                        new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) },
-                        new ColumnDefinition { Width = GridLength.Star },
-                    };
+                        if (clients.ID == clientIds.ID)
+                        {
+                            client = new LGKMClientsModel();
+                            client.ID = clients.ID;
+                            client.ClientName = clients.ClientName;
+                            client.ClientDbCode = clients.ClientDbCode;
+                            index++;
+                        }
 
-                    Label clientDbCode = new Label
-                    {
-                        //Text = client.ClientDbCode
-                    };
-                    clientDbCode.SetDynamicResource(StyleProperty, "mainBtnLabel");
-                    clientDbCode.Text = client.ClientDbCode.ToString();
+                            Frame clientFrame = new Frame();
+                            clientFrame.SetDynamicResource(StyleProperty, "mainFrame");
 
-                    Label clientName = new Label
-                    {
-                        //Text = client.ClientName
-                    };
-                    clientName.Text = client.ClientName.ToString();
-                    clientName.SetDynamicResource(StyleProperty, "mainBtnLabel");
+                            Grid clientGrid = new Grid();
+                            clientGrid.ColumnDefinitions = new ColumnDefinitionCollection
+                            {
+                            new ColumnDefinition { Width = GridLength.Star },
+                            new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) },
+                            new ColumnDefinition { Width = GridLength.Star },
+                            };
 
-                    Label clientId = new Label
-                    {
-                        //Text = client.ID.ToString()
-                    };
-                    clientId.SetDynamicResource(StyleProperty, "mainBtnLabel");
-                    clientId.Text = client.ID.ToString();
+                            Label clientDbCode = new Label
+                            {
+                                Text = client.ClientDbCode
+                            };
+                            clientDbCode.SetDynamicResource(StyleProperty, "mainBtnLabel");
 
-                    clientGrid.Children.Add(clientDbCode, 0, 0);
-                    clientGrid.Children.Add(clientName,1 ,0);
-                    clientGrid.Children.Add(clientId,2 ,0);
+                            Label clientName = new Label
+                            {
+                                Text = client.ClientName
+                            };
+                            clientName.Text = client.ClientName.ToString();
 
-                    clientFrame.Content= clientGrid;     
-                    multiGrid.Children.Add(clientFrame ,0 ,index -1);
+                            Label clientId = new Label
+                            {
+                                Text = client.ID.ToString()
+                            };
+                            clientId.SetDynamicResource(StyleProperty, "mainBtnLabel");
+
+                            clientGrid.Children.Add(clientDbCode, 0, 0);
+                            clientGrid.Children.Add(clientName, 1, 0);
+                            clientGrid.Children.Add(clientId, 2, 0);
+
+                            clientFrame.Content = clientGrid;
+                            multiGrid.Children.Add(clientFrame, 0, index - 1);                       
+                    }
                 }
                 mainGrid.Children.Remove(multiGrid);
                 clientScroll.Content = multiGrid;
