@@ -59,12 +59,6 @@ namespace Marcaj.Pages.Tables
             PopList(IsFirstLoad, GroupId);
 		}
 
-
-
-            public new bool IsEnabled { get; set; }
-            
-
-
         async void PopList(bool isFirstLoad, int groupId)
         {
             if (isFirstLoad == true)
@@ -335,7 +329,7 @@ namespace Marcaj.Pages.Tables
             }
             _tokenSource = new CancellationTokenSource();
 
-            await Task.Delay(1000);
+            await Task.Delay(500);
             Search(entrySearch.Text);
         }
 

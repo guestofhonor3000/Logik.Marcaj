@@ -2,33 +2,87 @@
 using Marcaj.Models.DbModels.LGK;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-
+using System.Xml;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Marcaj.Pages.Modals
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ClientModalPage : ContentPage
-	{
-		OrderHeadersModel order;
-        LGKMClientsModel client;
-        List<LGKMClientsModel> clientsList;
-        List<LGKMClientsModel> clientIdsList;
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class ClientModalPage : ContentPage
+    {
+        OrderHeadersModel order;
+        List<InventoryClients> clientsList;
+        InventoryClients Client;
         List<OrderHeadersModel> ordersList;
         string ClientName;
-		public ClientModalPage(OrderHeadersModel orderHeader, List<OrderHeadersModel> orderHeadersList)
-		{
-			InitializeComponent ();
-            clientsList = new List<LGKMClientsModel> ();
-            clientIdsList = new List<LGKMClientsModel> ();
+        bool isSearch;
+        public ClientModalPage(OrderHeadersModel orderHeader, List<OrderHeadersModel> orderHeadersList)
+        {
+            InitializeComponent();
             order = orderHeader;
             ordersList = orderHeadersList;
+            isSearch = false;
             multiShow();
-		}
+        }
+
+        int entries_ = 0;
+        CancellationTokenSource _tokenSource;
+        int entries = 0;
+        private async void Search(string text)
+        {
+            entries_++;
+            if (entries_ == entries)
+            {
+                Debug.WriteLine("cauta");
+                if (search.Text != "")
+                {
+                    var a = await App.manager.iGetAllInventoryClients();
+                    var b = a.Where(x => x.InventoryClientText.ToLower().Contains(text.ToLower()) == true).ToList();
+                    if (b.Count > 0)
+                    {
+                        clientsListView.ItemsSource = b;
+                        clientsListView.SelectedItem = b[0];
+                    }
+                    else
+                    {
+                        clientsListView.ItemsSource = a;
+                        clientsListView.SelectedItem = a[0];
+                    }
+                }
+            }
+        }
+        private async void search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            entries++;
+            if (_tokenSource != null)
+            {
+                _tokenSource.Cancel();
+            }
+            _tokenSource = new CancellationTokenSource();
+
+            await Task.Delay(500);
+            Search(search.Text);
+        }
+
+        private async void clientsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            var selected = e.SelectedItem as InventoryClients;
+
+            if (selected != null) 
+            {
+                var chgOrdHd = new OrderHeadersModel();
+                chgOrdHd.CustomerID = selected.InventoryClientID;
+                chgOrdHd.SpecificCustomerName = selected.InventoryClientText;
+
+                await App.manager.iPutOrderHeaders(chgOrdHd, order.OrderID);
+                await Navigation.PopModalAsync();
+            }
+        }
 
         private async void multiShow()
         {
@@ -41,14 +95,14 @@ namespace Marcaj.Pages.Modals
             Button clientLookup = new Button
             {
                 Text = "Selectare Client",
-                Margin = new Thickness(20,10,20,10),
+                Margin = new Thickness(20, 10, 20, 10),
             };
             clientLookup.SetDynamicResource(StyleProperty, "btn");
 
             Button clientNew = new Button
             {
                 Text = "Client Nou",
-                Margin = new Thickness(20,10,20,10),
+                Margin = new Thickness(20, 10, 20, 10),
             };
             clientNew.SetDynamicResource(StyleProperty, "btn");
 
@@ -58,67 +112,21 @@ namespace Marcaj.Pages.Modals
 
             async void clientLookup_Clicked(object sender0, EventArgs e0)
             {
-                int index = 0;
-
                 multiGrid.Children.Clear();
-                ScrollView clientScroll = new ScrollView();
 
-                clientsList = await App.manager.iGetAllClients();
-                clientIdsList = clientsList.Where(x => x.ID == clientsList[index].ID).ToList();
-                
-                foreach (var clients in clientsList) 
+                multiGrid.RowDefinitions = new RowDefinitionCollection
                 {
-                    foreach (var clientIds in clientIdsList)
-                    {
-                        if (clients.ID == clientIds.ID)
-                        {
-                            client = new LGKMClientsModel();
-                            client.ID = clients.ID;
-                            client.ClientName = clients.ClientName;
-                            client.ClientDbCode = clients.ClientDbCode;
-                            index++;
-                        }
+                    new RowDefinition { Height = GridLength.Star },
+                    new RowDefinition { Height = new GridLength(6, GridUnitType.Star) },
+                };
 
-                            Frame clientFrame = new Frame();
-                            clientFrame.SetDynamicResource(StyleProperty, "mainFrame");
-
-                            Grid clientGrid = new Grid();
-                            clientGrid.ColumnDefinitions = new ColumnDefinitionCollection
-                            {
-                            new ColumnDefinition { Width = GridLength.Star },
-                            new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) },
-                            new ColumnDefinition { Width = GridLength.Star },
-                            };
-
-                            Label clientDbCode = new Label
-                            {
-                                Text = client.ClientDbCode
-                            };
-                            clientDbCode.SetDynamicResource(StyleProperty, "mainBtnLabel");
-
-                            Label clientName = new Label
-                            {
-                                Text = client.ClientName
-                            };
-                            clientName.Text = client.ClientName.ToString();
-
-                            Label clientId = new Label
-                            {
-                                Text = client.ID.ToString()
-                            };
-                            clientId.SetDynamicResource(StyleProperty, "mainBtnLabel");
-
-                            clientGrid.Children.Add(clientDbCode, 0, 0);
-                            clientGrid.Children.Add(clientName, 1, 0);
-                            clientGrid.Children.Add(clientId, 2, 0);
-
-                            clientFrame.Content = clientGrid;
-                            multiGrid.Children.Add(clientFrame, 0, index - 1);                       
-                    }
-                }
-                mainGrid.Children.Remove(multiGrid);
-                clientScroll.Content = multiGrid;
-                mainGrid.Children.Add(clientScroll,0,1);
+                clientsList = await App.manager.iGetAllInventoryClients();
+                clientsListView.ItemsSource = clientsList;
+                
+                searchFrame.IsVisible= true;
+                clientsListView.IsVisible= true;
+                multiGrid.Children.Add(searchFrame, 0, 0);
+                multiGrid.Children.Add(clientsListView, 0, 1);
             }
 
 
@@ -127,17 +135,18 @@ namespace Marcaj.Pages.Modals
                 multiGrid.Children.Clear();
                 multiGrid.RowDefinitions = new RowDefinitionCollection
                 {
-                    new RowDefinition { Height = GridLength.Star },
+                    new RowDefinition { Height = new GridLength(.5, GridUnitType.Star) },
                     new RowDefinition { Height = new GridLength(2, GridUnitType.Star) },
-                    new RowDefinition { Height = GridLength.Star },
+                    new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
                     new RowDefinition { Height = new GridLength(2, GridUnitType.Star) },
+                    new RowDefinition { Height = new GridLength(.5, GridUnitType.Star) },
                 };
 
                 Entry clientNameEntry = new Entry
                 {
                     BackgroundColor = Color.Transparent,
                     Placeholder = "Nume Client",
-                    //FontFamily = 
+                    FontFamily = "Verdana",
                     FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
                     PlaceholderColor = Color.Black,
                     TextColor = Color.Black,
@@ -150,12 +159,12 @@ namespace Marcaj.Pages.Modals
                 Frame clientNameFrame = new Frame
                 {
                     CornerRadius = 4,
-                    Background= Color.FromHex("#d9d9d9"),
+                    Background = Color.FromHex("#d9d9d9"),
                     Margin = new Thickness(20, 10, 20, 10),
                 };
                 clientNameFrame.Content = clientNameEntry;
 
-                Button Done = new Button 
+                Button Done = new Button
                 {
                     Text = "Salveaza",
                     Margin = new Thickness(20, 10, 20, 10),
@@ -167,7 +176,7 @@ namespace Marcaj.Pages.Modals
                 async void Done_Clicked(object sender, EventArgs e)
                 {
                     ClientName = clientNameEntry.Text;
-                    order.SpecificCustomerName= ClientName;
+                    order.SpecificCustomerName = ClientName;
                     //var modOrder = new OrderHeadersModel();
                     //modOrder.SpecificCustomerName= ClientName;
                     //await App.manager.iPutOrderHeaders(modOrder, order.OrderID);

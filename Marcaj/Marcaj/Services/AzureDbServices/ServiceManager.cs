@@ -45,6 +45,10 @@ namespace Marcaj.Services
         {
             return Service.GetAllClients();
         }
+        public Task<List<InventoryClients>> iGetAllInventoryClients()
+        {
+            return Service.GetAllInventoryClients();
+        }
         public Task iPutTableGroups(DineInTableGroupModel item, int id)
         {
             return Service.PutTableGroups(item, id);

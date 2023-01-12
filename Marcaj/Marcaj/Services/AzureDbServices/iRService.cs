@@ -28,6 +28,7 @@ namespace Marcaj.Services
         Task PutPopUpSetting(StationSettingsModel model, bool popUp);
         Task PutStationName(StationSettingsModel item);
         Task<List<LGKMClientsModel>> GetAllClients();
+        Task<List<InventoryClients>> GetAllInventoryClients();
         Task<List<StationSettingsModel>> GetAllStationSettings();
         Task<List<DineInTableModel>> GetOnlyDineInTablesByTableGroup(int groupID);
         Task<List<OrderHeadersModel>> GetOrderHeadersByDineInTableID(int id);

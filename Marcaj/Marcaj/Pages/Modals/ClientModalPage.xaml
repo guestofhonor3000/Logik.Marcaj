@@ -68,6 +68,44 @@
                     <Grid x:Name="multiGrid"
                           Margin="10"
                           Grid.Row="1">
+
+                        <Frame CornerRadius="5"
+                               IsVisible="false"
+                               x:Name="searchFrame"
+                               Background="#f1f1f1"
+                               HorizontalOptions="Fill"   
+                               VerticalOptions="Fill"
+                               Margin="5"
+                               Padding="0">
+
+                            <Entry Placeholder="Cautare Client" 
+                                   FontFamily="Verdana" 
+                                   FontSize="18"
+                                   x:Name="search"
+                                   TextChanged="search_TextChanged"
+                                   BackgroundColor="Transparent" 
+                                   PlaceholderColor="Black" 
+                                   TextColor="Black" 
+                                   HorizontalTextAlignment="Center"/>
+                        </Frame>
+
+                        <ListView x:Name="clientsListView"
+                                  SelectionMode="Single"
+                                  IsVisible="false"
+                                  ItemSelected="clientsListView_ItemSelected">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Frame x:Name="clientFrame"
+                                               Style="{DynamicResource mainFrame}">
+                                            <Label Text="{Binding InventoryClientText}"
+                                                   Style="{DynamicResource mainBtnLabel}"/>
+                                        </Frame>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+
+                        </ListView>
                     </Grid>
                 </Grid>
             </Frame>

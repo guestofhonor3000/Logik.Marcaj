@@ -67,5 +67,7 @@ namespace Marcaj
         //LGKMClients
         public static string GetUriClients = "https://elogik.azurewebsites.net/api/lgkmclients";
 
+        //InventoryClients
+        public static string GetUriAllInventoryClients = "https://elogik.azurewebsites.net/api/InventoryClients";
     }
 }

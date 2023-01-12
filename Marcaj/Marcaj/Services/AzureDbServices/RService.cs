@@ -27,6 +27,7 @@ namespace Marcaj.Services
         List<EmployeeFileModel> employeeFiles;
         List<StationSettingsModel> stationModels;
         List<LGKMClientsModel> clientsList;
+        List<InventoryClients> inventoryClients;
         #endregion
 
         #region Init
@@ -744,5 +745,17 @@ namespace Marcaj.Services
         }
         #endregion
 
+        #region InventoryClients
+        public async Task<List<InventoryClients>>  GetAllInventoryClients()
+        {
+            HttpClient client = new HttpClient();
+            inventoryClients = new List<InventoryClients>();
+            Uri uri = new Uri(string.Format(Constants.GetUriAllInventoryClients, string.Empty));
+            HttpResponseMessage response = await client.GetAsync(uri);
+            var content = await response.Content.ReadAsStringAsync();
+            inventoryClients = JsonConvert.DeserializeObject<List<InventoryClients>>(content);
+            return inventoryClients;
+        }
+        #endregion
     }
 }
